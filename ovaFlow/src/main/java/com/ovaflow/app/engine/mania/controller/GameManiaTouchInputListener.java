@@ -21,11 +21,13 @@ public class GameManiaTouchInputListener implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent me) {
         float x = me.getX();
         float y = me.getY();
-        mRenderer.buttonPressed(0);
+
+        mRenderer.startGame();
 
         Log.i("Pos", me.getAction() + "(" + x + ", " + y + ")");
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
-        }else if (me.getAction() == MotionEvent.ACTION_UP) {
+            mRenderer.buttonPressed(0);
+        } else if (me.getAction() == MotionEvent.ACTION_UP) {
             mRenderer.buttonReleased(0);
         }
         return false;

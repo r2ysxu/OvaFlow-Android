@@ -7,15 +7,19 @@ import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
  */
 public class Hitbox extends Square {
 
+    public static float WIDTH = 1.0f;
+    public static float HEIGHT = 1.0f;
+    public static float YPOS = -0.7f;
+
     public Hitbox(int index) {
         float color[] = {0.0f, 0.0f, 1.0f, 0.0f};
         setColor(color);
-        scaleDim(1f, 1f);
+        scaleDim(WIDTH, HEIGHT);
         determinePosition(index);
     }
 
     private void determinePosition(int index) {
-        float x = 0.0f, y = -0.7f;
+        float x = 0.0f;
 
         switch (index) {
             case 0:
@@ -34,6 +38,6 @@ public class Hitbox extends Square {
                 x = 0.5f;
                 break;
         }
-        setPosition(x, y);
+        setPosition(x, YPOS);
     }
 }

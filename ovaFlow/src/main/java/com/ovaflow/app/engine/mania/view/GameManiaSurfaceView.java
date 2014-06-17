@@ -3,14 +3,15 @@ package com.ovaflow.app.engine.mania.view;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
-import com.ovaflow.app.engine.mania.controller.GameManiaEngine;
+import com.ovaflow.app.engine.mania.controller.GameManiaTouchInputListener;
 
 /**
  * Created by ArthurXu on 09/06/2014.
  */
 public class GameManiaSurfaceView extends GLSurfaceView {
 
-    private final GameManiaEngine gmEngine;
+    private final GameManiaGLRenderer mRenderer;
+    private final GameManiaTouchInputListener mInputListener;
 
     public GameManiaSurfaceView(Context context) {
         super(context);
@@ -18,12 +19,13 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
-        gmEngine = new GameManiaEngine();
-        setRenderer(gmEngine.getRenderer());
-        setOnTouchListener(gmEngine.getInputListener());
-        gmEngine.startGame();
+        mRenderer = new GameManiaGLRenderer();
+        mInputListener = new GameManiaTouchInputListener(mRenderer);
+
+        setRenderer(mRenderer);
+        setOnTouchListener(mInputListener);
 
         // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 }
