@@ -1,5 +1,7 @@
 package com.ovaflow.app.engine.mania.model.renderable;
 
+import android.util.Log;
+
 import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
 
 /**
@@ -7,37 +9,50 @@ import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
  */
 public class Hitbox extends Square {
 
-    public static float WIDTH = 1.0f;
-    public static float HEIGHT = 1.0f;
-    public static float YPOS = -0.7f;
+    public static float WIDTHSCL = 1.0f;
+    public static float HEIGHTSCL = 1.0f;
+    public static float XPOS = -0.9f;
 
     public Hitbox(int index) {
         float color[] = {0.0f, 0.0f, 1.0f, 0.0f};
         setColor(color);
-        scaleDim(WIDTH, HEIGHT);
+        scaleDim(WIDTHSCL, HEIGHTSCL);
         determinePosition(index);
     }
 
+    public boolean contains(float x, float y) {
+        float top = (mY + HEIGHTSCL * coords[0]);
+        float bottom = (mY + HEIGHTSCL * coords[6]);
+        Log.i("Contains", " [" + top + ", " + bottom +"]");
+        if (y >= top && y <= bottom) {
+            //if (y >= mY && y <= (mY + HEIGHTSCL * coords[6])) {
+                return true;
+            //}
+        }
+
+        return false;
+    }
+
     private void determinePosition(int index) {
-        float x = 0.0f;
+        float y = 0.0f;
 
         switch (index) {
             case 0:
-                x = -0.5f;
+                y = -0.5f;
                 break;
             case 1:
-                x = -0.25f;
+                y = -0.25f;
                 break;
             case 2:
-                x = 0;
+                y = 0;
                 break;
             case 3:
-                x = 0.25f;
+                y = 0.25f;
                 break;
             case 4:
-                x = 0.5f;
+                y = 0.5f;
                 break;
         }
-        setPosition(x, YPOS);
+        setPosition(XPOS, y);
     }
 }

@@ -19,7 +19,7 @@ public class Square extends RenderableObject {
 
     protected float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 0.0f};
     protected float[] matrix = new float[16];
-    protected float mWidth, mHeight;
+    protected float mWidth = 1.0f, mHeight = 1.0f;
     protected float mX, mY;
     protected final float[] coords = {
             -0.1f, 0.1f, 0.0f,   // top left
@@ -63,14 +63,16 @@ public class Square extends RenderableObject {
     }
 
     public void setPosition(float x, float y) {
-        this.mX = x;
-        this.mY = y;
+        this.mX = x / mWidth;
+        this.mY = y / mHeight;
     }
 
     @Override
     public void draw(final float[] mvpMatrix) {
         super.initDraw();
-        float[] mat = matrix;
+        float[] mat = new float[16];
+
+        //System.arraycopy( mvpMatrix, 0, mat, 0, mvpMatrix.length );
 
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
@@ -78,9 +80,11 @@ public class Square extends RenderableObject {
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
         GameManiaGLRenderer.checkGlError("glGetUniformLocation");
 
-        Matrix.setIdentityM(matrix, 0);
-        Matrix.translateM(matrix, 0, mX, mY, 0.0f);
-        Matrix.scaleM(matrix, 0, mWidth, mHeight, 0.0f);
+        Matrix.setIdentityM(mat, 0);
+        Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);
+        Matrix.translateM(mat, 0, mX, mY, 0.0f);
+
+        //Matrix.multiplyMM(mat, 0, mvpMatrix, 0, matrix, 0);
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mat, 0);

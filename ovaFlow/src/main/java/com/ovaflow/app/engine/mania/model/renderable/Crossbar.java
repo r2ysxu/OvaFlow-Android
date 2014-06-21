@@ -7,10 +7,13 @@ import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
  */
 public class Crossbar extends Square {
 
+    public static final float HITRANGE = -0.7f;
+    public static final float HEIGHT = 0.15f;
+
     public Crossbar() {
         float color[] = {1.0f, 0.0f, 0.0f, 0.0f};
         setColor(color);
-        scaleDim(7f, 0.12f);
-        setPosition(0.0f, -0.7f);
+        scaleDim(HEIGHT, 7f);
+        setPosition(-0.7f, 0.0f);
     }
 }

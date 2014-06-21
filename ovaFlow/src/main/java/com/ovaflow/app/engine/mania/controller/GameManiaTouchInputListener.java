@@ -22,14 +22,18 @@ public class GameManiaTouchInputListener implements View.OnTouchListener {
         float x = me.getX();
         float y = me.getY();
 
-        mRenderer.startGame();
+        float adjX = (2 * (x - view.getWidth() / 2) / view.getWidth());
+        float adjY = (2 * -(y - view.getHeight() / 2) / view.getHeight());
 
-        Log.i("Pos", me.getAction() + "(" + x + ", " + y + ")");
+        Log.i("Pos", "Pixel " + "(" + x + ", " + y + ")");
+        Log.i("Pos", "GL " + "(" + adjX + ", " + adjY + ")");
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
-            mRenderer.buttonPressed(0);
+            //if (adjY < -0.9f)
+            //    mRenderer.restartGame();
+            mRenderer.buttonPressed(adjX, adjY);
         } else if (me.getAction() == MotionEvent.ACTION_UP) {
-            mRenderer.buttonReleased(0);
+            mRenderer.buttonReleased(adjX, adjY);
         }
-        return false;
+        return true;
     }
 }

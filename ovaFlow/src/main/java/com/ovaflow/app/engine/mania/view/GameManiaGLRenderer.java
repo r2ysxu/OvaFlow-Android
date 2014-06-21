@@ -39,8 +39,17 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mProjectionMatrix = new float[16];
 
     public void startGame() {
-        if (!gameStarted)
+        if (!gameStarted) {
             gmee = new GameManiaEngine();
+            gameStarted = true;
+        }
+    }
+
+    public void restartGame() {
+        if (gameStarted) {
+            gmee = new GameManiaEngine();
+            notes = Note.generateNotes();
+        }
     }
 
     private void surfaceCreated() {
@@ -55,6 +64,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
             mHitboxs[i] = new Hitbox(i);
         }
         currentNotes = new LinkedList<Note>();
+        startGame();
     }
 
     private void drawNotes() {
@@ -68,7 +78,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
             Note n = currentNotes.get(i);
             n.draw(mMVPMatrix);
             n.fallDown();
-            if (n.missedOut()) {
+            if (n.missedOut(Crossbar.HITRANGE, Crossbar.HEIGHT)) {
                 currentNotes.remove(i);
                 i--;
             }
@@ -93,24 +103,44 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
             drawNotes();
     }
 
-    public int checkCollide() {
+    public int checkCollide(int index) {
         int sum = 0;
         for (int i = 0; i < currentNotes.size(); i++) {
             Note n = currentNotes.get(i);
-            sum += n.checkTolerance(Hitbox.YPOS);
+            int num = n.checkTolerance(Crossbar.HITRANGE);
+            if (num > 0){
+                currentNotes.remove(i);
+            }
+            sum += num;
         }
         return sum;
     }
 
-    public void buttonPressed(int index) {
+    public void buttonPressed(float x, float y) {
         float[] color = {0.0f, 1.0f, 1.0f, 1.0f};
-        mHitboxs[index].setColor(color);
-        gmee.addScore(checkCollide());
+        int index = 0;
+
+        for (Hitbox hb : mHitboxs) {
+            if (hb.contains(x, y)) {
+                mHitboxs[index].setColor(color);
+                gmee.addScore(checkCollide(index));
+                break;
+            }
+            index++;
+        }
     }
 
-    public void buttonReleased(int index) {
+    public void buttonReleased(float x, float y) {
         float color[] = {0.0f, 0.0f, 1.0f, 0.0f};
-        mHitboxs[index].setColor(color);
+        int index = 0;
+
+        for (Hitbox hb : mHitboxs) {
+            if (hb.contains(x, y)) {
+                mHitboxs[index].setColor(color);
+                break;
+            }
+            index++;
+        }
     }
 
     @Override
@@ -130,10 +160,11 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
 
         float ratio = (float) width / height;
+        Log.i("SurfaceChanged", "Ratio: " + ratio);
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.frustumM(mProjectionMatrix, 0, -1, 1, -1, 1, 3, 7);
     }
 
     /**
