@@ -1,7 +1,5 @@
 package com.ovaflow.app.engine.mania.model.renderable;
 
-import android.util.Log;
-
 import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
 
 /**
@@ -23,7 +21,6 @@ public class Hitbox extends Square {
     public boolean contains(float x, float y) {
         float top = (mY + HEIGHTSCL * coords[0]);
         float bottom = (mY + HEIGHTSCL * coords[6]);
-        Log.i("Contains", " [" + top + ", " + bottom +"]");
         if (y >= top && y <= bottom) {
             //if (y >= mY && y <= (mY + HEIGHTSCL * coords[6])) {
                 return true;

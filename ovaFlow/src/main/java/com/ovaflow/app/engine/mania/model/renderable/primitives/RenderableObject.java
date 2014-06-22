@@ -11,7 +11,7 @@ import java.nio.FloatBuffer;
  */
 public abstract class RenderableObject {
 
-    protected final String vertexShaderCode =
+    protected String vertexShaderCode =
             // This matrix member variable provides a hook to manipulate
             // the coordinates of the objects that use this vertex shader
             "uniform mat4 uMVPMatrix;" +
@@ -22,7 +22,7 @@ public abstract class RenderableObject {
                     // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;" +
                     "}";
-    protected final String fragmentShaderCode =
+    protected String fragmentShaderCode =
             "precision mediump float;" +
                     "uniform vec4 vColor;" +
                     "void main() {" +

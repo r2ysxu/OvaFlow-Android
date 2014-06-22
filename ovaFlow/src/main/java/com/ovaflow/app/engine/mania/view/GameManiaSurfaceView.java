@@ -19,7 +19,7 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
-        mRenderer = new GameManiaGLRenderer();
+        mRenderer = new GameManiaGLRenderer(context);
         mInputListener = new GameManiaTouchInputListener(mRenderer);
 
         setRenderer(mRenderer);

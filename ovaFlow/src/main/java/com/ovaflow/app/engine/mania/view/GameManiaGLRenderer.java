@@ -1,15 +1,16 @@
 package com.ovaflow.app.engine.mania.view;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import com.ovaflow.app.engine.mania.controller.GameManiaEngine;
+import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Note;
-import com.ovaflow.app.engine.mania.model.renderable.Slider;
+import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,29 +26,36 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "GameManiaGLRenderer";
     public static final int MAXHITBOX = 5;
 
-    private GameManiaEngine gmee;
+    private Context mActivityContext;
+
+    private GameManiaController gmee;
     private boolean gameStarted = false;
 
     private List<Note> notes;
-    private Slider mSlider;
     private Crossbar mCrossbar;
     private Hitbox[] mHitboxs = new Hitbox[MAXHITBOX];
     private List<Note> currentNotes;
+
+    private TextureObject scoreHUD;
 
     private final float[] mViewMatrix = new float[16];
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
 
+    public GameManiaGLRenderer(Context context) {
+        mActivityContext = context;
+    }
+
     public void startGame() {
         if (!gameStarted) {
-            gmee = new GameManiaEngine();
+            gmee = new GameManiaController();
             gameStarted = true;
         }
     }
 
     public void restartGame() {
         if (gameStarted) {
-            gmee = new GameManiaEngine();
+            gmee = new GameManiaController();
             notes = Note.generateNotes();
         }
     }
@@ -55,9 +63,11 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private void surfaceCreated() {
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        GLES20.glEnable(GLES20.GL_TEXTURE_2D);
 
         //Initialize Objects
-        mSlider = new Slider();
         mCrossbar = new Crossbar();
         notes = Note.generateNotes();
         for (int i = 0; i < MAXHITBOX; i++) {
@@ -65,6 +75,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         }
         currentNotes = new LinkedList<Note>();
         startGame();
+
+        scoreHUD = new TextureObject(mActivityContext);
+        scoreHUD.setTextTexture(mActivityContext, "Score: 0");
     }
 
     private void drawNotes() {
@@ -94,13 +107,12 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
-        mSlider.draw(mMVPMatrix);
         mCrossbar.draw(mMVPMatrix);
         for (int i = 0; i < MAXHITBOX; i++)
             mHitboxs[i].draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
             drawNotes();
+        scoreHUD.draw(mMVPMatrix);
     }
 
     public int checkCollide(int index) {
@@ -108,9 +120,10 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         for (int i = 0; i < currentNotes.size(); i++) {
             Note n = currentNotes.get(i);
             int num = n.checkTolerance(Crossbar.HITRANGE);
-            if (num > 0){
+            if (num > 0) {
                 currentNotes.remove(i);
             }
+            gmee.addScore(num);
             sum += num;
         }
         return sum;
@@ -123,7 +136,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         for (Hitbox hb : mHitboxs) {
             if (hb.contains(x, y)) {
                 mHitboxs[index].setColor(color);
-                gmee.addScore(checkCollide(index));
+                checkCollide(index);
                 break;
             }
             index++;
@@ -181,13 +194,24 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
         // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
-        int shader = GLES20.glCreateShader(type);
+        int shaderHandle = GLES20.glCreateShader(type);
 
         // add the source code to the shader and compile it
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
+        GLES20.glShaderSource(shaderHandle, shaderCode);
+        GLES20.glCompileShader(shaderHandle);
 
-        return shader;
+        // Get the compilation status.
+        final int[] compileStatus = new int[1];
+        GLES20.glGetShaderiv(shaderHandle, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
+
+        // If the compilation failed, delete the shader.
+        if (compileStatus[0] == 0) {
+            Log.e(TAG, "Error compiling shader: " + GLES20.glGetShaderInfoLog(shaderHandle));
+            GLES20.glDeleteShader(shaderHandle);
+            shaderHandle = 0;
+        }
+
+        return shaderHandle;
     }
 
     public static void checkGlError(String glOperation) {

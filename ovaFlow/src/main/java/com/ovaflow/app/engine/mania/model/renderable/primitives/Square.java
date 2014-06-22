@@ -84,7 +84,6 @@ public class Square extends RenderableObject {
         Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);
         Matrix.translateM(mat, 0, mX, mY, 0.0f);
 
-        //Matrix.multiplyMM(mat, 0, mvpMatrix, 0, matrix, 0);
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mat, 0);
