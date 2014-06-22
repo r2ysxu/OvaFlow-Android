@@ -24,7 +24,6 @@ import javax.microedition.khronos.opengles.GL10;
 public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "GameManiaGLRenderer";
-    public static final int MAXHITBOX = 5;
 
     private Context mActivityContext;
 
@@ -33,7 +32,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     private List<Note> notes;
     private Crossbar mCrossbar;
-    private Hitbox[] mHitboxs = new Hitbox[MAXHITBOX];
+    private Hitbox mHitboxs;
     private List<Note> currentNotes;
 
     private TextureObject scoreHUD;
@@ -49,6 +48,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     public void startGame() {
         if (!gameStarted) {
             gmee = new GameManiaController();
+            gmee.playMusic(mActivityContext);
             gameStarted = true;
         }
     }
@@ -70,9 +70,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         //Initialize Objects
         mCrossbar = new Crossbar();
         notes = Note.generateNotes();
-        for (int i = 0; i < MAXHITBOX; i++) {
-            mHitboxs[i] = new Hitbox(i);
-        }
+        mHitboxs = new Hitbox();
         currentNotes = new LinkedList<Note>();
         startGame();
 
@@ -108,8 +106,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
         mCrossbar.draw(mMVPMatrix);
-        for (int i = 0; i < MAXHITBOX; i++)
-            mHitboxs[i].draw(mMVPMatrix);
+        mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
             drawNotes();
         scoreHUD.draw(mMVPMatrix);
@@ -130,30 +127,26 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void buttonPressed(float x, float y) {
-        float[] color = {0.0f, 1.0f, 1.0f, 1.0f};
-        int index = 0;
-
-        for (Hitbox hb : mHitboxs) {
-            if (hb.contains(x, y)) {
-                mHitboxs[index].setColor(color);
-                checkCollide(index);
-                break;
-            }
-            index++;
+        int index = mHitboxs.contains(x, y);
+        Log.i("Hitbox", "Index:" + index);
+        if (index != -1) {
+            checkCollide(index);
+            mHitboxs.setPressed(index, true);
         }
     }
 
     public void buttonReleased(float x, float y) {
-        float color[] = {0.0f, 0.0f, 1.0f, 0.0f};
-        int index = 0;
+        int index = mHitboxs.contains(x, y);
+        if (index != -1)
+            mHitboxs.setPressed(index, false);
+    }
 
-        for (Hitbox hb : mHitboxs) {
-            if (hb.contains(x, y)) {
-                mHitboxs[index].setColor(color);
-                break;
-            }
-            index++;
-        }
+    public void pause() {
+        gmee.pauseMusic();
+    }
+
+    public void resume() {
+        gmee.resumeMusic();
     }
 
     @Override

@@ -11,45 +11,47 @@ public class Hitbox extends Square {
     public static float HEIGHTSCL = 1.0f;
     public static float XPOS = -0.9f;
 
-    public Hitbox(int index) {
-        float color[] = {0.0f, 0.0f, 1.0f, 0.0f};
-        setColor(color);
+    public static final int MAXHITBOX = 5;
+
+    private boolean[] pressed = new boolean[MAXHITBOX];
+
+    private float[] downColor = {0.0f, 1.0f, 1.0f, 1.0f};
+    private float[] upColor = {0.0f, 0.0f, 1.0f, 0.0f};
+
+    public Hitbox() {
         scaleDim(WIDTHSCL, HEIGHTSCL);
-        determinePosition(index);
     }
 
-    public boolean contains(float x, float y) {
-        float top = (mY + HEIGHTSCL * coords[0]);
-        float bottom = (mY + HEIGHTSCL * coords[6]);
-        if (y >= top && y <= bottom) {
-            //if (y >= mY && y <= (mY + HEIGHTSCL * coords[6])) {
-                return true;
-            //}
-        }
+    public int contains(float x, float y) {
+        float uY = -0.5f;
 
-        return false;
+        for (int i = 0; i < MAXHITBOX; i++) {
+            float top = (uY + HEIGHTSCL * coords[0]);
+            float bottom = (uY + HEIGHTSCL * coords[6]);
+            if (y >= top && y <= bottom) {
+                //if (y >= mY && y <= (mY + HEIGHTSCL * coords[6])) {
+                return i;
+                //}
+            }
+            uY += 0.25;
+        }
+        return -1;
     }
 
-    private void determinePosition(int index) {
-        float y = 0.0f;
+    public void setPressed(int index, boolean val) {
+        pressed[index] = val;
+    }
 
-        switch (index) {
-            case 0:
-                y = -0.5f;
-                break;
-            case 1:
-                y = -0.25f;
-                break;
-            case 2:
-                y = 0;
-                break;
-            case 3:
-                y = 0.25f;
-                break;
-            case 4:
-                y = 0.5f;
-                break;
+    public void draw(float[] mMVPmatrix) {
+        float y = -0.5f;
+        for (int i = 0; i < MAXHITBOX; i++) {
+            if (pressed[i])
+                setColor(downColor);
+            else
+                setColor(upColor);
+            setPosition(XPOS, y);
+            super.draw(mMVPmatrix);
+            y += 0.25;
         }
-        setPosition(XPOS, y);
     }
 }

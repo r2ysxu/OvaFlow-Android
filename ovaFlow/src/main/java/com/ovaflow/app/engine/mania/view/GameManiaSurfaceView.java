@@ -28,4 +28,12 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         // Render the view only when there is a change in the drawing data
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
+
+    public void pause() {
+        mRenderer.pause();
+    }
+
+    public void resume() {
+        mRenderer.resume();
+    }
 }

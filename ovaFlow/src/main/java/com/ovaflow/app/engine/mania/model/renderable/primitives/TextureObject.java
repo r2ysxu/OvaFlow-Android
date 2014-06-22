@@ -39,7 +39,7 @@ public class TextureObject {
     private final short drawOrder[] = {0, 1, 2, 0, 2, 3}; // order to draw vertices
 
     //Matrix Related
-    protected float mWidth = 0.1f, mHeight = 0.1f;
+    protected float mWidth = 1.0f, mHeight = 1.0f;
     protected float mX = 0.0f, mY = 0.0f;
 
     protected final float[] coords = {

@@ -1,6 +1,11 @@
 package com.ovaflow.app.engine.mania.controller;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.util.Log;
+
+import java.io.IOException;
 
 /**
  * Created by ArthurXu on 09/06/2014.
@@ -15,6 +20,8 @@ public class GameManiaController {
     private int combo = 0;
     private int multiplier = 1;
 
+    private MediaPlayer player;
+
     public GameManiaController() {
         startGame();
     }
@@ -22,6 +29,26 @@ public class GameManiaController {
     public void startGame() {
         startTime = System.currentTimeMillis();
         score = 0;
+    }
+
+    public void playMusic(Context context) {
+        try {
+            AssetFileDescriptor afd = context.getAssets().openFd("we_will_rock_you.mp3");
+            player = new MediaPlayer();
+            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            player.prepare();
+            player.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pauseMusic() {
+        player.pause();
+    }
+
+    public void resumeMusic() {
+        player.start();
     }
 
     public long getStartTime() {
