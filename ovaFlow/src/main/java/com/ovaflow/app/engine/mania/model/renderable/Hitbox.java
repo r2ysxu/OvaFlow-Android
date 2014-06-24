@@ -16,7 +16,7 @@ public class Hitbox extends Square {
     private boolean[] pressed = new boolean[MAXHITBOX];
 
     private float[] downColor = {0.0f, 1.0f, 1.0f, 1.0f};
-    private float[] upColor = {0.0f, 0.0f, 1.0f, 0.0f};
+    private float[] upColor = {0.0f, 0.0f, 1.0f, 1.0f};
 
     public Hitbox() {
         scaleDim(WIDTHSCL, HEIGHTSCL);

@@ -17,7 +17,7 @@ public class Square extends RenderableObject {
     private ShortBuffer indexBuffer;
     private final short drawOrder[] = {0, 1, 2, 0, 2, 3}; // order to draw vertices
 
-    protected float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 0.0f};
+    protected float color[] = {0.63671875f, 0.76953125f, 0.22265625f, 1.0f};
     protected float[] matrix = new float[16];
     protected float mWidth = 1.0f, mHeight = 1.0f;
     protected float mX, mY;

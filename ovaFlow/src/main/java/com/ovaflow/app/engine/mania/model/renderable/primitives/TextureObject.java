@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.opengl.GLES20;
@@ -43,8 +44,8 @@ public class TextureObject {
     protected float mX = 0.0f, mY = 0.0f;
 
     protected final float[] coords = {
-            -0.1f, 0.1f, 0.0f,   // top left
-            -0.1f, -0.1f, 0.0f,   // bottom left
+            -0.1f, -0.1f, 0.0f,   // top left
+            -0.1f, 0.1f, 0.0f,   // bottom left
             0.1f, -0.1f, 0.0f,   // bottom right
             0.1f, 0.1f, 0.0f}; // top right
 
@@ -133,10 +134,12 @@ public class TextureObject {
     }
 
     private void initializeTexture(Context context) {
-        float[] textureCoordinateData = {1.0f, 0.0f,
-                1.0f, 1.0f,
-                0.0f, 1.0f,
-                0.0f, 0.0f};
+        float[] textureCoordinateData = {1.0f, 0.0f,    // 10
+                1.0f, 1.0f,     // 11
+                0.0f, 1.0f,     // 01
+                0.0f, 0.0f};    // 00
+
+
         mTextCoordAttribute = GLES20.glGetAttribLocation(mProgram, "aTexCoordinate");
         mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "uTexture");
         mTextureCoordinates = ByteBuffer.allocateDirect(textureCoordinateData.length * 4)
@@ -155,22 +158,36 @@ public class TextureObject {
 
     public void setTextTexture(Context context, String word) {
         // Create an empty, mutable bitmap
-        Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_4444);
+        Bitmap bitmap = Bitmap.createBitmap(256, 32, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
-        bitmap.eraseColor(0);
-        Drawable background = context.getResources().getDrawable(R.drawable.smiley2);
-        background.setBounds(0, 0, 256, 256);
+        bitmap.eraseColor(0); //Set Transparency
+        Drawable background = context.getResources().getDrawable(R.drawable.text_bg);
+        background.setBounds(0, 0, 256, 32);
         background.draw(canvas);
 
+        canvas.scale(1f, -1f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        canvas.rotate(180f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+
         Paint textPaint = new Paint();
-        textPaint.setTextSize(32);
+        textPaint.setColor(Color.BLUE);
+        textPaint.setTextSize(20);
         textPaint.setAntiAlias(true);
         textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
-        // draw the text centered
-        canvas.drawText(word, 16, 112, textPaint);
+        canvas.drawText(word, 10, 25, textPaint);
+
         mTextureDataHandle = loadTexture(bitmap);
         bitmap.recycle();
+    }
+
+    public void scaleDim(float width, float height) {
+        this.mWidth = width;
+        this.mHeight = height;
+    }
+
+    public void setPosition(float x, float y) {
+        this.mX = x / mWidth;
+        this.mY = y / mHeight;
     }
 
     public void draw(float[] mvpMatrix) {
@@ -191,6 +208,7 @@ public class TextureObject {
         Matrix.setIdentityM(mat, 0);
         Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);
         Matrix.translateM(mat, 0, mX, mY, 0.0f);
+        Matrix.rotateM(mat, 0, 90f, 0f, 0f, 1f);
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mat, 0);
@@ -203,6 +221,5 @@ public class TextureObject {
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-
     }
 }

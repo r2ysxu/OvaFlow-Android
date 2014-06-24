@@ -11,7 +11,7 @@ public class Crossbar extends Square {
     public static final float HEIGHT = 0.15f;
 
     public Crossbar() {
-        float color[] = {1.0f, 0.0f, 0.0f, 0.0f};
+        float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
         setColor(color);
         scaleDim(HEIGHT, 7f);
         setPosition(-0.7f, 0.0f);

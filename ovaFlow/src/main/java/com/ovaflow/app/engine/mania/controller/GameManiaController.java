@@ -20,6 +20,9 @@ public class GameManiaController {
     private int combo = 0;
     private int multiplier = 1;
 
+    private boolean scoreChanged = true;
+    private boolean comboChanged = true;
+
     private MediaPlayer player;
 
     public GameManiaController() {
@@ -37,7 +40,7 @@ public class GameManiaController {
             player = new MediaPlayer();
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
-            player.start();
+            //player.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,7 +70,22 @@ public class GameManiaController {
             multiplier = 1;
         }
         Log.i("Score", "Score: " + score);
+        if (pts > 0)
+            scoreChanged = true;
+        comboChanged = true;
         return score;
+    }
+
+    public boolean scoreChanged() {
+        boolean ret = scoreChanged;
+        scoreChanged = false;
+        return ret;
+    }
+
+    public boolean comboChanged() {
+        boolean ret = comboChanged;
+        comboChanged = false;
+        return ret;
     }
 
     public int getCombo() {

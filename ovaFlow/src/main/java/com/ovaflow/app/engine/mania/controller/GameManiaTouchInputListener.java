@@ -1,6 +1,5 @@
 package com.ovaflow.app.engine.mania.controller;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -25,8 +24,6 @@ public class GameManiaTouchInputListener implements View.OnTouchListener {
         float adjX = (2 * (x - view.getWidth() / 2) / view.getWidth());
         float adjY = (2 * -(y - view.getHeight() / 2) / view.getHeight());
 
-        Log.i("Pos", "Pixel " + "(" + x + ", " + y + ")");
-        Log.i("Pos", "GL " + "(" + adjX + ", " + adjY + ")");
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
             //if (adjY < -0.9f)
             //    mRenderer.restartGame();

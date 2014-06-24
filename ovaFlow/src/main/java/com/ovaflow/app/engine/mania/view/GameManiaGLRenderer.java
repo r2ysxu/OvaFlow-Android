@@ -8,9 +8,9 @@ import android.util.Log;
 
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
+import com.ovaflow.app.engine.mania.model.renderable.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Note;
-import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private Hitbox mHitboxs;
     private List<Note> currentNotes;
 
-    private TextureObject scoreHUD;
+    private HUD hud;
 
     private final float[] mViewMatrix = new float[16];
     private final float[] mMVPMatrix = new float[16];
@@ -63,6 +63,8 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private void surfaceCreated() {
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glEnable(GLES20.GL_TEXTURE_2D);
@@ -74,8 +76,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         currentNotes = new LinkedList<Note>();
         startGame();
 
-        scoreHUD = new TextureObject(mActivityContext);
-        scoreHUD.setTextTexture(mActivityContext, "Score: 0");
+        hud = new HUD(mActivityContext);
     }
 
     private void drawNotes() {
@@ -96,6 +97,12 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         }
     }
 
+    private void drawHitAnimation() {
+        if (gmee.scoreChanged()) {
+            hud.updateScore("Score:" + gmee.getScore());
+        }
+    }
+
     private void drawFrame() {
         // Draw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
@@ -109,7 +116,8 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
             drawNotes();
-        scoreHUD.draw(mMVPMatrix);
+        drawHitAnimation();
+        hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
     }
 
     public int checkCollide(int index) {
@@ -128,7 +136,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     public void buttonPressed(float x, float y) {
         int index = mHitboxs.contains(x, y);
-        Log.i("Hitbox", "Index:" + index);
         if (index != -1) {
             checkCollide(index);
             mHitboxs.setPressed(index, true);
