@@ -7,12 +7,12 @@ import android.opengl.Matrix;
 import android.util.Log;
 
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
+import com.ovaflow.app.engine.mania.controller.KeyNote;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
-import com.ovaflow.app.engine.mania.model.renderable.Note;
+import com.ovaflow.app.engine.mania.model.renderable.Notes;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -30,10 +30,10 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private GameManiaController gmee;
     private boolean gameStarted = false;
 
-    private List<Note> notes;
+    private List<KeyNote> keynotes;
     private Crossbar mCrossbar;
     private Hitbox mHitboxs;
-    private List<Note> currentNotes;
+    private Notes currentNotes;
 
     private HUD hud;
 
@@ -56,7 +56,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     public void restartGame() {
         if (gameStarted) {
             gmee = new GameManiaController();
-            notes = Note.generateNotes();
+            keynotes = KeyNote.generateNotes();
         }
     }
 
@@ -71,9 +71,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         //Initialize Objects
         mCrossbar = new Crossbar();
-        notes = Note.generateNotes();
+        keynotes = KeyNote.generateNotes();
         mHitboxs = new Hitbox();
-        currentNotes = new LinkedList<Note>();
+        currentNotes = new Notes();
         startGame();
 
         hud = new HUD(mActivityContext);
@@ -82,18 +82,12 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private void drawNotes() {
         long elapsedTime = ((System.currentTimeMillis() - gmee.getStartTime()) / 100) * 100;
 
-        if (!notes.isEmpty() && (Math.abs(notes.get(0).getTime() - elapsedTime) < 100)) {
-            currentNotes.add(notes.remove(0));
+        if (!keynotes.isEmpty() && (Math.abs(keynotes.get(0).getTime() - elapsedTime) < 100)) {
+            currentNotes.addKeyNote(keynotes.remove(0));
         }
-
-        for (int i = 0; i < currentNotes.size(); i++) {
-            Note n = currentNotes.get(i);
-            n.draw(mMVPMatrix);
-            n.fallDown();
-            if (n.missedOut(Crossbar.HITRANGE, Crossbar.HEIGHT)) {
-                currentNotes.remove(i);
-                i--;
-            }
+        currentNotes.draw(mMVPMatrix);
+        if (currentNotes.checkMissed(Crossbar.HITRANGE, Crossbar.HEIGHT)) {
+            gmee.missedNote();
         }
     }
 
@@ -120,18 +114,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
     }
 
-    public int checkCollide(int index) {
-        int sum = 0;
-        for (int i = 0; i < currentNotes.size(); i++) {
-            Note n = currentNotes.get(i);
-            int num = n.checkTolerance(Crossbar.HITRANGE);
-            if (num > 0) {
-                currentNotes.remove(i);
-            }
-            gmee.addScore(num);
-            sum += num;
-        }
-        return sum;
+    public void checkCollide(int index) {
+        int[] vals = currentNotes.checkCollide(index, Crossbar.HITRANGE);
+        gmee.addScore(vals[0], vals[1]);
     }
 
     public void buttonPressed(float x, float y) {

@@ -3,7 +3,6 @@ package com.ovaflow.app.engine.mania.controller;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -58,22 +57,24 @@ public class GameManiaController {
         return startTime;
     }
 
-    public int addScore(int pts) {
+    public int addScore(int pts, int cbs) {
         score += pts * multiplier;
+        combo += cbs;
         if (pts > 0) {
-            combo++;
             if ((combo / COMBOMULTREQ) < MAXMULTIPLIER) {
                 multiplier = (int) Math.pow(2, combo / COMBOMULTREQ);
             }
-        } else {
-            combo = 0;
-            multiplier = 1;
         }
-        Log.i("Score", "Score: " + score);
         if (pts > 0)
             scoreChanged = true;
         comboChanged = true;
         return score;
+    }
+
+    public void missedNote() {
+        combo = 0;
+        multiplier = 1;
+        comboChanged = true;
     }
 
     public boolean scoreChanged() {
