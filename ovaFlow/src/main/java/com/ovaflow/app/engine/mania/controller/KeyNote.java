@@ -1,5 +1,11 @@
 package com.ovaflow.app.engine.mania.controller;
 
+import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -19,14 +25,35 @@ public class KeyNote {
     private float fallspeed;
     private short fret;
 
-    private float downPos;
+    private float downPos = 1f;
 
-    public static List<KeyNote> generateNotes() {
+    public static List<KeyNote> generateNotes(Context context, int resourceId) {
+
+        final InputStream inputStream = context.getResources().openRawResource(
+                resourceId);
+        final InputStreamReader inputStreamReader = new InputStreamReader(
+                inputStream);
+        final BufferedReader bufferedReader = new BufferedReader(
+                inputStreamReader);
 
         //HardCoded for testing
+        float fallspeed = 0.005f;
+        short t = 0;
+
         List<KeyNote> noteList = new LinkedList<KeyNote>();
-        noteList.add(new KeyNote(1000, 0.005f, (short) 0, (short) 0));
-        noteList.add(new KeyNote(1000, 0.005f, (short) 1, (short) 0));
+
+        String nextLine;
+
+        try {
+            while ((nextLine = bufferedReader.readLine()) != null) {
+                String[] beats = nextLine.split("\t");
+                long time = Long.parseLong(beats[0]);
+                short fret = Short.parseShort(beats[1]);
+                noteList.add(new KeyNote(time, fallspeed, fret, t));
+            }
+        } catch (IOException e) {
+            return null;
+        }
 
         Collections.sort(noteList, new Comparator<KeyNote>() {
             @Override

@@ -1,6 +1,7 @@
 package com.ovaflow.app.engine.mania.model.renderable;
 
 import android.content.Context;
+import android.graphics.Typeface;
 
 import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
 
@@ -27,22 +28,26 @@ public class HUD {
 
     private void initScoreHUD(Context context) {
         score = new TextureObject(context);
-        score.setTextTexture(mActivityContext, "Score: 0");
+        Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
+        score.setTextTexture(mActivityContext, "Score: 0", tf);
         score.scaleDim(0.1f, 1f);
         score.setPosition(1f, 0f);
     }
 
     private void initComboHUD(Context context) {
         combo = new TextureObject(context);
-        combo.setTextTexture(mActivityContext, "0");
+        Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
+        combo.setTextTexture(mActivityContext, "0", tf);
         combo.scaleDim(0.1f, 1f);
         combo.setPosition(0f, -1f);
     }
 
     public void draw(float[] mMVPmatrix, int comboNum, boolean comboFlag) {
         score.draw(mMVPmatrix);
-        if (comboFlag)
-            combo.setTextTexture(mActivityContext, "" + comboNum);
+        if (comboFlag) {
+            Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
+            combo.setTextTexture(mActivityContext, "" + comboNum, tf);
+        }
         //if (comboNum > 0) {
         combo.draw(mMVPmatrix);
         //}
@@ -60,6 +65,7 @@ public class HUD {
     }
 
     public void updateScore(String scoreStr) {
-        score.setTextTexture(mActivityContext, scoreStr);
+        Typeface tf = Typeface.create("Helvetica",Typeface.BOLD);
+        score.setTextTexture(mActivityContext, scoreStr, tf);
     }
 }

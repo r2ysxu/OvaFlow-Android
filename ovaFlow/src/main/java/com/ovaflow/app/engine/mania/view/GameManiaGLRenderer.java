@@ -6,6 +6,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.KeyNote;
 import com.ovaflow.app.engine.mania.model.renderable.Background;
@@ -55,13 +56,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-    public void restartGame() {
-        if (gameStarted) {
-            gmee = new GameManiaController();
-            keynotes = KeyNote.generateNotes();
-        }
-    }
-
     private void surfaceCreated() {
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -73,8 +67,8 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         //Initialize Objects
         background = new Background(mActivityContext);
-        mCrossbar = new Crossbar();
-        keynotes = KeyNote.generateNotes();
+        mCrossbar = new Crossbar(mActivityContext);
+        keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
         mHitboxs = new Hitbox();
         currentNotes = new Notes();
         startGame();

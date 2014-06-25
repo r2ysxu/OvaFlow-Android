@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
@@ -54,6 +54,9 @@ public class TextureObject {
     private int mTextureDataHandle;
     private FloatBuffer mTextureCoordinates;
     private int mTextureUniformHandle;
+
+    private float textureWidth;
+    private float textureHeight;
 
     private static int loadTexture(Bitmap bitmap) {
         final int[] textureHandle = new int[1];
@@ -162,7 +165,7 @@ public class TextureObject {
         mTextureDataHandle = textureHandle;
     }
 
-    public void setTextTexture(Context context, String word) {
+    public void setTextTexture(Context context, String word, Typeface tf ) {
         // Create an empty, mutable bitmap
         Bitmap bitmap = Bitmap.createBitmap(256, 32, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap
@@ -176,10 +179,10 @@ public class TextureObject {
         canvas.rotate(180f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
 
         Paint textPaint = new Paint();
-        textPaint.setColor(Color.BLUE);
         textPaint.setTextSize(20);
         textPaint.setAntiAlias(true);
-        textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
+        textPaint.setARGB(0xff, 0xFF, 0xFF, 0xFF);
+        textPaint.setTypeface(tf);
         canvas.drawText(word, 10, 25, textPaint);
 
         mTextureDataHandle = loadTexture(bitmap);
