@@ -36,9 +36,9 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         float adjY = (2 * -(y - getHeight() / 2) / getHeight());
 
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
-            //mRenderer.buttonPressed(adjX, adjY);
+            mRenderer.buttonPressed(adjX, adjY);
         } else if (me.getAction() == MotionEvent.ACTION_UP) {
-            //mRenderer.buttonReleased(adjX, adjY);
+            mRenderer.buttonReleased(adjX, adjY);
         }
         return true;
     }

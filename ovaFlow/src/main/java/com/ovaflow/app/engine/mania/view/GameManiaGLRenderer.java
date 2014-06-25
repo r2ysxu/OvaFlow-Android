@@ -90,18 +90,18 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         mButtonPressed = true;
         mButtonPressedX = x;
         mButtonPressedY = y;
-        /*int index = mHitboxs.contains(x, y);
+        int index = mHitboxs.contains(x, y);
         if (index != -1) {
             checkCollide(index);
             mHitboxs.setPressed(index, true);
-        }*/
+        }
     }
 
     public void buttonReleased(float x, float y) {
         mButtonPressed = false;
-        /*int index = mHitboxs.contains(x, y);
+        int index = mHitboxs.contains(x, y);
         if (index != -1)
-            mHitboxs.setPressed(index, false);*/
+            mHitboxs.setPressed(index, false);
     }
 
     public void pause() {
