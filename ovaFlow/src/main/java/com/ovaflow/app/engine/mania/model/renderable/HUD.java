@@ -11,16 +11,28 @@ public class HUD {
 
     private Context mActivityContext;
 
-    TextureObject score;
-    TextureObject combo;
+    private TextureObject score;
+    private TextureObject combo;
+    private ScoreSplash scoreSplash;
+
+    private long timer;
 
     public HUD(Context context) {
         mActivityContext = context;
+        initScoreHUD(context);
+        initComboHUD(context);
+
+        scoreSplash = new ScoreSplash(mActivityContext);
+    }
+
+    private void initScoreHUD(Context context) {
         score = new TextureObject(context);
         score.setTextTexture(mActivityContext, "Score: 0");
         score.scaleDim(0.1f, 1f);
         score.setPosition(1f, 0f);
+    }
 
+    private void initComboHUD(Context context) {
         combo = new TextureObject(context);
         combo.setTextTexture(mActivityContext, "0");
         combo.scaleDim(0.1f, 1f);
@@ -31,9 +43,20 @@ public class HUD {
         score.draw(mMVPmatrix);
         if (comboFlag)
             combo.setTextTexture(mActivityContext, "" + comboNum);
-        if (comboNum > 0) {
-            combo.draw(mMVPmatrix);
-        }
+        //if (comboNum > 0) {
+        combo.draw(mMVPmatrix);
+        //}
+    }
+
+    public void startSplash() {
+        timer = 500;
+    }
+
+    public void drawHitSplash(float[] mMVPmatrix, int pts) {
+        if (pts > 0 || timer > 0)
+            scoreSplash.draw(mMVPmatrix, pts);
+        if (timer > 0)
+            timer -= 10;
     }
 
     public void updateScore(String scoreStr) {

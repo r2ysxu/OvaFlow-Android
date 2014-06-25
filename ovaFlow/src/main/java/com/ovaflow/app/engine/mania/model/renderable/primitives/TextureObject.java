@@ -147,13 +147,19 @@ public class TextureObject {
         mTextureCoordinates.put(textureCoordinateData).position(0);
     }
 
-    public void setTexture(Context context, final int resourceId) {
+    public int setTexture(Context context, final int resourceId) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;   // No pre-scaling
+        options.inMutable = true;
         // Read in the resource
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
         mTextureDataHandle = loadTexture(bitmap);
         bitmap.recycle();
+        return mTextureDataHandle;
+    }
+
+    public void useTexture(int textureHandle) {
+        mTextureDataHandle = textureHandle;
     }
 
     public void setTextTexture(Context context, String word) {

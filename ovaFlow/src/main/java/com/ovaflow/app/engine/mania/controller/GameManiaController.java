@@ -19,7 +19,7 @@ public class GameManiaController {
     private int combo = 0;
     private int multiplier = 1;
 
-    private boolean scoreChanged = true;
+    private int scoreChanged;
     private boolean comboChanged = true;
 
     private MediaPlayer player;
@@ -66,7 +66,7 @@ public class GameManiaController {
             }
         }
         if (pts > 0)
-            scoreChanged = true;
+            scoreChanged = pts;
         comboChanged = true;
         return score;
     }
@@ -77,9 +77,9 @@ public class GameManiaController {
         comboChanged = true;
     }
 
-    public boolean scoreChanged() {
-        boolean ret = scoreChanged;
-        scoreChanged = false;
+    public int scoreChanged() {
+        int ret = scoreChanged;
+        scoreChanged = 0;
         return ret;
     }
 

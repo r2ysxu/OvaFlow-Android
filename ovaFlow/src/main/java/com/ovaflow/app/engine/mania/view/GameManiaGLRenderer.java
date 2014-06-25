@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.KeyNote;
+import com.ovaflow.app.engine.mania.model.renderable.Background;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
@@ -34,6 +35,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private Crossbar mCrossbar;
     private Hitbox mHitboxs;
     private Notes currentNotes;
+    private Background background;
 
     private HUD hud;
 
@@ -66,10 +68,11 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
-        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-        GLES20.glEnable(GLES20.GL_TEXTURE_2D);
+        //GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        //GLES20.glEnable(GLES20.GL_TEXTURE_2D);
 
         //Initialize Objects
+        background = new Background(mActivityContext);
         mCrossbar = new Crossbar();
         keynotes = KeyNote.generateNotes();
         mHitboxs = new Hitbox();
@@ -91,10 +94,13 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-    private void drawHitAnimation() {
-        if (gmee.scoreChanged()) {
+    private void drawHitAnimation(float[] mMVPmatrix) {
+        int scoreChanged = gmee.scoreChanged();
+        if (scoreChanged > 0) {
             hud.updateScore("Score:" + gmee.getScore());
+            hud.startSplash();
         }
+        hud.drawHitSplash(mMVPmatrix, scoreChanged);
     }
 
     private void drawFrame() {
@@ -106,11 +112,14 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        //Draw Everything
+        background.draw(mMVPMatrix);
         mCrossbar.draw(mMVPMatrix);
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
             drawNotes();
-        drawHitAnimation();
+        drawHitAnimation(mMVPMatrix);
         hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
     }
 
