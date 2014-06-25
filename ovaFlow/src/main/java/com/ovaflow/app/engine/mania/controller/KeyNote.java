@@ -47,7 +47,7 @@ public class KeyNote {
         try {
             while ((nextLine = bufferedReader.readLine()) != null) {
                 String[] beats = nextLine.split("\t");
-                long time = Long.parseLong(beats[0]) - 2250;
+                long time = Long.parseLong(beats[0]) - 1450;
                 short fret = Short.parseShort(beats[1]);
                 noteList.add(new KeyNote(time, fallspeed, fret, t));
             }

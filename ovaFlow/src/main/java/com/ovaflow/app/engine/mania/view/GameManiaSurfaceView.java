@@ -2,6 +2,7 @@ package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.view.MotionEvent;
 
 /**
  * Created by ArthurXu on 09/06/2014.
@@ -26,7 +27,7 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
-    /*@Override
+    @Override
     public boolean onTouchEvent(MotionEvent me) {
         float x = me.getX();
         float y = me.getY();
@@ -40,7 +41,7 @@ public class GameManiaSurfaceView extends GLSurfaceView {
             //mRenderer.buttonReleased(adjX, adjY);
         }
         return true;
-    } */
+    }
 
     public void pause() {
         mRenderer.pause();

@@ -129,7 +129,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         mHitboxs = new Hitbox();
         currentNotes = new Notes();
         //hud = new HUD(mActivityContext);
-        
+
         startGame();
 
     }
