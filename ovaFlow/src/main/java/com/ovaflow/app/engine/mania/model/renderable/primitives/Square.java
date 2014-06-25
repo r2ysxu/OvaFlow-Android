@@ -67,18 +67,21 @@ public class Square extends RenderableObject {
         this.mY = y / mHeight;
     }
 
+    protected void initDraw() {
+        super.initDraw();
+    }
+
     @Override
     public void draw(final float[] mvpMatrix) {
-        super.initDraw();
         float[] mat = new float[16];
-
-        //System.arraycopy( mvpMatrix, 0, mat, 0, mvpMatrix.length );
+        super.initDraw();
 
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
         GameManiaGLRenderer.checkGlError("glGetUniformLocation");
+
 
         Matrix.setIdentityM(mat, 0);
         Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);

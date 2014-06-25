@@ -25,7 +25,7 @@ public class KeyNote {
     private float fallspeed;
     private short fret;
 
-    private float downPos = 1f;
+    private float downPos = 0.95f;
 
     public static List<KeyNote> generateNotes(Context context, int resourceId) {
 
@@ -37,7 +37,7 @@ public class KeyNote {
                 inputStreamReader);
 
         //HardCoded for testing
-        float fallspeed = 0.005f;
+        float fallspeed = 0.02f;
         short t = 0;
 
         List<KeyNote> noteList = new LinkedList<KeyNote>();
@@ -47,7 +47,7 @@ public class KeyNote {
         try {
             while ((nextLine = bufferedReader.readLine()) != null) {
                 String[] beats = nextLine.split("\t");
-                long time = Long.parseLong(beats[0]);
+                long time = Long.parseLong(beats[0]) - 2250;
                 short fret = Short.parseShort(beats[1]);
                 noteList.add(new KeyNote(time, fallspeed, fret, t));
             }
@@ -99,8 +99,14 @@ public class KeyNote {
         return downPos;
     }
 
+    private long lastTime;
+
     public float fall() {
-        downPos -= fallspeed;
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastTime > 1) {
+            downPos -= fallspeed;
+            lastTime = currentTime;
+        }
         return downPos;
     }
 

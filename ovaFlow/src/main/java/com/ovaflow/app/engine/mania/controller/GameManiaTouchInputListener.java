@@ -27,9 +27,9 @@ public class GameManiaTouchInputListener implements View.OnTouchListener {
         if (me.getAction() == MotionEvent.ACTION_DOWN) {
             //if (adjY < -0.9f)
             //    mRenderer.restartGame();
-            mRenderer.buttonPressed(adjX, adjY);
+            //mRenderer.buttonPressed(adjX, adjY);
         } else if (me.getAction() == MotionEvent.ACTION_UP) {
-            mRenderer.buttonReleased(adjX, adjY);
+            //mRenderer.buttonReleased(adjX, adjY);
         }
         return true;
     }

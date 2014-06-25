@@ -39,7 +39,7 @@ public class GameManiaController {
             player = new MediaPlayer();
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
-            //player.start();
+            player.start();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -44,6 +44,7 @@ public class Hitbox extends Square {
 
     public void draw(float[] mMVPmatrix) {
         float y = -0.5f;
+
         for (int i = 0; i < MAXHITBOX; i++) {
             if (pressed[i])
                 setColor(downColor);

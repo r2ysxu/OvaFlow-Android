@@ -181,7 +181,7 @@ public class TextureObject {
         Paint textPaint = new Paint();
         textPaint.setTextSize(20);
         textPaint.setAntiAlias(true);
-        textPaint.setARGB(0xff, 0xFF, 0xFF, 0xFF);
+        textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
         textPaint.setTypeface(tf);
         canvas.drawText(word, 10, 25, textPaint);
 

@@ -38,6 +38,10 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private Notes currentNotes;
     private Background background;
 
+    private boolean mButtonPressed = false;
+    private float mButtonPressedX;
+    private float mButtonPressedY;
+
     private HUD hud;
 
     private final float[] mViewMatrix = new float[16];
@@ -54,26 +58,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
             gmee.playMusic(mActivityContext);
             gameStarted = true;
         }
-    }
-
-    private void surfaceCreated() {
-        // Set the background frame color
-        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        GLES20.glEnable(GLES20.GL_BLEND);
-        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
-        //GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-        //GLES20.glEnable(GLES20.GL_TEXTURE_2D);
-
-        //Initialize Objects
-        background = new Background(mActivityContext);
-        mCrossbar = new Crossbar(mActivityContext);
-        keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
-        mHitboxs = new Hitbox();
-        currentNotes = new Notes();
-        startGame();
-
-        hud = new HUD(mActivityContext);
     }
 
     private void drawNotes() {
@@ -97,43 +81,27 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         hud.drawHitSplash(mMVPmatrix, scoreChanged);
     }
 
-    private void drawFrame() {
-        // Draw background color
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
-        // Set the camera position
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
-        //Draw Everything
-        background.draw(mMVPMatrix);
-        mCrossbar.draw(mMVPMatrix);
-        mHitboxs.draw(mMVPMatrix);
-        if (gmee.getStartTime() > 0)
-            drawNotes();
-        drawHitAnimation(mMVPMatrix);
-        hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
-    }
-
     public void checkCollide(int index) {
         int[] vals = currentNotes.checkCollide(index, Crossbar.HITRANGE);
         gmee.addScore(vals[0], vals[1]);
     }
 
     public void buttonPressed(float x, float y) {
-        int index = mHitboxs.contains(x, y);
+        mButtonPressed = true;
+        mButtonPressedX = x;
+        mButtonPressedY = y;
+        /*int index = mHitboxs.contains(x, y);
         if (index != -1) {
             checkCollide(index);
             mHitboxs.setPressed(index, true);
-        }
+        }*/
     }
 
     public void buttonReleased(float x, float y) {
-        int index = mHitboxs.contains(x, y);
+        mButtonPressed = false;
+        /*int index = mHitboxs.contains(x, y);
         if (index != -1)
-            mHitboxs.setPressed(index, false);
+            mHitboxs.setPressed(index, false);*/
     }
 
     public void pause() {
@@ -146,7 +114,52 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-        surfaceCreated();
+
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+
+        // Set the background frame color
+        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        //Initialize Objects
+        background = new Background(mActivityContext);
+        mCrossbar = new Crossbar(mActivityContext);
+        keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
+        mHitboxs = new Hitbox();
+        currentNotes = new Notes();
+        //hud = new HUD(mActivityContext);
+        
+        startGame();
+
+    }
+
+    public void drawFrame() {
+        // Draw background color
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        // Set the camera position
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+
+        // Calculate the projection and view transformation
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        //Draw Everything
+        //background.draw(mMVPMatrix);
+        mCrossbar.draw(mMVPMatrix);
+        mHitboxs.draw(mMVPMatrix);
+        if (gmee.getStartTime() > 0)
+            drawNotes();
+
+        //Detect Button Press
+                /*int index = mHitboxs.contains(x, y);
+        if (index != -1) {
+            checkCollide(index);
+            mHitboxs.setPressed(index, true);
+        }*/
+
+        //drawHitAnimation(mMVPMatrix);
+        //hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
     }
 
     @Override
