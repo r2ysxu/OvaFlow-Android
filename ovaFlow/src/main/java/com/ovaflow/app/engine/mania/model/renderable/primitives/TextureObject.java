@@ -106,8 +106,8 @@ public class TextureObject {
 
     private void initializeBuffers() {
         final float[] coords = {
-                -0.1f, -0.1f, 0.0f,   // top left
-                -0.1f, 0.1f, 0.0f,   // bottom left
+                -0.1f, 0.1f, 0.0f,   // top left
+                -0.1f, -0.1f, 0.0f,   // bottom left
                 0.1f, -0.1f, 0.0f,   // bottom right
                 0.1f, 0.1f, 0.0f}; // top right
 
@@ -131,10 +131,11 @@ public class TextureObject {
     }
 
     private void initializeTexture(Context context) {
-        float[] textureCoordinateData = {1.0f, 0.0f,    // 10
-                1.0f, 1.0f,     // 11
-                0.0f, 1.0f,     // 01
-                0.0f, 0.0f};    // 00
+        float[] textureCoordinateData = {
+                0f, 0f,
+                0f, 1f,
+                1f, 1f,
+                1f, 0f};
 
         mTextureCoordinates = ByteBuffer.allocateDirect(textureCoordinateData.length * 4)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
