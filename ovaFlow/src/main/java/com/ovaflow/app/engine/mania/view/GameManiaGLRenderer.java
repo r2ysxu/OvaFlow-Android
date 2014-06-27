@@ -63,7 +63,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private void drawNotes() {
         long elapsedTime = ((System.currentTimeMillis() - gmee.getStartTime()) / 100) * 100;
 
-        if (!keynotes.isEmpty() && (Math.abs(keynotes.get(0).getTime() - elapsedTime) < 100)) {
+        if (!keynotes.isEmpty() && (Math.abs(keynotes.get(0).getTime() - elapsedTime) < 500)) {
             currentNotes.addKeyNote(keynotes.remove(0));
         }
         currentNotes.draw(mMVPMatrix);
@@ -125,7 +125,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         //Initialize Objects
-        //background = new Background(mActivityContext);
+        background = new Background(mActivityContext);
         mCrossbar = new Crossbar(mActivityContext);
         keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
         mHitboxs = new Hitbox();
@@ -144,7 +144,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         //Draw Everything
-        //background.draw(mMVPMatrix);
+        background.draw(mMVPMatrix);
         mCrossbar.draw(mMVPMatrix);
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)

@@ -47,6 +47,6 @@ public class ScoreSplash extends TextureObject {
                 break;
         }
         useTexture(textureHandle);
-        super.draw(mMVPmatrix);
+        //super.draw(mMVPmatrix);
     }
 }

@@ -158,13 +158,13 @@ public class TextureObject {
         mTextureDataHandle = textureHandle;
     }
 
-    public void setTextTexture(Context context, String word, Typeface tf) {
+    public int setTextTexture(Context context, String word, Typeface tf) {
         // Create an empty, mutable bitmap
-        Bitmap bitmap = Bitmap.createBitmap(256, 32, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(128, 32, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         bitmap.eraseColor(0); //Set Transparency
         Drawable background = context.getResources().getDrawable(R.drawable.text_bg);
-        background.setBounds(0, 0, 256, 32);
+        background.setBounds(0, 0, 128, 32);
         background.draw(canvas);
 
 
@@ -172,7 +172,7 @@ public class TextureObject {
         Paint textPaint = new Paint();
         textPaint.setTextSize(20);
         textPaint.setAntiAlias(true);
-        textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
+        textPaint.setARGB(0xff, 0xff, 0xff, 0xff);
         textPaint.setTypeface(tf);
 
         canvas.scale(1f, 1f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
@@ -182,6 +182,7 @@ public class TextureObject {
         //Load and Cleanup
         mTextureDataHandle = loadTexture(bitmap);
         bitmap.recycle();
+        return mTextureDataHandle;
     }
 
     public void scaleDim(float width, float height) {

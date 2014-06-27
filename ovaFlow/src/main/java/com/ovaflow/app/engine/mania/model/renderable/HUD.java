@@ -39,7 +39,7 @@ public class HUD {
         Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
         combo.setTextTexture(mActivityContext, "0", tf);
         combo.scaleDim(1f, 3f);
-        combo.setPosition(0f, 0f);
+        combo.setPosition(0f, -0.24f);
     }
 
     public void draw(float[] mMVPmatrix, int comboNum, boolean comboFlag) {
