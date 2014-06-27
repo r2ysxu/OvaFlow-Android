@@ -125,12 +125,12 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         //Initialize Objects
-        background = new Background(mActivityContext);
+        //background = new Background(mActivityContext);
         mCrossbar = new Crossbar(mActivityContext);
         keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
         mHitboxs = new Hitbox();
         currentNotes = new Notes();
-        //hud = new HUD(mActivityContext);
+        hud = new HUD(mActivityContext);
 
         startGame();
 
@@ -144,14 +144,14 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         //Draw Everything
-        background.draw(mMVPMatrix);
+        //background.draw(mMVPMatrix);
         mCrossbar.draw(mMVPMatrix);
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
            drawNotes();
 
-        //drawHitAnimation(mMVPMatrix);
-        //hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
+        drawHitAnimation(mMVPMatrix);
+        hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
     }
 
     @Override

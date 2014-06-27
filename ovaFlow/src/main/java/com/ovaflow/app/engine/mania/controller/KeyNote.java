@@ -73,6 +73,7 @@ public class KeyNote {
         this.fret = fret;
         this.fallspeed = fallSpeed;
         this.type = typeFlag;
+        lastTime = System.currentTimeMillis();
     }
 
     public int checkTolerance(int fret, float x) {
@@ -103,7 +104,7 @@ public class KeyNote {
 
     public float fall() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastTime > 1) {
+        if (currentTime - lastTime > 10) {
             downPos -= fallspeed;
             lastTime = currentTime;
         }

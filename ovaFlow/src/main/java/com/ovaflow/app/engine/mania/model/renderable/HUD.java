@@ -30,16 +30,16 @@ public class HUD {
         score = new TextureObject(context);
         Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
         score.setTextTexture(mActivityContext, "Score: 0", tf);
-        score.scaleDim(0.1f, 1f);
-        score.setPosition(1f, 0f);
+        score.scaleDim(1f, 3f);
+        score.setPosition(0.9f, 0.7f);
     }
 
     private void initComboHUD(Context context) {
         combo = new TextureObject(context);
         Typeface tf = Typeface.create("Helvetica", Typeface.BOLD);
         combo.setTextTexture(mActivityContext, "0", tf);
-        combo.scaleDim(0.1f, 1f);
-        combo.setPosition(0f, -1f);
+        combo.scaleDim(1f, 3f);
+        combo.setPosition(0f, 0f);
     }
 
     public void draw(float[] mMVPmatrix, int comboNum, boolean comboFlag) {
@@ -59,7 +59,7 @@ public class HUD {
 
     public void drawHitSplash(float[] mMVPmatrix, int pts) {
         if (pts > 0 || timer > 0)
-            scoreSplash.draw(mMVPmatrix, pts);
+            //scoreSplash.draw(mMVPmatrix, pts);
         if (timer > 0)
             timer -= 10;
     }

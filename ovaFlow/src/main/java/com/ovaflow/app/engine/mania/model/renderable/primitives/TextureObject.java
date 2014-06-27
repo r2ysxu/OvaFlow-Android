@@ -167,8 +167,6 @@ public class TextureObject {
         background.setBounds(0, 0, 256, 32);
         background.draw(canvas);
 
-        canvas.scale(1f, -1f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
-        canvas.rotate(180f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
 
         //Paint Text
         Paint textPaint = new Paint();
@@ -176,6 +174,9 @@ public class TextureObject {
         textPaint.setAntiAlias(true);
         textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
         textPaint.setTypeface(tf);
+
+        canvas.scale(1f, 1f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        canvas.rotate(180f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
         canvas.drawText(word, 10, 25, textPaint);
 
         //Load and Cleanup

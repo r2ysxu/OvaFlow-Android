@@ -12,7 +12,7 @@ public class Background extends TextureObject {
 
     public Background(Context context) {
         super(context);
-        scaleDim(6f, 6f);
+        scaleDim(10f, 10f);
         setPosition(0f, 0f);
         setTexture(context, R.drawable.mania_background);
     }
