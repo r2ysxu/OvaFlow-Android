@@ -117,10 +117,12 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
 
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Set the camera position
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         //Initialize Objects
         background = new Background(mActivityContext);
@@ -138,25 +140,15 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         // Draw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        // Set the camera position
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         //Draw Everything
-        //background.draw(mMVPMatrix);
+        background.draw(mMVPMatrix);
         mCrossbar.draw(mMVPMatrix);
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
-            drawNotes();
-
-        //Detect Button Press
-                /*int index = mHitboxs.contains(x, y);
-        if (index != -1) {
-            checkCollide(index);
-            mHitboxs.setPressed(index, true);
-        }*/
+           drawNotes();
 
         //drawHitAnimation(mMVPMatrix);
         //hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());

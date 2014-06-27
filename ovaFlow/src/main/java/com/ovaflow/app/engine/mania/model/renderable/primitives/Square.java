@@ -67,10 +67,6 @@ public class Square extends RenderableObject {
         this.mY = y / mHeight;
     }
 
-    protected void initDraw() {
-        super.initDraw();
-    }
-
     @Override
     public void draw(final float[] mvpMatrix) {
         float[] mat = new float[16];

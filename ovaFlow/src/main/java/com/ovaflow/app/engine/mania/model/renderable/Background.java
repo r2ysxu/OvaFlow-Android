@@ -12,8 +12,8 @@ public class Background extends TextureObject {
 
     public Background(Context context) {
         super(context);
-        scaleDim(2f, 2f);
-        setPosition(1f, -1f);
+        scaleDim(6f, 6f);
+        setPosition(0f, 0f);
         setTexture(context, R.drawable.mania_background);
     }
 }

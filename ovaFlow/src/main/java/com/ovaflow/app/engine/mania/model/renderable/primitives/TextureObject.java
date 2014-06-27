@@ -43,22 +43,13 @@ public class TextureObject {
     protected float mWidth = 1.0f, mHeight = 1.0f;
     protected float mX = 0.0f, mY = 0.0f;
 
-    protected final float[] coords = {
-            -0.1f, -0.1f, 0.0f,   // top left
-            -0.1f, 0.1f, 0.0f,   // bottom left
-            0.1f, -0.1f, 0.0f,   // bottom right
-            0.1f, 0.1f, 0.0f}; // top right
-
     //Texture Related
-    private int mTextCoordAttribute;
+    private int mTextureHandle;
     private int mTextureDataHandle;
     private FloatBuffer mTextureCoordinates;
     private int mTextureUniformHandle;
 
-    private float textureWidth;
-    private float textureHeight;
-
-    private static int loadTexture(Bitmap bitmap) {
+    public static int loadTexture(Bitmap bitmap) {
         final int[] textureHandle = new int[1];
 
         GLES20.glGenTextures(1, textureHandle, 0);
@@ -74,20 +65,19 @@ public class TextureObject {
             // Load the bitmap into the bound texture.
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
         }
-
         if (textureHandle[0] == 0) {
             throw new RuntimeException("Error loading texture.");
         }
-
         return textureHandle[0];
     }
 
     public TextureObject(Context context) {
-        vertexShaderCode = RawResourceReader.readTextFileFromRawResource(context, R.raw.vertext_shader_code);
+        vertexShaderCode = RawResourceReader.readTextFileFromRawResource(context, R.raw.vertex_shader_code);
         fragmentShaderCode = RawResourceReader.readTextFileFromRawResource(context, R.raw.fragment_shader_code);
-        getGLProgram(context);
+
         initializeBuffers();
         initializeTexture(context);
+        getGLProgram(context);
     }
 
     protected void getGLProgram(Context context) {
@@ -98,18 +88,29 @@ public class TextureObject {
         int fragmentShader = GameManiaGLRenderer.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
+
+        //mProgram = ShaderHelper.createAndLinkProgram(vertexShader, fragmentShader,
+        //        new String[]{"a_Position", "a_Color", "a_Normal", "a_TexCoordinate"});
+
         //Attach GL, vShader and fShader Program
         mProgram = GLES20.glCreateProgram();
+
         GLES20.glAttachShader(mProgram, vertexShader);
         GLES20.glAttachShader(mProgram, fragmentShader);
 
-        GLES20.glBindAttribLocation(mProgram, 0, "vertexPosition");
-        GLES20.glBindAttribLocation(mProgram, 0, "aTexCoordinate");
+        //GLES20.glBindAttribLocation(mProgram, 0, "a_Position");
+        //GLES20.glBindAttribLocation(mProgram, 0, "a_TexCoordinate");
 
         GLES20.glLinkProgram(mProgram);
     }
 
     private void initializeBuffers() {
+        final float[] coords = {
+                -0.1f, -0.1f, 0.0f,   // top left
+                -0.1f, 0.1f, 0.0f,   // bottom left
+                0.1f, -0.1f, 0.0f,   // bottom right
+                0.1f, 0.1f, 0.0f}; // top right
+
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 coords.length * 4);
         bb.order(ByteOrder.nativeOrder());
@@ -127,13 +128,6 @@ public class TextureObject {
         vertexBuffer = bb.asFloatBuffer();
         vertexBuffer.put(coords);
         vertexBuffer.position(0);
-
-        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vertexPosition");
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
-        GLES20.glVertexAttribPointer(
-                mPositionHandle, COORDS_PER_VERTEX,
-                GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer);
     }
 
     private void initializeTexture(Context context) {
@@ -142,22 +136,20 @@ public class TextureObject {
                 0.0f, 1.0f,     // 01
                 0.0f, 0.0f};    // 00
 
-
-        mTextCoordAttribute = GLES20.glGetAttribLocation(mProgram, "aTexCoordinate");
-        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "uTexture");
         mTextureCoordinates = ByteBuffer.allocateDirect(textureCoordinateData.length * 4)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
         mTextureCoordinates.put(textureCoordinateData).position(0);
+        GameManiaGLRenderer.checkGlError("initTexture");
     }
 
     public int setTexture(Context context, final int resourceId) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;   // No pre-scaling
-        options.inMutable = true;
+        options.inScaled = false;   // No pre-scaling=
         // Read in the resource
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
         mTextureDataHandle = loadTexture(bitmap);
         bitmap.recycle();
+        GameManiaGLRenderer.checkGlError("setTexture()");
         return mTextureDataHandle;
     }
 
@@ -165,10 +157,9 @@ public class TextureObject {
         mTextureDataHandle = textureHandle;
     }
 
-    public void setTextTexture(Context context, String word, Typeface tf ) {
+    public void setTextTexture(Context context, String word, Typeface tf) {
         // Create an empty, mutable bitmap
         Bitmap bitmap = Bitmap.createBitmap(256, 32, Bitmap.Config.ARGB_8888);
-        // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
         bitmap.eraseColor(0); //Set Transparency
         Drawable background = context.getResources().getDrawable(R.drawable.text_bg);
@@ -178,6 +169,7 @@ public class TextureObject {
         canvas.scale(1f, -1f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
         canvas.rotate(180f, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
 
+        //Paint Text
         Paint textPaint = new Paint();
         textPaint.setTextSize(20);
         textPaint.setAntiAlias(true);
@@ -185,6 +177,7 @@ public class TextureObject {
         textPaint.setTypeface(tf);
         canvas.drawText(word, 10, 25, textPaint);
 
+        //Load and Cleanup
         mTextureDataHandle = loadTexture(bitmap);
         bitmap.recycle();
     }
@@ -199,20 +192,37 @@ public class TextureObject {
         this.mY = y / mHeight;
     }
 
+    int drawCount = 0;
+
     public void draw(float[] mvpMatrix) {
         float[] mat = new float[16];
         GLES20.glUseProgram(mProgram);
 
-        //Texture
+        // Getting Attribute Handlers
+        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "u_Texture");
+        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
+        mTextureHandle = GLES20.glGetAttribLocation(mProgram, "a_TexCoordinate");
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
+        GameManiaGLRenderer.checkGlError("Obtaining Attribute Handlers " + drawCount);
+
+        //Bind Texture
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
         GLES20.glUniform1i(mTextureUniformHandle, 0);
+        GameManiaGLRenderer.checkGlError("Binding Texture " + drawCount);
+
+        // Vertext info
+        vertexBuffer.position(0);
+        GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false,
+                vertexStride, vertexBuffer);
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        GameManiaGLRenderer.checkGlError("Loading Vertex Info " + drawCount);
 
         mTextureCoordinates.position(0);
-        GLES20.glVertexAttribPointer(mTextCoordAttribute, 2, GLES20.GL_FLOAT, false,
-                0, mTextureCoordinates);
-
-        GLES20.glEnableVertexAttribArray(mTextCoordAttribute);
+        GLES20.glVertexAttribPointer(mTextureHandle, 2, GLES20.GL_FLOAT, false, 0,
+                mTextureCoordinates);
+        GLES20.glEnableVertexAttribArray(mTextureHandle);
+        GameManiaGLRenderer.checkGlError("Loading Texture Info " + drawCount);
 
         Matrix.setIdentityM(mat, 0);
         Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);
@@ -227,8 +237,12 @@ public class TextureObject {
         GLES20.glDrawElements(
                 GLES20.GL_TRIANGLES, drawOrder.length,
                 GLES20.GL_UNSIGNED_SHORT, indexBuffer);
+        GameManiaGLRenderer.checkGlError("Drawing " + drawCount);
 
-        // Disable vertex array
+        // Disable vertex arrays
         GLES20.glDisableVertexAttribArray(mPositionHandle);
+        //GLES20.glDisableVertexAttribArray(mTextureHandle);
+        GameManiaGLRenderer.checkGlError("endDraw " + drawCount);
+        drawCount++;
     }
 }
