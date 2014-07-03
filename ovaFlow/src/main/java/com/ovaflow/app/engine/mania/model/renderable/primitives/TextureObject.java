@@ -195,8 +195,6 @@ public class TextureObject {
         this.mY = y / mHeight;
     }
 
-    int drawCount = 0;
-
     public void draw(float[] mvpMatrix) {
         float[] mat = new float[16];
         GLES20.glUseProgram(mProgram);
@@ -206,26 +204,26 @@ public class TextureObject {
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
         mTextureHandle = GLES20.glGetAttribLocation(mProgram, "a_TexCoordinate");
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
-        GameManiaGLRenderer.checkGlError("Obtaining Attribute Handlers " + drawCount);
+        GameManiaGLRenderer.checkGlError("Obtaining Attribute Handlers ");
 
         //Bind Texture
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
         GLES20.glUniform1i(mTextureUniformHandle, 0);
-        GameManiaGLRenderer.checkGlError("Binding Texture " + drawCount);
+        GameManiaGLRenderer.checkGlError("Binding Texture ");
 
         // Vertext info
         vertexBuffer.position(0);
         GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false,
                 vertexStride, vertexBuffer);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
-        GameManiaGLRenderer.checkGlError("Loading Vertex Info " + drawCount);
+        GameManiaGLRenderer.checkGlError("Loading Vertex Info ");
 
         mTextureCoordinates.position(0);
         GLES20.glVertexAttribPointer(mTextureHandle, 2, GLES20.GL_FLOAT, false, 0,
                 mTextureCoordinates);
         GLES20.glEnableVertexAttribArray(mTextureHandle);
-        GameManiaGLRenderer.checkGlError("Loading Texture Info " + drawCount);
+        GameManiaGLRenderer.checkGlError("Loading Texture Info ");
 
         Matrix.setIdentityM(mat, 0);
         Matrix.scaleM(mat, 0, mWidth, mHeight, 0.0f);
@@ -240,12 +238,11 @@ public class TextureObject {
         GLES20.glDrawElements(
                 GLES20.GL_TRIANGLES, drawOrder.length,
                 GLES20.GL_UNSIGNED_SHORT, indexBuffer);
-        GameManiaGLRenderer.checkGlError("Drawing " + drawCount);
+        GameManiaGLRenderer.checkGlError("Drawing ");
 
         // Disable vertex arrays
         GLES20.glDisableVertexAttribArray(mPositionHandle);
         //GLES20.glDisableVertexAttribArray(mTextureHandle);
-        GameManiaGLRenderer.checkGlError("endDraw " + drawCount);
-        drawCount++;
+        GameManiaGLRenderer.checkGlError("endDraw ");
     }
 }

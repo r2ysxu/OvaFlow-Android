@@ -20,7 +20,6 @@ public class GameManiaController {
     private int multiplier = 1;
 
     private int scoreChanged;
-    private boolean comboChanged = true;
 
     private MediaPlayer player;
 
@@ -67,25 +66,17 @@ public class GameManiaController {
         }
         if (pts > 0)
             scoreChanged = pts;
-        comboChanged = true;
         return score;
     }
 
     public void missedNote() {
         combo = 0;
         multiplier = 1;
-        comboChanged = true;
     }
 
     public int scoreChanged() {
         int ret = scoreChanged;
         scoreChanged = 0;
-        return ret;
-    }
-
-    public boolean comboChanged() {
-        boolean ret = comboChanged;
-        comboChanged = false;
         return ret;
     }
 

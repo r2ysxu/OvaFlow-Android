@@ -11,7 +11,7 @@ import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.KeyNote;
 import com.ovaflow.app.engine.mania.model.renderable.Background;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
-import com.ovaflow.app.engine.mania.model.renderable.HUD;
+import com.ovaflow.app.engine.mania.model.renderable.HUD.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Notes;
 
@@ -37,10 +37,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private Hitbox mHitboxs;
     private Notes currentNotes;
     private Background background;
-
-    private boolean mButtonPressed = false;
-    private float mButtonPressedX;
-    private float mButtonPressedY;
 
     private HUD hud;
 
@@ -75,7 +71,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private void drawHitAnimation(float[] mMVPmatrix) {
         int scoreChanged = gmee.scoreChanged();
         if (scoreChanged > 0) {
-            hud.updateScore("Score:" + gmee.getScore());
+            hud.updateScore(gmee.getScore());
             hud.startSplash();
         }
         hud.drawHitSplash(mMVPmatrix, scoreChanged);
@@ -87,9 +83,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void buttonPressed(float x, float y) {
-        mButtonPressed = true;
-        mButtonPressedX = x;
-        mButtonPressedY = y;
         int index = mHitboxs.contains(x, y);
         if (index != -1) {
             checkCollide(index);
@@ -98,7 +91,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void buttonReleased(float x, float y) {
-        mButtonPressed = false;
         int index = mHitboxs.contains(x, y);
         if (index != -1)
             mHitboxs.setPressed(index, false);
@@ -133,7 +125,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         hud = new HUD(mActivityContext);
 
         startGame();
-
     }
 
     public void drawFrame() {
@@ -151,7 +142,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
            drawNotes();
 
         drawHitAnimation(mMVPMatrix);
-        hud.draw(mMVPMatrix, gmee.getCombo(), gmee.comboChanged());
+        hud.draw(mMVPMatrix, gmee.getCombo());
     }
 
     @Override
