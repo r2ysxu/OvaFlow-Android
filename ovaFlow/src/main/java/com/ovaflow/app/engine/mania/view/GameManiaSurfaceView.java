@@ -10,7 +10,7 @@ import com.ovaflow.app.engine.mania.controller.GameManiaTouchInputListener;
  */
 public class GameManiaSurfaceView extends GLSurfaceView {
 
-    private final GameManiaGLRenderer mRenderer;
+    private final GameManiaGLRenderer gmRenderer;
     private final GameManiaTouchInputListener mInputListener;
 
     public GameManiaSurfaceView(Context context) {
@@ -19,20 +19,21 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
-        mRenderer = new GameManiaGLRenderer(context);
-        mInputListener = new GameManiaTouchInputListener(mRenderer);
+        gmRenderer = new GameManiaGLRenderer(context);
+        mInputListener = new GameManiaTouchInputListener(gmRenderer);
 
-        setRenderer(mRenderer);
+        setRenderer(gmRenderer);
         setOnTouchListener(mInputListener);
 
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
     }
 
     public void pause() {
-        mRenderer.pause();
+        gmRenderer.pause();
     }
 
     public void resume() {
-        mRenderer.resume();
+        gmRenderer.resume();
     }
 }

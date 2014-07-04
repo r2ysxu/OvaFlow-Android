@@ -1,6 +1,6 @@
 package com.ovaflow.app.engine.mania.model.renderable;
 
-import com.ovaflow.app.engine.mania.controller.KeyNote;
+import com.ovaflow.app.engine.mania.model.data.KeyNote;
 import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
 
 import java.util.LinkedList;
