@@ -12,7 +12,7 @@ import com.ovaflow.app.engine.mania.controller.KeyNote;
 import com.ovaflow.app.engine.mania.model.renderable.Background;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.HUD.HUD;
-import com.ovaflow.app.engine.mania.model.renderable.Hitbox;
+import com.ovaflow.app.engine.mania.model.renderable.Clickables.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Notes;
 
 import java.util.List;
