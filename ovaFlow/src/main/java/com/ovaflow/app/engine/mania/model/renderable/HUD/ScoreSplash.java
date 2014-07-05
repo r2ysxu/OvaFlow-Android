@@ -13,25 +13,26 @@ public class ScoreSplash extends TextureObject {
     public static final int PERFECT = 100;
     public static final int GOOD = 50;
     public static final int BAD = 30;
-    public static final int MISS = 0;
+    public static final int MISS = -1;
 
     private final int highTextureHandle;
     private final int medTextureHandle;
     private final int lowTextureHandle;
     private final int missTextureHandle;
 
+    private int textureHandle;
+
     public ScoreSplash(Context context) {
         super(context);
-        scaleDim(0.5f, 1f);
+        scaleDim(3f, 1f);
         setPosition(-0.05f, -0.5f);
-        highTextureHandle = setTexture(context, R.drawable.smiley2);
-        medTextureHandle = setTexture(context, R.drawable.smiley2);
-        lowTextureHandle = setTexture(context, R.drawable.smiley2);
-        missTextureHandle = setTexture(context, R.drawable.smiley2);
+        highTextureHandle = setTexture(context, R.drawable.splash_cool);
+        medTextureHandle = setTexture(context, R.drawable.splash_good);
+        lowTextureHandle = setTexture(context, R.drawable.splash_bad);
+        missTextureHandle = setTexture(context, R.drawable.splash_miss);
     }
 
-    public void draw(float[] mMVPmatrix, int performance) {
-        int textureHandle;
+    public void setSplashType(int performance) {
         switch (performance) {
             case PERFECT:
                 textureHandle = highTextureHandle;
@@ -42,11 +43,19 @@ public class ScoreSplash extends TextureObject {
             case BAD:
                 textureHandle = lowTextureHandle;
                 break;
-            default:
+            case MISS:
                 textureHandle = missTextureHandle;
                 break;
+            default:
+                textureHandle = -1;
+                break;
         }
-        useTexture(textureHandle);
-        //super.draw(mMVPmatrix);
+    }
+
+    public void draw(float[] mMVPmatrix) {
+        if (textureHandle >= 0) {
+            useTexture(textureHandle);
+            super.draw(mMVPmatrix);
+        }
     }
 }

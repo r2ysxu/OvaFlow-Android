@@ -52,6 +52,7 @@ public class GameManiaCanvas {
         currentNotes.draw(mMVPMatrix);
         if (currentNotes.checkMissed()) {
             gmee.missedNote();
+            hud.startSplash(-1);
         }
     }
 
@@ -59,7 +60,7 @@ public class GameManiaCanvas {
         int scoreChanged = gmee.scoreChanged();
         if (scoreChanged > 0) {
             hud.updateScore(gmee.getScore());
-            hud.startSplash();
+            hud.startSplash(scoreChanged);
         }
         hud.drawHitSplash(mMVPmatrix, scoreChanged);
     }
@@ -87,7 +88,7 @@ public class GameManiaCanvas {
         //Initialize Objects
         mCrossbar = new Crossbar(mActivityContext);
         keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
-        mHitboxs = new Hitbox();
+        mHitboxs = new Hitbox(mActivityContext);
         currentNotes = new Notes();
         hud = new HUD(mActivityContext);
 

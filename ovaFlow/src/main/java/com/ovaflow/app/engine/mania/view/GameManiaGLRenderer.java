@@ -23,6 +23,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private Context mActivityContext;
 
     private final GameManiaCanvas gmc;
+    private final ScoreCanvas sc;
 
     private final float[] mViewMatrix = new float[16];
     private final float[] mMVPMatrix = new float[16];
@@ -33,6 +34,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     public GameManiaGLRenderer(Context context, GameManiaController gmee) {
         mActivityContext = context;
         gmc = new GameManiaCanvas(context, gmee);
+        sc = new ScoreCanvas(context, gmee);
     }
 
     public void buttonPressed(float x, float y) {
@@ -84,7 +86,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         //Draw Everything
         background.draw(mMVPMatrix);
-        gmc.drawFrame(mMVPMatrix);
+        if (gmc.drawFrame(mMVPMatrix)) {
+            sc.draw(mMVPMatrix);
+        }
     }
 
     @Override

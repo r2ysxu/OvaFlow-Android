@@ -77,6 +77,7 @@ public class GameManiaController {
     public void missedNote() {
         combo = 0;
         multiplier = 1;
+        scoreChanged();
     }
 
     public int scoreChanged() {

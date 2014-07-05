@@ -10,7 +10,7 @@ public class HUD {
     private Context mActivityContext;
 
     private ScoreHUD score;
-    private ComboHUD combo;
+    private numberHUD combo;
     private ScoreSplash scoreSplash;
 
     private long timer;
@@ -24,7 +24,7 @@ public class HUD {
 
     private void initHUD(Context context) {
         score = new ScoreHUD(context);
-        combo = new ComboHUD(context);
+        combo = new numberHUD(context);
     }
 
     public void draw(float[] mMVPmatrix, int comboNum) {
@@ -35,15 +35,17 @@ public class HUD {
         //}
     }
 
-    public void startSplash() {
+    public void startSplash(int pts) {
         timer = 500;
+        scoreSplash.setSplashType(pts);
     }
 
     public void drawHitSplash(float[] mMVPmatrix, int pts) {
         if (pts > 0 || timer > 0)
-            //scoreSplash.draw(mMVPmatrix, pts);
-            if (timer > 0)
-                timer -= 10;
+            scoreSplash.draw(mMVPmatrix);
+        if (timer > 0)
+            timer -= 10;
+
     }
 
     public void updateScore(int scorePts) {
