@@ -24,18 +24,21 @@ public class GameManiaController {
 
     private MediaPlayer player;
 
+    private int songId;
+    private String songFileName = "we_will_rock_you.mp3";
+
     public GameManiaController() {
-        startGame();
     }
 
-    public void startGame() {
+    public void startGame(int songId) {
+        this.songId = songId;
         startTime = System.currentTimeMillis();
         score = 0;
     }
 
     public void playMusic(Context context) {
         try {
-            AssetFileDescriptor afd = context.getAssets().openFd("we_will_rock_you.mp3");
+            AssetFileDescriptor afd = context.getAssets().openFd(songFileName);
             player = new MediaPlayer();
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();

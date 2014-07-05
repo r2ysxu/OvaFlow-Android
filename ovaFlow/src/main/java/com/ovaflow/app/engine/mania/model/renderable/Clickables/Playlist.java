@@ -3,8 +3,8 @@ package com.ovaflow.app.engine.mania.model.renderable.Clickables;
 import android.content.Context;
 import android.graphics.Typeface;
 
-import com.ovaflow.app.engine.mania.model.data.PlaylistInfo;
-import com.ovaflow.app.engine.mania.model.data.SongInfo;
+import com.ovaflow.app.model.PlaylistInfo;
+import com.ovaflow.app.model.SongInfo;
 import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
 
 /**

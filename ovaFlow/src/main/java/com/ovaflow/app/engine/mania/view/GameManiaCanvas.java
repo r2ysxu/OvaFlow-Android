@@ -28,17 +28,17 @@ public class GameManiaCanvas {
 
     private HUD hud;
 
-    private GameManiaController gmee;
+    private final GameManiaController gmee;
 
-    public GameManiaCanvas(Context context) {
+    public GameManiaCanvas(Context context, GameManiaController gmee) {
         this.mActivityContext = context;
-        onSurfaceCreated();
+        this.gmee = gmee;
     }
 
     public void startGame() {
         if (!gameStarted) {
-            gmee = new GameManiaController();
             gmee.playMusic(mActivityContext);
+            gmee.startGame(0);
             gameStarted = true;
         }
     }
@@ -83,7 +83,7 @@ public class GameManiaCanvas {
             mHitboxs.setPressed(index, false);
     }
 
-    private void onSurfaceCreated() {
+    public void onSurfaceCreated() {
         //Initialize Objects
         mCrossbar = new Crossbar(mActivityContext);
         keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);

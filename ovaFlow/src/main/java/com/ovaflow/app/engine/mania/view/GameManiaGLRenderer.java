@@ -7,6 +7,7 @@ import android.opengl.Matrix;
 import android.util.Log;
 
 import com.ovaflow.app.R;
+import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.renderable.Background;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -20,9 +21,8 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "GameManiaGLRenderer";
 
     private Context mActivityContext;
-    private GLSurfaceView mActivityView;
 
-    private GameManiaCanvas gmc;
+    private final GameManiaCanvas gmc;
 
     private final float[] mViewMatrix = new float[16];
     private final float[] mMVPMatrix = new float[16];
@@ -30,9 +30,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     private Background background;
 
-    public GameManiaGLRenderer(Context context, GLSurfaceView view) {
+    public GameManiaGLRenderer(Context context, GameManiaController gmee) {
         mActivityContext = context;
-        mActivityView = view;
+        gmc = new GameManiaCanvas(context, gmee);
     }
 
     public void buttonPressed(float x, float y) {
@@ -52,7 +52,6 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public boolean enterGameplay() {
-        mActivityView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
         gmc.startGame();
         return true;
     }
@@ -71,7 +70,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
 
         background = new Background(mActivityContext, R.drawable.mania_background);
-        gmc = new GameManiaCanvas(mActivityContext);
+        gmc.onSurfaceCreated();
         enterGameplay();
     }
 

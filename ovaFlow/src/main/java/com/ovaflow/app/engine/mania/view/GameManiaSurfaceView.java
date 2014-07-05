@@ -3,6 +3,7 @@ package com.ovaflow.app.engine.mania.view;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 
+import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.GameManiaTouchInputListener;
 
 /**
@@ -12,6 +13,7 @@ public class GameManiaSurfaceView extends GLSurfaceView {
 
     private final GameManiaGLRenderer gmRenderer;
     private final GameManiaTouchInputListener mInputListener;
+    private final GameManiaController gmController;
 
     public GameManiaSurfaceView(Context context) {
         super(context);
@@ -19,7 +21,8 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
-        gmRenderer = new GameManiaGLRenderer(context, this);
+        gmController = new GameManiaController();
+        gmRenderer = new GameManiaGLRenderer(context, gmController);
         mInputListener = new GameManiaTouchInputListener(gmRenderer);
 
         setRenderer(gmRenderer);
