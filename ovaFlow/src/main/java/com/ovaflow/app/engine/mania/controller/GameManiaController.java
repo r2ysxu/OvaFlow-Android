@@ -15,6 +15,7 @@ public class GameManiaController {
     public static final int COMBOMULTREQ = 5;
 
     private long startTime;
+    private long endTime;
     private int score;
     private int combo = 0;
     private int multiplier = 1;
@@ -39,6 +40,7 @@ public class GameManiaController {
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
             player.start();
+            endTime = player.getDuration();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,5 +92,9 @@ public class GameManiaController {
 
     public int getMultiplier() {
         return multiplier;
+    }
+
+    public boolean songEnded() {
+        return System.currentTimeMillis() - startTime > endTime + 1000;
     }
 }

@@ -9,7 +9,7 @@ public class Hitbox extends Square {
 
     public static float WIDTHSCL = 1.0f;
     public static float HEIGHTSCL = 1.0f;
-    public static float XPOS = -0.9f;
+    public static float YPOS = -0.9f;
 
     public static final int MAXHITBOX = 5;
 
@@ -23,17 +23,17 @@ public class Hitbox extends Square {
     }
 
     public int contains(float x, float y) {
-        float uY = -0.5f;
+        float uX = -0.5f;
 
         for (int i = 0; i < MAXHITBOX; i++) {
-            float top = (uY + HEIGHTSCL * coords[0]);
-            float bottom = (uY + HEIGHTSCL * coords[6]);
-            if (y >= top && y <= bottom) {
+            float left = (uX + HEIGHTSCL * coords[0]);
+            float right = (uX + HEIGHTSCL * coords[6]);
+            if (x >= left && x <= right) {
                 //if (y >= mY && y <= (mY + HEIGHTSCL * coords[6])) {
                 return i;
                 //}
             }
-            uY += 0.25;
+            uX += 0.25;
         }
         return -1;
     }
@@ -43,16 +43,16 @@ public class Hitbox extends Square {
     }
 
     public void draw(float[] mMVPmatrix) {
-        float y = -0.5f;
+        float x = -0.5f;
 
         for (int i = 0; i < MAXHITBOX; i++) {
             if (pressed[i])
                 setColor(downColor);
             else
                 setColor(upColor);
-            setPosition(XPOS, y);
+            setPosition(x, YPOS);
             super.draw(mMVPmatrix);
-            y += 0.25;
+            x += 0.25;
         }
     }
 }

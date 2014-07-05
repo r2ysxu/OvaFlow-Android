@@ -1,13 +1,10 @@
 package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
-import android.opengl.GLES20;
-import android.opengl.Matrix;
 
 import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.data.KeyNote;
-import com.ovaflow.app.engine.mania.model.renderable.Background;
 import com.ovaflow.app.engine.mania.model.renderable.Clickables.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.HUD.HUD;
@@ -28,7 +25,6 @@ public class GameManiaCanvas {
     private Crossbar mCrossbar;
     private Hitbox mHitboxs;
     private Notes currentNotes;
-    private Background background;
 
     private HUD hud;
 
@@ -36,6 +32,7 @@ public class GameManiaCanvas {
 
     public GameManiaCanvas(Context context) {
         this.mActivityContext = context;
+        onSurfaceCreated();
     }
 
     public void startGame() {
@@ -53,7 +50,7 @@ public class GameManiaCanvas {
             currentNotes.addKeyNote(keynotes.remove(0));
         }
         currentNotes.draw(mMVPMatrix);
-        if (currentNotes.checkMissed(Crossbar.HITRANGE, Crossbar.HEIGHT)) {
+        if (currentNotes.checkMissed()) {
             gmee.missedNote();
         }
     }
@@ -86,28 +83,19 @@ public class GameManiaCanvas {
             mHitboxs.setPressed(index, false);
     }
 
-    public void onSurfaceCreated() {
+    private void onSurfaceCreated() {
         //Initialize Objects
-        background = new Background(mActivityContext);
         mCrossbar = new Crossbar(mActivityContext);
         keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
         mHitboxs = new Hitbox();
         currentNotes = new Notes();
         hud = new HUD(mActivityContext);
 
-        startGame();
+        currentNotes.setMissRange(Crossbar.HITRANGE, Crossbar.HEIGHT);
     }
 
 
-    public void drawFrame(float[] mMVPMatrix, float[] mProjectionMatrix, float[] mViewMatrix) {
-        // Draw background color
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
-        //Draw Everything
-        background.draw(mMVPMatrix);
+    public boolean drawFrame(float[] mMVPMatrix) {
         mCrossbar.draw(mMVPMatrix);
         mHitboxs.draw(mMVPMatrix);
         if (gmee.getStartTime() > 0)
@@ -115,5 +103,15 @@ public class GameManiaCanvas {
 
         drawHitAnimation(mMVPMatrix);
         hud.draw(mMVPMatrix, gmee.getCombo());
+
+        return gmee.songEnded();
+    }
+
+    public void pauseGame() {
+        gmee.pauseMusic();
+    }
+
+    public void resumeGame() {
+        gmee.resumeMusic();
     }
 }

@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class KeyNote {
 
-    public static final float MAXTOLERANCE = 0.02f;
-    public static final float MEDIUMTOLERANCE = 0.05f;
-    public static final float LOWTOLERANCE = 0.1f;
+    public static final float MAXTOLERANCE = 0.05f;
+    public static final float MEDIUMTOLERANCE = 0.1f;
+    public static final float LOWTOLERANCE = 0.2f;
 
     private long time;
     private short type;
@@ -68,7 +68,7 @@ public class KeyNote {
         return noteList;
     }
 
-    public KeyNote(long time, float fallSpeed, short fret, short typeFlag) {
+    private KeyNote(long time, float fallSpeed, short fret, short typeFlag) {
         this.time = time;
         this.fret = fret;
         this.fallspeed = fallSpeed;
@@ -91,8 +91,8 @@ public class KeyNote {
         return tol;
     }
 
-    public boolean missed(float missrange, float height) {
-        boolean val = downPos < missrange - height;
+    public boolean missed(float range) {
+        boolean val = downPos < range;
         return val;
     }
 

@@ -2,7 +2,6 @@ package com.ovaflow.app.engine.mania.model.renderable;
 
 import android.content.Context;
 
-import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
 
 /**
@@ -10,10 +9,10 @@ import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
  */
 public class Background extends TextureObject {
 
-    public Background(Context context) {
+    public Background(Context context, int resourceId) {
         super(context);
         scaleDim(10f, 10f);
         setPosition(0f, 0f);
-        setTexture(context, R.drawable.mania_background);
+        setTexture(context, resourceId);
     }
 }

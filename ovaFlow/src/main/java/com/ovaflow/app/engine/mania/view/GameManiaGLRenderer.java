@@ -6,6 +6,9 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.ovaflow.app.R;
+import com.ovaflow.app.engine.mania.model.renderable.Background;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -17,6 +20,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "GameManiaGLRenderer";
 
     private Context mActivityContext;
+    private GLSurfaceView mActivityView;
 
     private GameManiaCanvas gmc;
 
@@ -24,8 +28,11 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
 
-    public GameManiaGLRenderer(Context context) {
+    private Background background;
+
+    public GameManiaGLRenderer(Context context, GLSurfaceView view) {
         mActivityContext = context;
+        mActivityView = view;
     }
 
     public void buttonPressed(float x, float y) {
@@ -37,11 +44,17 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void pause() {
-        //gmee.pauseMusic();
+        gmc.pauseGame();
     }
 
     public void resume() {
-        //gmee.resumeMusic();
+        gmc.resumeGame();
+    }
+
+    public boolean enterGameplay() {
+        mActivityView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        gmc.startGame();
+        return true;
     }
 
     @Override
@@ -56,13 +69,23 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         // Set the camera position
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
+
+        background = new Background(mActivityContext, R.drawable.mania_background);
         gmc = new GameManiaCanvas(mActivityContext);
-        gmc.onSurfaceCreated();
+        enterGameplay();
     }
 
     @Override
     public void onDrawFrame(GL10 unused) {
-        gmc.drawFrame(mMVPMatrix, mProjectionMatrix, mViewMatrix);
+        // Draw background color
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        // Calculate the projection and view transformation
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        //Draw Everything
+        background.draw(mMVPMatrix);
+        gmc.drawFrame(mMVPMatrix);
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.util.List;
 public class Notes extends Square {
 
     public static final int MAXNOTE = 5;
-    public static float WIDTHSCL = 0.1f;
-    public static float HEIGHTSCL = 1.0f;
+    public static float WIDTHSCL = 1f;
+    public static float HEIGHTSCL = 0.1f;
 
     private List<KeyNote> keynotes;
 
@@ -30,23 +30,23 @@ public class Notes extends Square {
         this.keynotes.add(keyNote);
     }
 
-    private void determinePosition(short fret, float xPos) {
-        float yPos = 0f;
+    private void determinePosition(short fret, float yPos) {
+        float xPos = 0f;
         switch (fret) {
             case 0:
-                yPos = -0.5f;
+                xPos = -0.5f;
                 break;
             case 1:
-                yPos = -0.25f;
+                xPos = -0.25f;
                 break;
             case 2:
-                yPos = 0;
+                xPos = 0;
                 break;
             case 3:
-                yPos = 0.25f;
+                xPos = 0.25f;
                 break;
             case 4:
-                yPos = 0.5f;
+                xPos = 0.5f;
                 break;
         }
         setPosition(xPos, yPos);
@@ -73,12 +73,18 @@ public class Notes extends Square {
         return retVal;
     }
 
-    public boolean checkMissed(float missrange, float height) {
+    private float range = 0;
+
+    public void setMissRange(float missRange, float missHeight) {
+        range = missRange - missHeight * coords[0] + (HEIGHTSCL * coords[6]);
+    }
+
+    public boolean checkMissed() {
         boolean missed = false;
 
         for (int i = 0; i < keynotes.size(); i++) {
             KeyNote n = keynotes.get(i);
-            if (n.missed(missrange, height * coords[6] + (WIDTHSCL * coords[6]))) {
+            if (n.missed(-1f)) {
                 keynotes.remove(i);
                 i--;
                 missed = true;
@@ -94,7 +100,9 @@ public class Notes extends Square {
         for (int i = 0; i < keynotes.size(); i++) {
             KeyNote n = keynotes.get(i);
             determinePosition(n.getFret(), n.getDownPos());
-            super.draw(mMVPmatrix);
+            if (!n.missed(range)) {
+                super.draw(mMVPmatrix);
+            }
             n.fall();
         }
     }

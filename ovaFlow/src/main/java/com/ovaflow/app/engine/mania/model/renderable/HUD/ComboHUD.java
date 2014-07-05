@@ -21,27 +21,21 @@ public class ComboHUD {
     }
 
     private void initScoreboard(Context context) {
-        comboHandles[0] = comboB.setTextTexture(context, "0", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[1] = comboB.setTextTexture(context, "1", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[2] = comboB.setTextTexture(context, "2", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[3] = comboB.setTextTexture(context, "3", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[4] = comboB.setTextTexture(context, "4", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[5] = comboB.setTextTexture(context, "5", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[6] = comboB.setTextTexture(context, "6", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[7] = comboB.setTextTexture(context, "7", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[8] = comboB.setTextTexture(context, "8", Typeface.create("Helvetica", Typeface.BOLD));
-        comboHandles[9] = comboB.setTextTexture(context, "9", Typeface.create("Helvetica", Typeface.BOLD));
+        comboB.setTextContext(Typeface.create("Helvetica",  Typeface.BOLD), 20, 0xff, 0xff, 0xff, 0xff);
+        for (int i = 0; i < comboHandles.length; i ++) {
+            comboHandles[i] = comboB.setTextTexture(context, i+"");
+        }
     }
 
     public void draw(float[] mMVPmatrix) {
-        float x = 0f, y = -0.24f;
+        float x = 0f, y = 0f;
         int score = comboPts;
 
-        comboB.scaleDim(1f, 3f);
+        comboB.scaleDim(3f, 1f);
 
         while (score >= 1) {
             score = score / 10;
-            y -= 0.05f/2;
+            x += 0.05f/2;
         }
 
         score = comboPts;
@@ -52,7 +46,7 @@ public class ComboHUD {
             comboB.useTexture(comboHandles[digit]);
             comboB.setPosition(x, y);
             comboB.draw(mMVPmatrix);
-            y += 0.05f;
+            x -= 0.05f;
         }
     }
 

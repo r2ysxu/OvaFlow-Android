@@ -21,31 +21,25 @@ public class ScoreHUD {
     }
 
     private void initScoreboard(Context context) {
-        scoreHandles[0] = scoreB.setTextTexture(context, "0", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[1] = scoreB.setTextTexture(context, "1", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[2] = scoreB.setTextTexture(context, "2", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[3] = scoreB.setTextTexture(context, "3", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[4] = scoreB.setTextTexture(context, "4", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[5] = scoreB.setTextTexture(context, "5", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[6] = scoreB.setTextTexture(context, "6", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[7] = scoreB.setTextTexture(context, "7", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[8] = scoreB.setTextTexture(context, "8", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[9] = scoreB.setTextTexture(context, "9", Typeface.create("Helvetica", Typeface.BOLD));
-        scoreHandles[10] = scoreB.setTextTexture(context, "Score", Typeface.create("Helvetica", Typeface.BOLD));
+        scoreB.setTextContext(Typeface.create("Helvetica",  Typeface.BOLD), 20, 0xff, 0xff, 0xff, 0xff);
+        for (int i = 0; i < scoreHandles.length -1; i ++) {
+            scoreHandles[i] = scoreB.setTextTexture(context, i+"");
+        }
+        scoreHandles[10] = scoreB.setTextTexture(context, "Score: ");
     }
 
     public void draw(float[] mMVPmatrix) {
-        float x = 0.9f, y = 0.7f;
+        float x = -0.7f, y = 0.9f;
         int score = scorePts;
 
-        scoreB.scaleDim(1f, 3f);
+        scoreB.scaleDim(3f, 1f);
         scoreB.useTexture(scoreHandles[10]);
         scoreB.setPosition(x, y);
         scoreB.draw(mMVPmatrix);
-        y = y - 0.25f;
+        x = x + 0.25f;
         while (score >= 1) {
             score = score / 10;
-            y -= 0.05f;
+            x += 0.05f;
         }
 
         score = scorePts;
@@ -56,7 +50,7 @@ public class ScoreHUD {
             scoreB.useTexture(scoreHandles[digit]);
             scoreB.setPosition(x, y);
             scoreB.draw(mMVPmatrix);
-            y += 0.05f;
+            x -= 0.05f;
         }
     }
 
