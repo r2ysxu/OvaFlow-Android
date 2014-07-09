@@ -32,7 +32,7 @@ public class ScoreHUD {
         float x = -0.7f, y = 0.9f;
         int score = scorePts;
 
-        scoreB.scaleDim(3f, 1f);
+        scoreB.scaleDim(2f, 1f);
         scoreB.useTexture(scoreHandles[10]);
         scoreB.setPosition(x, y);
         scoreB.draw(mMVPmatrix);

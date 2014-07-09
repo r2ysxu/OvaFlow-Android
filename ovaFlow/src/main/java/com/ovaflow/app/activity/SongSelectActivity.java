@@ -3,6 +3,7 @@ package com.ovaflow.app.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -15,13 +16,16 @@ import com.ovaflow.app.view.PlayListAdapter;
 
 public class SongSelectActivity extends Activity {
 
-    PlayListAdapter mPlayListAdapter;
-    PlaylistExpandListener mPlayListListener;
+    private PlayListAdapter mPlayListAdapter;
+    private PlaylistExpandListener mPlayListListener;
+    Activity curActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_select);
+        fillPlayList();
+        addButtonListener();
     }
 
 
@@ -30,8 +34,6 @@ public class SongSelectActivity extends Activity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.song_select, menu);
-        fillPlayList();
-        addButtonListener();
         return true;
     }
 
@@ -49,14 +51,21 @@ public class SongSelectActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playSong();
+                selectSong();
+            }
+        });
+        Button backButton = (Button) findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavUtils.navigateUpFromSameTask(curActivity);
             }
         });
     }
 
-    private void playSong() {
-        Intent intent = new Intent(this, GameManiaActivity.class);
-        intent.putExtra("SongId", mPlayListListener.getSelectedGroup());
+    private void selectSong() {
+        Intent intent = new Intent(this, BeatmapActivity.class);
+        intent.putExtra("Song", mPlayListAdapter.getSongInfo(mPlayListListener.getSelectedGroup()));
         startActivityForResult(intent, 1);
     }
 }

@@ -15,7 +15,9 @@ public class ScoreCanvas {
 
     private TextureObject background;
     private numberHUD scoreHUD;
-    private numberHUD comboHUD;
+    // private numberHUD comboHUD;
+    private numberHUD coolHUD, goodHUD, badHUD, missHUD;
+
 
     public ScoreCanvas(Context context, GameManiaController gmee) {
         mActivityContext = context;
@@ -24,11 +26,21 @@ public class ScoreCanvas {
 
     public void onSurfaceCreated() {
         background = new TextureObject(mActivityContext);
+
+        coolHUD = new numberHUD(mActivityContext);
+        goodHUD = new numberHUD(mActivityContext);
+        badHUD = new numberHUD(mActivityContext);
+        missHUD = new numberHUD(mActivityContext);
         scoreHUD = new numberHUD(mActivityContext);
-        comboHUD = new numberHUD(mActivityContext);
+        // comboHUD = new numberHUD(mActivityContext);
+
+
     }
 
     public void draw(float[] mMVPmatrix) {
-        scoreHUD.draw();
+        scoreHUD.draw(mMVPmatrix);
+        coolHUD.draw(mMVPmatrix);
+
+
     }
 }

@@ -1,9 +1,11 @@
 package com.ovaflow.app.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ArthurXu on 04/07/2014.
  */
-public class SongInfo {
+public class SongInfo implements Serializable {
 
     private long duration;
     private String name;
@@ -38,4 +40,5 @@ public class SongInfo {
     public int getSongId() {
         return songId;
     }
+
 }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="User Id"
+        android:id="@+id/IdText"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="80dp" />
+
+    <EditText
+        android:layout_width="234dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/IdText"
+        android:layout_marginLeft="50dp"
+        android:layout_alignBaseline="@+id/IdText"
+        android:layout_alignBottom="@+id/IdText"
+        android:id="@+id/id"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Password"
+        android:id="@+id/passwordText"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="160dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="log in"
+        android:id="@+id/Login"
+        android:layout_marginTop="43dp"
+        android:layout_below="@+id/passwordText"
+        android:layout_toRightOf="@+id/IdText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="register"
+        android:id="@+id/Reg"
+        android:layout_alignTop="@+id/Login"
+        android:layout_alignRight="@+id/id"
+        android:layout_alignEnd="@+id/id"
+        android:layout_marginRight="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/information"
+        android:layout_below="@+id/Login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password"
+        android:layout_alignTop="@+id/passwordText"
+        android:layout_alignLeft="@+id/id"
+        android:layout_alignStart="@+id/id"
+        android:layout_alignRight="@+id/id"
+        android:layout_alignEnd="@+id/id" />
+
+
+</RelativeLayout>

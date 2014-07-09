@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_game_mania">GameManiaActivity</string>
     <string name="title_activity_song_select">SongSelectActivity</string>
+    <string name="title_activity_menu">menuActivity</string>
+    <string name="title_activity_beatmap">BeatmapActivity</string>
+    <string name="title_activity_summary">SummaryActivity</string>
 
 </resources>

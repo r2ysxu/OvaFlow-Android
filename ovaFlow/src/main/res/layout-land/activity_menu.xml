@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play List"
+        android:id="@+id/play"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="141dp"
+        android:layout_marginTop="80dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Avatar"
+        android:id="@+id/avatar"
+        android:layout_alignTop="@+id/play"
+        android:layout_toRightOf="@+id/play"
+        android:layout_marginLeft="123dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download"
+        android:id="@+id/dl"
+        android:layout_below="@+id/play"
+        android:layout_alignLeft="@+id/play"
+        android:layout_alignStart="@+id/play"
+        android:layout_marginTop="61dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:id="@+id/logout"
+        android:layout_alignTop="@+id/dl"
+        android:layout_alignLeft="@+id/avatar"
+        android:layout_alignStart="@+id/avatar" />
+</RelativeLayout>
