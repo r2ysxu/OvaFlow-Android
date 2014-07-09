@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.ovaflow.app.activity.MenuActivity;
@@ -27,7 +28,6 @@ public class LoginClientRequest {
     public final static String EXTRA_RMB = "com.ovaflow.app.RMB";
 
     private static final String serviceStr = "/OvaflowServer/rest/ovf/acinfo";
-    private TextView infoView;
 
     public LoginClientRequest(Context context) {
         this.context = context;
@@ -46,6 +46,7 @@ public class LoginClientRequest {
         String[] paramValues = {id, password};
 
         String stringUrl = ClientRequestInfo.generateRequest(serviceStr, paramKeys, paramValues);
+        Log.i("URL", stringUrl);
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -105,6 +106,7 @@ public class LoginClientRequest {
         public DownloadWebpageTask(String userId, String password, TextView view) {
             this.userId = userId;
             this.password = password;
+            infoView = view;
         }
 
 
@@ -130,13 +132,13 @@ public class LoginClientRequest {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
+            Log.i("Result", result);
             if (userId == null) {
-                infoView.setText("Incorrect id or password");
+                infoView.setText("Please enter a username");
             } else if (userId.equals("guest")) {
                 sendMessage(userId, 0);
-            } else if (result.contains(userId)) {
+            } else if (result.contains("User:") && !result.contains("RMB: -1")) {
                 infoView.setText("Log in succeeded");
-
                 String n = result.substring(result.indexOf("RMB: "), result.length());
                 sendMessage(userId, Integer.parseInt(n));
             } else {

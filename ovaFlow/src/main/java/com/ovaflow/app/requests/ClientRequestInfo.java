@@ -9,7 +9,7 @@ public class ClientRequestInfo {
     public static final String hostPort = "8080";
 
     public static final String generateRequest(String resourcePath, String[] paramKeys, String[] paramValues) {
-        String resource = "http://" + hostIp + hostPort + resourcePath;
+        String resource = "http://" + hostIp + ":" + hostPort + resourcePath;
 
         if (paramKeys.length > 0) {
             resource += "?";
@@ -18,7 +18,7 @@ public class ClientRequestInfo {
         for (int i = 0; i < paramKeys.length; i++) {
             String key = paramKeys[i];
             String value = paramValues[i];
-            resource += key + "=" +value;
+            resource += key + "=" + value;
             if (i < paramKeys.length - 1) {
                 resource += "&";
             }
