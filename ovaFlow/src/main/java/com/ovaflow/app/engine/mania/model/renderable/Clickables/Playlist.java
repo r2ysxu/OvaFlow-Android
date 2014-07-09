@@ -1,4 +1,4 @@
-package com.ovaflow.app.engine.mania.model.renderable.Clickables;
+package com.ovaflow.app.engine.mania.model.renderable.clickables;
 
 import android.content.Context;
 import android.graphics.Typeface;

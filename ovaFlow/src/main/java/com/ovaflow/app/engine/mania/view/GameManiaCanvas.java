@@ -5,9 +5,9 @@ import android.content.Context;
 import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.data.KeyNote;
-import com.ovaflow.app.engine.mania.model.renderable.Clickables.Hitbox;
+import com.ovaflow.app.engine.mania.model.renderable.clickables.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
-import com.ovaflow.app.engine.mania.model.renderable.HUD.HUD;
+import com.ovaflow.app.engine.mania.model.renderable.hud.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Notes;
 
 import java.util.List;

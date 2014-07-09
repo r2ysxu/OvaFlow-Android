@@ -1,4 +1,4 @@
-package com.ovaflow.app.engine.mania.model.renderable.HUD;
+package com.ovaflow.app.engine.mania.model.renderable.hud;
 
 import android.content.Context;
 

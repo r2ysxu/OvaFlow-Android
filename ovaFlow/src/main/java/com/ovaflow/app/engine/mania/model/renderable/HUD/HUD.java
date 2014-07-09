@@ -1,4 +1,4 @@
-package com.ovaflow.app.engine.mania.model.renderable.HUD;
+package com.ovaflow.app.engine.mania.model.renderable.hud;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ public class HUD {
     private Context mActivityContext;
 
     private ScoreHUD score;
-    private numberHUD combo;
+    private ComboHUD combo;
     private ScoreSplash scoreSplash;
 
     private long timer;
@@ -24,7 +24,7 @@ public class HUD {
 
     private void initHUD(Context context) {
         score = new ScoreHUD(context);
-        combo = new numberHUD(context);
+        combo = new ComboHUD(context);
     }
 
     public void draw(float[] mMVPmatrix, int comboNum) {

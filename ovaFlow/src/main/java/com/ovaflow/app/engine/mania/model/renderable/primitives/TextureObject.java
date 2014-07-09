@@ -150,7 +150,7 @@ public class TextureObject {
 
     public int setTexture(Context context, final int resourceId) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;   // No pre-scaling=
+        options.inScaled = false;   // No pre-scaling
         // Read in the resource
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
         mTextureDataHandle = loadTexture(bitmap);
