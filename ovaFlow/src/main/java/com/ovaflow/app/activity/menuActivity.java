@@ -12,8 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ovaflow.app.R;
+import com.ovaflow.app.requests.LoginClientRequest;
 
-public class menuActivity extends Activity {
+public class MenuActivity extends Activity {
 
     private Button play;
     private Button avatar;
@@ -34,8 +35,8 @@ public class menuActivity extends Activity {
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        ID = intent.getStringExtra(MainActivity.EXTRA_ID);
-        RMB = intent.getIntExtra(MainActivity.EXTRA_RMB, -1);
+        ID = intent.getStringExtra(LoginClientRequest.EXTRA_ID);
+        RMB = intent.getIntExtra(LoginClientRequest.EXTRA_RMB, -1);
 
         userInfo = (TextView) findViewById(R.id.info);
         //userInfo.setText("User:"+ID);
