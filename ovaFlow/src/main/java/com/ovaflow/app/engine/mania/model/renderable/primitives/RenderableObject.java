@@ -2,7 +2,7 @@ package com.ovaflow.app.engine.mania.model.renderable.primitives;
 
 import android.opengl.GLES20;
 
-import com.ovaflow.app.engine.mania.view.GameManiaGLRenderer;
+import com.ovaflow.app.util.GameManiaGLUtil;
 
 import java.nio.FloatBuffer;
 
@@ -45,9 +45,9 @@ public abstract class RenderableObject {
 
     protected void getGLProgram() {
         //Load vShader, and fShader
-        int vertexShader = GameManiaGLRenderer.loadShader(
+        int vertexShader = GameManiaGLUtil.loadShader(
                 GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = GameManiaGLRenderer.loadShader(
+        int fragmentShader = GameManiaGLUtil.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
         //Attach GL, vShader and fShader Program

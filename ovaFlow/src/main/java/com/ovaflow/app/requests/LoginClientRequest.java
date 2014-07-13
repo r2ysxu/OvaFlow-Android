@@ -139,7 +139,7 @@ public class LoginClientRequest {
                 sendMessage(userId, 0);
             } else if (result.contains("User:") && !result.contains("RMB: -1")) {
                 infoView.setText("Log in succeeded");
-                String n = result.substring(result.indexOf("RMB: "), result.length());
+                String n = result.substring(result.indexOf("RMB: ") + 5, result.indexOf("Current Avatar:")).trim();
                 sendMessage(userId, Integer.parseInt(n));
             } else {
                 infoView.setText("Incorrect id or password");

@@ -13,10 +13,9 @@ import com.ovaflow.app.requests.LoginClientRequest;
 
 public class MainActivity extends Activity {
 
-    private Button logi;
-    private Button reg;
-    private TextView nameV;
-    private TextView passV;
+    private Button loginButton;
+    private Button registerButton;
+    private Button guestButton;
     private TextView infoV;
     private EditText nameE;
     private EditText passE;
@@ -28,41 +27,43 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.getWindow().setTitle("voaFlow");
+        this.getWindow().setTitle("OvaFlow Login");
 
         setContentView(R.layout.activity_main);
 
-        nameV = (TextView) findViewById(R.id.IdText);
-        passV = (TextView) findViewById(R.id.passwordText);
         infoV = (TextView) findViewById(R.id.information);
 
         nameE = (EditText) findViewById(R.id.id);
-        passE = (EditText) findViewById(R.id.password);
+        passE = (EditText) findViewById(R.id.main_password_text);
 
-        logi = (Button) findViewById(R.id.Login);
+        loginButton = (Button) findViewById(R.id.main_login_button);
+        registerButton = (Button) findViewById(R.id.main_reg_button);
+        guestButton = (Button) findViewById(R.id.main_guest_button);
 
         loginRequest = new LoginClientRequest(this);
+        addActionListeners();
+    }
 
-        logi.setOnClickListener(new View.OnClickListener() {
+    private void addActionListeners() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String username = nameE.getText().toString();
                 String password = passE.getText().toString();
-                if (username != null && username.equals("guest")) { //backDoor
-                    loginRequest.sendMessage(username, 0);
-                } else if (!loginRequest.checkLogin(username, password, infoV))
+                if (!loginRequest.checkLogin(username, password, infoV))
                     infoV.setText("No network connection available.");
             }
         });
-
-        reg = (Button) findViewById(R.id.Reg);
-        reg.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //do register
-                infoV.setText("registering");
+                infoV.setText("Registering");
             }
         });
-
-
+        guestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginRequest.sendMessage("guest", 0);
+            }
+        });
     }
 
     @Override

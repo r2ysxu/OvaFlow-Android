@@ -3,7 +3,7 @@ package com.ovaflow.app.engine.mania.model.renderable.primitives;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
-import com.ovaflow.app.engine.mania.view.GameManiaGLRenderer;
+import com.ovaflow.app.util.GameManiaGLUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -49,14 +49,14 @@ public class Circle extends RenderableObject {
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
-        GameManiaGLRenderer.checkGlError("glGetUniformLocation");
+        GameManiaGLUtil.checkGlError("glGetUniformLocation");
 
         Matrix.translateM(mMatrix, 0, mvpMatrix, 0, 0.0f, -0.8f, 0.0f);
         Matrix.scaleM(mMatrix, 0, 1.2f, 1.2f, 1.0f);
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMatrix, 0);
-        GameManiaGLRenderer.checkGlError("glUniformMatrix4fv");
+        GameManiaGLUtil.checkGlError("glUniformMatrix4fv");
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, VERTICES);
 

@@ -1,9 +1,7 @@
 package com.ovaflow.app.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -26,7 +24,7 @@ public class MenuActivity extends Activity {
     private String ID;
     private int RMB;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    //@TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +36,9 @@ public class MenuActivity extends Activity {
         ID = intent.getStringExtra(LoginClientRequest.EXTRA_ID);
         RMB = intent.getIntExtra(LoginClientRequest.EXTRA_RMB, -1);
 
-        userInfo = (TextView) findViewById(R.id.info);
+        //userInfo = (TextView) findViewById(R.id.info);
         //userInfo.setText("User:"+ID);
-        userInfo.setText("User:"+ID+" RMB:"+RMB);
+        //userInfo.setText("User:"+ID+" RMB:"+RMB);
 
         play = (Button) findViewById(R.id.play);
         avatar = (Button) findViewById(R.id.avatar);

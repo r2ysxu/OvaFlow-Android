@@ -12,8 +12,7 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
 import com.ovaflow.app.R;
-import com.ovaflow.app.engine.mania.view.GameManiaGLRenderer;
-import com.ovaflow.app.util.RawResourceReader;
+import com.ovaflow.app.util.GameManiaGLUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -78,8 +77,8 @@ public class TextureObject {
     }
 
     public TextureObject(Context context) {
-        vertexShaderCode = RawResourceReader.readTextFileFromRawResource(context, R.raw.vertex_shader_code);
-        fragmentShaderCode = RawResourceReader.readTextFileFromRawResource(context, R.raw.fragment_shader_code);
+        vertexShaderCode = GameManiaGLUtil.readTextFileFromRawResource(context, R.raw.vertex_shader_code);
+        fragmentShaderCode = GameManiaGLUtil.readTextFileFromRawResource(context, R.raw.fragment_shader_code);
 
         initializeBuffers();
         initializeTexture(context);
@@ -89,23 +88,16 @@ public class TextureObject {
     protected void getGLProgram(Context context) {
 
         // Load vShader, and fShader
-        int vertexShader = GameManiaGLRenderer.loadShader(
+        int vertexShader = GameManiaGLUtil.loadShader(
                 GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-        int fragmentShader = GameManiaGLRenderer.loadShader(
+        int fragmentShader = GameManiaGLUtil.loadShader(
                 GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-
-        //mProgram = ShaderHelper.createAndLinkProgram(vertexShader, fragmentShader,
-        //        new String[]{"a_Position", "a_Color", "a_Normal", "a_TexCoordinate"});
 
         //Attach GL, vShader and fShader Program
         mProgram = GLES20.glCreateProgram();
 
         GLES20.glAttachShader(mProgram, vertexShader);
         GLES20.glAttachShader(mProgram, fragmentShader);
-
-        //GLES20.glBindAttribLocation(mProgram, 0, "a_Position");
-        //GLES20.glBindAttribLocation(mProgram, 0, "a_TexCoordinate");
 
         GLES20.glLinkProgram(mProgram);
     }
@@ -253,6 +245,6 @@ public class TextureObject {
         // Disable vertex arrays
         GLES20.glDisableVertexAttribArray(mPositionHandle);
         //GLES20.glDisableVertexAttribArray(mTextureHandle);
-        GameManiaGLRenderer.checkGlError("endDraw ");
+        GameManiaGLUtil.checkGlError("endDraw ");
     }
 }

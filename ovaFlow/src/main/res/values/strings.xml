@@ -9,5 +9,7 @@
     <string name="title_activity_menu">menuActivity</string>
     <string name="title_activity_beatmap">BeatmapActivity</string>
     <string name="title_activity_summary">SummaryActivity</string>
+    <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="title_activity_edit_song">EditSongActivity</string>
 
 </resources>

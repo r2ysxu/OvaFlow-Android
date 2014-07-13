@@ -3,7 +3,7 @@ package com.ovaflow.app.engine.mania.model.renderable.primitives;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
-import com.ovaflow.app.engine.mania.view.GameManiaGLRenderer;
+import com.ovaflow.app.util.GameManiaGLUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -76,7 +76,7 @@ public class Square extends RenderableObject {
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
-        GameManiaGLRenderer.checkGlError("glGetUniformLocation");
+        GameManiaGLUtil.checkGlError("glGetUniformLocation");
 
 
         Matrix.setIdentityM(mat, 0);
@@ -86,7 +86,7 @@ public class Square extends RenderableObject {
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mat, 0);
-        GameManiaGLRenderer.checkGlError("glUniformMatrix4fv");
+        GameManiaGLUtil.checkGlError("glUniformMatrix4fv");
 
         //Actual Drawing
         GLES20.glDrawElements(

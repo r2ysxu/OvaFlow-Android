@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mania_background"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -9,51 +10,51 @@
     tools:context="com.ovaflow.app.activity.MenuActivity">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Play List"
         android:id="@+id/play"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/avatar" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Avatar"
         android:id="@+id/avatar"
-        android:layout_below="@+id/play"
-        android:layout_alignLeft="@+id/play"
-        android:layout_alignStart="@+id/play"
-        android:layout_marginTop="46dp" />
+        android:layout_above="@+id/dl"
+        android:layout_marginBottom="90dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Download"
         android:id="@+id/dl"
-        android:layout_below="@+id/avatar"
-        android:layout_alignLeft="@+id/avatar"
-        android:layout_alignStart="@+id/avatar"
-        android:layout_marginTop="73dp" />
+        android:layout_above="@+id/logout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="81dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Log out"
         android:id="@+id/logout"
-        android:layout_below="@+id/dl"
-        android:layout_alignLeft="@+id/dl"
-        android:layout_alignStart="@+id/dl"
-        android:layout_marginTop="60dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/info"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="Ovaflow Menu"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

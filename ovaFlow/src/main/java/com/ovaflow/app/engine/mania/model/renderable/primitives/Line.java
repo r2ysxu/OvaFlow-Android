@@ -2,7 +2,7 @@ package com.ovaflow.app.engine.mania.model.renderable.primitives;
 
 import android.opengl.GLES20;
 
-import com.ovaflow.app.engine.mania.view.GameManiaGLRenderer;
+import com.ovaflow.app.util.GameManiaGLUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -41,9 +41,9 @@ public class Line extends RenderableObject {
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
-        GameManiaGLRenderer.checkGlError("glGetUniformLocation");
+        GameManiaGLUtil.checkGlError("glGetUniformLocation");
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
-        GameManiaGLRenderer.checkGlError("glUniformMatrix4fv");
+        GameManiaGLUtil.checkGlError("glUniformMatrix4fv");
         GLES20.glDrawArrays(GLES20.GL_LINES, 0, 6 / COORDS_PER_VERTEX);
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }

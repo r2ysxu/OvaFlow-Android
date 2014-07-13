@@ -24,7 +24,7 @@
         <activity
             android:name="com.ovaflow.app.activity.SongSelectActivity"
             android:label="@string/title_activity_song_select"
-            android:parentActivityName=".activity.MenuActivity" >
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity" >
 >
         </activity>
         <activity
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MenuActivity"
+            android:name="com.ovaflow.app.activity.MenuActivity"
             android:label="@string/title_activity_menu"
             android:parentActivityName="com.ovaflow.app.activity.MainActivity" >
 
@@ -55,6 +55,14 @@
         <activity
             android:name="com.ovaflow.app.activity.SummaryActivity"
             android:label="@string/title_activity_summary" >
+        </activity>
+        <activity
+            android:name="com.ovaflow.app.activity.MainActivity2"
+            android:label="@string/title_activity_main_activity2" >
+        </activity>
+        <activity
+            android:name="com.ovaflow.app.activity.EditSongActivity"
+            android:label="@string/title_activity_edit_song" >
         </activity>
     </application>
 
