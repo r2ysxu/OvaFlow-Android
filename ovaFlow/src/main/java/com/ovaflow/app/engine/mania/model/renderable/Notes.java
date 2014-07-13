@@ -1,6 +1,7 @@
 package com.ovaflow.app.engine.mania.model.renderable;
 
 import com.ovaflow.app.engine.mania.model.data.KeyNote;
+import com.ovaflow.app.engine.mania.model.data.ScoreType;
 import com.ovaflow.app.engine.mania.model.renderable.primitives.Square;
 
 import java.util.LinkedList;
@@ -52,25 +53,24 @@ public class Notes extends Square {
         setPosition(xPos, yPos);
     }
 
-    public int[] checkCollide(int index, float missrange) {
+    public ScoreType checkCollide(int index, float missrange) {
         int score = 0, combo = 0;
+        ScoreType st = new ScoreType();
         int[] retVal = new int[2];
 
         for (int i = 0; i < keynotes.size(); i++) {
             KeyNote n = keynotes.get(i);
             int num = n.checkTolerance(index, missrange);
+            st.addPts(num);
             if (num > 0) {
                 keynotes.remove(i);
                 i--;
                 score += num;
-                combo++;
             } else {
                 break;
             }
         }
-        retVal[0] = score;
-        retVal[1] = combo;
-        return retVal;
+        return st;
     }
 
     private float range = 0;

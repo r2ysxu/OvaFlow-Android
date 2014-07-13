@@ -5,22 +5,50 @@ package com.ovaflow.app.engine.mania.model.data;
  */
 public class ScoreType {
 
-    private short cool, good, bad, miss;
+    public static final int COOL = 100;
+    public static final int GOOD = 50;
+    public static final int BAD = 30;
+    public static final int MISS = 0;
 
+    private int cool, good, bad, miss;
 
-    public void addCool() { cool += 1; }
+    private int combo = 0;
 
-    public void addGood() { good += 1; }
+    public ScoreType() {
+        cool = 0;
+        good = 0;
+        bad = 0;
+        miss = 0;
+    }
 
-    public void addBad() { bad += 1; }
+    public void addPts(int pts) {
+        switch (pts) {
+            case COOL:
+                cool++;
+                break;
+            case GOOD:
+                good++;
+                break;
+            case BAD:
+                bad++;
+                break;
+            case MISS:
+                miss++;
+                break;
+        }
+        if (pts != MISS)
+            combo++;
+    }
 
-    public void addMiss() { miss += 1; }
+    public int getScore() {
+        return COOL * cool + GOOD * good + BAD * bad;
+    }
 
-    public short getCool() { return cool; }
+    public int getCombo() {
+        return combo;
+    }
 
-    public short getGood() { return good; }
-
-    public short getBad() { return bad; }
-
-    public short getMiss() { return miss; }
+    public void resetCombo() {
+        combo = 0;
+    }
 }

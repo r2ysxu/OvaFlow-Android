@@ -121,14 +121,6 @@ public class LoginClientRequest {
             }
         }
 
-        private int stoi(String value) {
-            int sum = 0;
-            for (int i = 0; i < value.length(); i++) {
-                // if()
-            }
-            return sum;
-        }
-
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {

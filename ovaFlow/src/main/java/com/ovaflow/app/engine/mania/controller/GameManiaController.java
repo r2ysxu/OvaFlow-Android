@@ -61,6 +61,10 @@ public class GameManiaController {
         return startTime;
     }
 
+    public long getTime() {
+        return player.getCurrentPosition();
+    }
+
     public int addScore(int pts, int cbs) {
         score += pts * multiplier;
         combo += cbs;
@@ -99,6 +103,6 @@ public class GameManiaController {
     }
 
     public boolean songEnded() {
-        return System.currentTimeMillis() - startTime > endTime + 1000;
+        return player.getCurrentPosition() > endTime + 1000;
     }
 }

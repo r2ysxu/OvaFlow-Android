@@ -5,6 +5,8 @@ import android.content.Context;
 import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.data.KeyNote;
+import com.ovaflow.app.engine.mania.model.data.ScoreType;
+import com.ovaflow.app.engine.mania.model.renderable.Avatar;
 import com.ovaflow.app.engine.mania.model.renderable.clickables.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
 import com.ovaflow.app.engine.mania.model.renderable.hud.HUD;
@@ -25,6 +27,7 @@ public class GameManiaCanvas {
     private Crossbar mCrossbar;
     private Hitbox mHitboxs;
     private Notes currentNotes;
+    private Avatar avatar;
 
     private HUD hud;
 
@@ -43,8 +46,12 @@ public class GameManiaCanvas {
         }
     }
 
+    private void drawAvatar(float[] mMVPmatrix) {
+        avatar.draw(mMVPmatrix);
+    }
+
     private void drawNotes(float[] mMVPMatrix) {
-        long elapsedTime = ((System.currentTimeMillis() - gmee.getStartTime()) / 100) * 100;
+        long elapsedTime = (gmee.getTime() / 100) * 100;
 
         if (!keynotes.isEmpty() && (Math.abs(keynotes.get(0).getTime() - elapsedTime) < 100)) {
             currentNotes.addKeyNote(keynotes.remove(0));
@@ -61,13 +68,15 @@ public class GameManiaCanvas {
         if (scoreChanged > 0) {
             hud.updateScore(gmee.getScore());
             hud.startSplash(scoreChanged);
+            avatar.setPose(scoreChanged);
         }
         hud.drawHitSplash(mMVPmatrix, scoreChanged);
     }
 
     public void checkCollide(int index) {
-        int[] vals = currentNotes.checkCollide(index, Crossbar.HITRANGE);
-        gmee.addScore(vals[0], vals[1]);
+        ScoreType st = currentNotes.checkCollide(index, Crossbar.HITRANGE);
+        gmee.addScore(st.getScore(), st.getCombo());
+        st.resetCombo();
     }
 
     public void buttonPressed(float x, float y) {
@@ -91,7 +100,7 @@ public class GameManiaCanvas {
         mHitboxs = new Hitbox(mActivityContext);
         currentNotes = new Notes();
         hud = new HUD(mActivityContext);
-
+        avatar = new Avatar(mActivityContext);
         currentNotes.setMissRange(Crossbar.HITRANGE, Crossbar.HEIGHT);
     }
 
@@ -103,6 +112,7 @@ public class GameManiaCanvas {
             drawNotes(mMVPMatrix);
 
         drawHitAnimation(mMVPMatrix);
+        drawAvatar(mMVPMatrix);
         hud.draw(mMVPMatrix, gmee.getCombo());
 
         return gmee.songEnded();

@@ -13,6 +13,6 @@ public class Background extends TextureObject {
         super(context);
         scaleDim(10f, 10f);
         setPosition(0f, 0f);
-        setTexture(context, resourceId);
+        setTexture(resourceId);
     }
 }

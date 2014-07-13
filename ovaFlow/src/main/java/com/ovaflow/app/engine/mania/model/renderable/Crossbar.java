@@ -17,6 +17,6 @@ public class Crossbar extends TextureObject {
         super(context);
         scaleDim(7f, HEIGHT);
         setPosition(0f, HITRANGE);
-        setTexture(context, R.drawable.mania_crossbar);
+        setTexture(R.drawable.mania_crossbar);
     }
 }

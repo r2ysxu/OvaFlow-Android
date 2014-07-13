@@ -26,10 +26,10 @@ public class ScoreSplash extends TextureObject {
         super(context);
         scaleDim(3f, 1f);
         setPosition(-0.05f, -0.5f);
-        highTextureHandle = setTexture(context, R.drawable.splash_cool);
-        medTextureHandle = setTexture(context, R.drawable.splash_good);
-        lowTextureHandle = setTexture(context, R.drawable.splash_bad);
-        missTextureHandle = setTexture(context, R.drawable.splash_miss);
+        highTextureHandle = setTexture(R.drawable.splash_cool);
+        medTextureHandle = setTexture(R.drawable.splash_good);
+        lowTextureHandle = setTexture(R.drawable.splash_bad);
+        missTextureHandle = setTexture(R.drawable.splash_miss);
     }
 
     public void setSplashType(int performance) {

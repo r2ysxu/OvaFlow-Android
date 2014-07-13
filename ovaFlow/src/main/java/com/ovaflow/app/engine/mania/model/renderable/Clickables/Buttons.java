@@ -43,7 +43,7 @@ public class Buttons extends TextureObject {
         for (ButtonInfo n : buttonInfos) {
             scaleDim(n.getScaleX(), n.getScaleY());
             setPosition(n.getPosX(), n.getPosY());
-            setTexture(mActivityContext, n.getImageId());
+            setTexture(n.getImageId());
             super.draw(mMVPmatrix);
         }
     }

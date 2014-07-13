@@ -24,10 +24,10 @@ public class ScoreSplash extends TextureObject {
         super(context);
         scaleDim(0.5f, 1f);
         setPosition(-0.05f, -0.5f);
-        highTextureHandle = setTexture(context, R.drawable.smiley2);
-        medTextureHandle = setTexture(context, R.drawable.smiley2);
-        lowTextureHandle = setTexture(context, R.drawable.smiley2);
-        missTextureHandle = setTexture(context, R.drawable.smiley2);
+        highTextureHandle = setTexture(R.drawable.smiley2);
+        medTextureHandle = setTexture(R.drawable.smiley2);
+        lowTextureHandle = setTexture(R.drawable.smiley2);
+        missTextureHandle = setTexture(R.drawable.smiley2);
     }
 
     public void draw(float[] mMVPmatrix, int performance) {

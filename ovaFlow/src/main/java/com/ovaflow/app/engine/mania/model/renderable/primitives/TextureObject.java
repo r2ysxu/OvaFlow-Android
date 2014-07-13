@@ -48,6 +48,8 @@ public class TextureObject {
     private FloatBuffer mTextureCoordinates;
     private int mTextureUniformHandle;
 
+    private Context context;
+
     private Typeface textTypeface = Typeface.create("Times New Roman", Typeface.NORMAL);
     private int textSize = 40;
     private int[] textColor = {0xff, 0xff, 0xff, 0xff};
@@ -77,15 +79,16 @@ public class TextureObject {
     }
 
     public TextureObject(Context context) {
+        this.context = context;
         vertexShaderCode = GameManiaGLUtil.readTextFileFromRawResource(context, R.raw.vertex_shader_code);
         fragmentShaderCode = GameManiaGLUtil.readTextFileFromRawResource(context, R.raw.fragment_shader_code);
 
         initializeBuffers();
-        initializeTexture(context);
-        getGLProgram(context);
+        initializeTexture();
+        getGLProgram();
     }
 
-    protected void getGLProgram(Context context) {
+    protected void getGLProgram() {
 
         // Load vShader, and fShader
         int vertexShader = GameManiaGLUtil.loadShader(
@@ -128,7 +131,7 @@ public class TextureObject {
         vertexBuffer.position(0);
     }
 
-    private void initializeTexture(Context context) {
+    private void initializeTexture() {
         float[] textureCoordinateData = {
                 0f, 0f,
                 0f, 1f,
@@ -140,7 +143,7 @@ public class TextureObject {
         mTextureCoordinates.put(textureCoordinateData).position(0);
     }
 
-    public int setTexture(Context context, final int resourceId) {
+    public int setTexture(final int resourceId) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;   // No pre-scaling
         // Read in the resource
@@ -246,5 +249,9 @@ public class TextureObject {
         GLES20.glDisableVertexAttribArray(mPositionHandle);
         //GLES20.glDisableVertexAttribArray(mTextureHandle);
         GameManiaGLUtil.checkGlError("endDraw ");
+    }
+
+    public Context getContext() {
+        return context;
     }
 }
