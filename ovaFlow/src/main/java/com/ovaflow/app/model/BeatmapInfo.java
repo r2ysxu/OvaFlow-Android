@@ -15,7 +15,7 @@ public class BeatmapInfo implements Serializable {
     public static BeatmapInfo[] generateBeatmaps() {
         BeatmapInfo[] beatmapInfos = new BeatmapInfo[3];
         for (int i = 0; i < beatmapInfos.length; i++) {
-            beatmapInfos[i] = new BeatmapInfo("Beatmap " + i, i);
+            beatmapInfos[i] = new BeatmapInfo("Beatmap " + i, (int)(Math.random() * 70) + 30);
         }
         return beatmapInfos;
     }

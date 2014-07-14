@@ -51,7 +51,8 @@ public class SongSelectActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectSong();
+                if (mPlayListListener.getSelectedGroup() > -1)
+                    selectSong();
             }
         });
         Button backButton = (Button) findViewById(R.id.back_button);

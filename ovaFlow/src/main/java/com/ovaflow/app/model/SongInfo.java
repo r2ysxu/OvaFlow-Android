@@ -30,9 +30,9 @@ public class SongInfo implements Serializable {
 
     public String getDurationStr() {
         Date date = new Date(duration);
-        DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
+        DateFormat formatter = new SimpleDateFormat("mm:ss");
         if (duration >= 3600000)
-            formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+            formatter = new SimpleDateFormat("HH:mm:ss");
         return formatter.format(date);
     }
 

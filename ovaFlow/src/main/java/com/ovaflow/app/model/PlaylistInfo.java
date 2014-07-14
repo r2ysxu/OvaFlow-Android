@@ -14,7 +14,7 @@ public class PlaylistInfo {
     public static final PlaylistInfo generatePlaylist() {
         List<SongInfo> songs = new ArrayList<SongInfo>();
 
-        songs.add(new SongInfo(1, 10000, "We Will Rock You", "Queens", "We Will Rock You"));
+        songs.add(new SongInfo(1, 72000, "We Will Rock You Child version", "Queens", "We Will Rock You"));
         songs.add(new SongInfo(2, 10000, "We are the Champions", "Queens", "We Will Rock You"));
         songs.add(new SongInfo(3, 10000, "Another One Bites the Dust", "Queens", "We Will Rock You"));
         songs.add(new SongInfo(4, 10000, "Sera Sera", "Shakira", "Oral Fixation Vol. 2"));

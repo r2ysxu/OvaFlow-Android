@@ -32,7 +32,7 @@ public class BeatmapAdapter extends ArrayAdapter<BeatmapInfo> {
 
         TextView beatmapName = (TextView) view.findViewById(R.id.beatmap_name);
         ProgressBar diff = (ProgressBar) view.findViewById(R.id.beatmap_diff);
-        diff.setProgress(60);
+        diff.setProgress(beatmaps[position].getDifficulty());
        // RatingBar difficulty = (RatingBar) view.findViewById(R.id.beatmap_difficulty);
         //difficulty.setEnabled(false);
         //difficulty.setNumStars(4);
