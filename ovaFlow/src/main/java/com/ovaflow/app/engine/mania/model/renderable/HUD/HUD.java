@@ -38,9 +38,12 @@ public class HUD {
     public void startSplash(int pts) {
         timer = 500;
         scoreSplash.setSplashType(pts);
+        scoreSplash.scaleDim(4f, 1f);
     }
 
     public void drawHitSplash(float[] mMVPmatrix, int pts) {
+        if (timer < 400)
+            scoreSplash.scaleDim(3f, 1f);
         if (pts > 0 || timer > 0)
             scoreSplash.draw(mMVPmatrix);
         if (timer > 0)

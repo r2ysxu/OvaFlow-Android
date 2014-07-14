@@ -90,7 +90,7 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         background.draw(mMVPMatrix);
         if (gmc.drawFrame(mMVPMatrix))
             songEndDelayTimer = System.currentTimeMillis();
-        if (songEndDelayTimer != Long.MAX_VALUE && System.currentTimeMillis() > songEndDelayTimer + 1000)
+        if (songEndDelayTimer != Long.MAX_VALUE && System.currentTimeMillis() > songEndDelayTimer + 500)
             startSummaryActivity();
     }
 

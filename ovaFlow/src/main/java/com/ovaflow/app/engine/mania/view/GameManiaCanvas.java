@@ -60,6 +60,7 @@ public class GameManiaCanvas {
         if (currentNotes.checkMissed()) {
             gmee.missedNote();
             hud.startSplash(-1);
+            avatar.setPose(-1);
         }
     }
 

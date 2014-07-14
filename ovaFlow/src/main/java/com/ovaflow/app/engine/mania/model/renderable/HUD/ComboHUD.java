@@ -28,25 +28,25 @@ public class ComboHUD {
     }
 
     public void draw(float[] mMVPmatrix) {
-        float x = 0f, y = 0f;
-        int score = comboPts;
+        float x = 0.45f, y = 0f;
+        int combo = comboPts;
 
-        comboB.scaleDim(3f, 1f);
+        comboB.scaleDim(6f, 2f);
 
-        while (score >= 1) {
-            score = score / 10;
-            x += 0.05f/2;
+        while (combo >= 1) {
+            combo = combo / 10;
+            x += 0.05f;
         }
 
-        score = comboPts;
+        combo = comboPts;
 
-        while (score >= 1) {
-            int digit = score % 10;
-            score = score / 10;
+        while (combo >= 1) {
+            int digit = combo % 10;
+            combo = combo / 10;
             comboB.useTexture(comboHandles[digit]);
             comboB.setPosition(x, y);
             comboB.draw(mMVPmatrix);
-            x -= 0.05f;
+            x -= 0.09f;
         }
     }
 
