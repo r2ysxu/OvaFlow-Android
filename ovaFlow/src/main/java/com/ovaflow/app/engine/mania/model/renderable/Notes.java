@@ -54,18 +54,15 @@ public class Notes extends Square {
     }
 
     public ScoreType checkCollide(int index, float missrange) {
-        int score = 0, combo = 0;
         ScoreType st = new ScoreType();
-        int[] retVal = new int[2];
 
         for (int i = 0; i < keynotes.size(); i++) {
             KeyNote n = keynotes.get(i);
             int num = n.checkTolerance(index, missrange);
-            st.addPts(num);
             if (num > 0) {
+                st.addPts(num);
                 keynotes.remove(i);
                 i--;
-                score += num;
             } else {
                 break;
             }

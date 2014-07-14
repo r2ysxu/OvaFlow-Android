@@ -57,6 +57,14 @@ public class MenuActivity extends Activity {
                 sendMessage(v);
             }
         });
+
+        if (getIntent() != null) {
+            String username = getIntent().getExtras().getString(LoginClientRequest.EXTRA_ID);
+            int rmb = getIntent().getExtras().getInt(LoginClientRequest.EXTRA_RMB);
+
+            ((TextView) findViewById(R.id.menu_username_text)).setText(username);
+            ((TextView) findViewById(R.id.menu_rmb_text)).setText("Rythm Point: " + rmb);
+        }
     }
 
 

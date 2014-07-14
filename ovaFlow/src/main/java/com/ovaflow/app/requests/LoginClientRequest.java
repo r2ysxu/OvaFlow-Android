@@ -129,10 +129,11 @@ public class LoginClientRequest {
                 infoView.setText("Please enter a username");
             } else if (userId.equals("guest")) {
                 sendMessage(userId, 0);
-            } else if (result.contains("User:") && !result.contains("RMB: -1")) {
+            } else if (!result.contains("Token:null")) {
                 infoView.setText("Log in succeeded");
-                String n = result.substring(result.indexOf("RMB: ") + 5, result.indexOf("Current Avatar:")).trim();
-                sendMessage(userId, Integer.parseInt(n));
+                String name = result.substring(result.indexOf("User:") + 5, result.indexOf("~RMB:"));
+                String n = result.substring(result.indexOf("RMB:") + 4, result.indexOf("~Current Avatar:")).trim();
+                sendMessage(name, Integer.parseInt(n));
             } else {
                 infoView.setText("Incorrect id or password");
             }

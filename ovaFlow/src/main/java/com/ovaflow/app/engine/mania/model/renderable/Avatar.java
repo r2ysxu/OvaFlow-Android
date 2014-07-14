@@ -19,8 +19,8 @@ public class Avatar extends TextureObject {
     public Avatar(Context context) {
         super(context);
         state = 0;
-        float x = -0.7f, y = 0.8f;
-        scaleDim(2f, 2f);
+        float x = 0.6f, y = 0.6f;
+        scaleDim(4f, 4f);
         setPosition(x ,y);
         setTexture(spriteMappings[state]);
     }

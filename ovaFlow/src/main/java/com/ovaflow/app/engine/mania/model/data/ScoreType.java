@@ -10,7 +10,9 @@ public class ScoreType implements Serializable {
     public static final int COOL = 100;
     public static final int GOOD = 50;
     public static final int BAD = 30;
-    public static final int MISS = 0;
+    public static final int MISS = -1;
+
+    private int score;
 
     private int cool, good, bad, miss;
 
@@ -46,12 +48,42 @@ public class ScoreType implements Serializable {
                 miss++;
                 break;
         }
-        if (pts != MISS)
+        if (pts != MISS) {
             combo++;
+        }
+    }
+
+    public int getRank() {
+        if (score < getTotal() * 100) return 0;
+        else if (score < getTotal() * 200) return 1;
+        else if (score < getTotal() * 300) return 2;
+        else if (score < getTotal() * 400) return 3;
+        else if (score < getTotal() * 500) return 4;
+        else if (score < getTotal() * 600) return 5;
+        else return 6;
+    }
+
+    public void add(ScoreType st) {
+        this.cool += st.cool;
+        this.good += st.good;
+        this.bad += st.bad;
+        this.miss += st.miss;
+    }
+
+    public void addScore(int pts) {
+        score += pts;
+    }
+
+    public int getTotal() {
+       return cool + good + bad + miss;
+    }
+
+    public int getPts() {
+        return cool * COOL + good * GOOD + bad * BAD;
     }
 
     public int getScore() {
-        return COOL * cool + GOOD * good + BAD * bad;
+        return score;
     }
 
     public int getCombo() {
@@ -60,5 +92,21 @@ public class ScoreType implements Serializable {
 
     public void resetCombo() {
         combo = 0;
+    }
+
+    public int getCool() {
+        return cool;
+    }
+
+    public int getGood() {
+        return good;
+    }
+
+    public int getBad() {
+        return bad;
+    }
+
+    public int getMiss() {
+        return miss;
     }
 }

@@ -30,9 +30,9 @@ public class HUD {
     public void draw(float[] mMVPmatrix, int comboNum) {
         score.draw(mMVPmatrix);
         combo.setComboPts(comboNum);
-        //if (comboNum > 0) {
-        combo.draw(mMVPmatrix);
-        //}
+        if (comboNum > 0) {
+            combo.draw(mMVPmatrix);
+        }
     }
 
     public void startSplash(int pts) {

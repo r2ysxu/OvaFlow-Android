@@ -9,6 +9,8 @@ public class BeatmapInfo implements Serializable {
 
     private String name;
     private int difficulty;
+    private String songFileLocation;
+    private String beatmapFileLocation;
 
     public static BeatmapInfo[] generateBeatmaps() {
         BeatmapInfo[] beatmapInfos = new BeatmapInfo[3];

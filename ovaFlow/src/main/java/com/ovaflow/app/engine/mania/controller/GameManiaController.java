@@ -17,27 +17,27 @@ public class GameManiaController {
     public static final int COMBOMULTREQ = 5;
 
     private long startTime;
-    private long endTime;
-    private int score;
+    private long endTime = Long.MAX_VALUE;
     private int combo = 0;
     private int multiplier = 1;
 
     private ScoreType scoreType;
-
     private int scoreChanged;
-
     private MediaPlayer player;
+
+    private boolean playing = false;
 
     private int songId;
     private String songFileName = "we_will_rock_you.mp3";
 
     public GameManiaController() {
+        scoreType = new ScoreType();
     }
 
     public void startGame(int songId) {
+        playing = true;
         this.songId = songId;
         startTime = System.currentTimeMillis();
-        score = 0;
     }
 
     public void playMusic(Context context) {
@@ -47,7 +47,12 @@ public class GameManiaController {
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
             player.start();
-            endTime = player.getDuration();
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    playing = false;
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,18 +75,19 @@ public class GameManiaController {
     }
 
     public int addScore(ScoreType st) {
-        scoreType = st;
-        score += st.getScore() * multiplier;
+        int pts = st.getPts() * multiplier;
+
+        scoreType.add(st);
+        scoreType.addScore(pts);
         combo += st.getCombo();
         st.resetCombo();
-        if (st.getScore() > 0) {
+        if (st.getPts() > 0) {
             if ((combo / COMBOMULTREQ) < MAXMULTIPLIER) {
                 multiplier = (int) Math.pow(2, combo / COMBOMULTREQ);
             }
         }
-        if (st.getScore() > 0)
-            scoreChanged = st.getScore();
-        return score;
+        scoreChanged = st.getPts();
+        return pts;
     }
 
     public void missedNote() {
@@ -106,7 +112,7 @@ public class GameManiaController {
     }
 
     public int getScore() {
-        return score;
+        return scoreType.getScore();
     }
 
     public int getMultiplier() {
@@ -114,6 +120,6 @@ public class GameManiaController {
     }
 
     public boolean songEnded() {
-        return !player.isPlaying();
+        return playing;
     }
 }

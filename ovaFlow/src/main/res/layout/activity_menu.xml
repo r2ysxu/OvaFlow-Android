@@ -57,4 +57,24 @@
         android:id="@+id/textView"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:textColor="#FFFFFF"
+        android:id="@+id/menu_username_text"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/menu_rmb_text"
+        android:layout_below="@+id/menu_username_text"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
