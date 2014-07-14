@@ -66,6 +66,6 @@ public class SongSelectActivity extends Activity {
     private void selectSong() {
         Intent intent = new Intent(this, BeatmapActivity.class);
         intent.putExtra("Song", mPlayListAdapter.getSongInfo(mPlayListListener.getSelectedGroup()));
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 }

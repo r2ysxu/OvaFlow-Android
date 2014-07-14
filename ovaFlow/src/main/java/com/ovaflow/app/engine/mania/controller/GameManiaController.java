@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 
+import com.ovaflow.app.engine.mania.model.data.ScoreType;
+
 import java.io.IOException;
 
 /**
@@ -19,6 +21,8 @@ public class GameManiaController {
     private int score;
     private int combo = 0;
     private int multiplier = 1;
+
+    private ScoreType scoreType;
 
     private int scoreChanged;
 
@@ -65,16 +69,18 @@ public class GameManiaController {
         return player.getCurrentPosition();
     }
 
-    public int addScore(int pts, int cbs) {
-        score += pts * multiplier;
-        combo += cbs;
-        if (pts > 0) {
+    public int addScore(ScoreType st) {
+        scoreType = st;
+        score += st.getScore() * multiplier;
+        combo += st.getCombo();
+        st.resetCombo();
+        if (st.getScore() > 0) {
             if ((combo / COMBOMULTREQ) < MAXMULTIPLIER) {
                 multiplier = (int) Math.pow(2, combo / COMBOMULTREQ);
             }
         }
-        if (pts > 0)
-            scoreChanged = pts;
+        if (st.getScore() > 0)
+            scoreChanged = st.getScore();
         return score;
     }
 
@@ -82,12 +88,17 @@ public class GameManiaController {
         combo = 0;
         multiplier = 1;
         scoreChanged();
+        scoreType.addPts(-1);
     }
 
     public int scoreChanged() {
         int ret = scoreChanged;
         scoreChanged = 0;
         return ret;
+    }
+
+    public ScoreType getScoreType() {
+        return scoreType;
     }
 
     public int getCombo() {
@@ -103,6 +114,6 @@ public class GameManiaController {
     }
 
     public boolean songEnded() {
-        return player.getCurrentPosition() > endTime + 1000;
+        return !player.isPlaying();
     }
 }

@@ -90,7 +90,9 @@ public class PlayListAdapter extends BaseExpandableListAdapter {
 
         SongInfo si = playlistInfo.getSongInfo(i);
 
-        songLength.setText("Duration: "+si.getDuration());
+
+
+        songLength.setText("Duration: "+si.getDurationStr());
 
         return view;
     }

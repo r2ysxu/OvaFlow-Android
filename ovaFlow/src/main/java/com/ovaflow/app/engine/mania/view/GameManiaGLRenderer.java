@@ -1,12 +1,14 @@
 package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
 import com.ovaflow.app.R;
+import com.ovaflow.app.activity.SummaryActivity;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.model.renderable.Background;
 
@@ -74,6 +76,8 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
         enterGameplay();
     }
 
+    private long songEndDelayTimer = Long.MAX_VALUE;
+
     @Override
     public void onDrawFrame(GL10 unused) {
         // Draw background color
@@ -84,7 +88,16 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
         //Draw Everything
         background.draw(mMVPMatrix);
-        gmc.drawFrame(mMVPMatrix);
+        if (gmc.drawFrame(mMVPMatrix))
+            songEndDelayTimer = System.currentTimeMillis();
+        if (System.currentTimeMillis() > songEndDelayTimer + 1000)
+            startSummaryActivity();
+    }
+
+    public void startSummaryActivity() {
+        Intent intent = new Intent(mActivityContext, SummaryActivity.class);
+        intent.putExtra("ScoreType", gmc.getScoreType());
+        mActivityContext.startActivity(intent);
     }
 
     @Override

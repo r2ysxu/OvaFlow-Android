@@ -1,6 +1,9 @@
 package com.ovaflow.app.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ArthurXu on 04/07/2014.
@@ -23,6 +26,14 @@ public class SongInfo implements Serializable {
 
     public long getDuration() {
         return duration;
+    }
+
+    public String getDurationStr() {
+        Date date = new Date(duration);
+        DateFormat formatter = new SimpleDateFormat("mm:ss:SSS");
+        if (duration >= 3600000)
+            formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+        return formatter.format(date);
     }
 
     public String getName() {

@@ -13,16 +13,17 @@ import com.ovaflow.app.R;
 public class SummaryActivity extends ActionBarActivity {
 
 
-    private Button back;
+    private Button backButton;
+    private Button ackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
-        back = (Button) findViewById(R.id.back);
+        backButton = (Button) findViewById(R.id.back);
 
-        back.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sendMessage(v);
             }

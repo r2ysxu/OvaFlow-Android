@@ -75,8 +75,7 @@ public class GameManiaCanvas {
 
     public void checkCollide(int index) {
         ScoreType st = currentNotes.checkCollide(index, Crossbar.HITRANGE);
-        gmee.addScore(st.getScore(), st.getCombo());
-        st.resetCombo();
+        gmee.addScore(st);
     }
 
     public void buttonPressed(float x, float y) {
@@ -116,6 +115,10 @@ public class GameManiaCanvas {
         hud.draw(mMVPMatrix, gmee.getCombo());
 
         return gmee.songEnded();
+    }
+
+    public ScoreType getScoreType() {
+        return gmee.getScoreType();
     }
 
     public void pauseGame() {

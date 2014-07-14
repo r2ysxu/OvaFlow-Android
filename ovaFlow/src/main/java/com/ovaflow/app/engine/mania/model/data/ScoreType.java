@@ -1,9 +1,11 @@
 package com.ovaflow.app.engine.mania.model.data;
 
+import java.io.Serializable;
+
 /**
  * Created by ArthurXu on 05/07/2014.
  */
-public class ScoreType {
+public class ScoreType implements Serializable {
 
     public static final int COOL = 100;
     public static final int GOOD = 50;
@@ -13,6 +15,14 @@ public class ScoreType {
     private int cool, good, bad, miss;
 
     private int combo = 0;
+
+
+    public ScoreType(ScoreType st) {
+        this.cool = st.cool;
+        this.good = st.good;
+        this.bad = st.bad;
+        this.miss = st.miss;
+    }
 
     public ScoreType() {
         cool = 0;
