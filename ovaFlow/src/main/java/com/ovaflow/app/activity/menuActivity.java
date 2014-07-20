@@ -9,65 +9,67 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ovaflow.app.R;
-import com.ovaflow.app.requests.LoginClientRequest;
+import com.ovaflow.app.util.ExtraConstants;
 
 public class MenuActivity extends Activity {
 
-    private Button play;
-    private Button avatar;
-    private Button dl;
-    private Button logout;
-    private TextView userInfo;
-    private Activity curActivity = this;
+    private Button playButton;
+    private Button avatarButton;
+    private Button downloadButton;
+    private Button logoutButton;
 
-    private String ID;
-    private int RMB;
+    private String username;
+    private int rmbNum;
+    private int avatarId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Intent intent = getIntent();
-        ID = intent.getStringExtra(LoginClientRequest.EXTRA_ID);
-        RMB = intent.getIntExtra(LoginClientRequest.EXTRA_RMB, -1);
+        playButton = (Button) findViewById(R.id.play);
+        avatarButton = (Button) findViewById(R.id.avatar);
+        downloadButton = (Button) findViewById(R.id.dl);
+        logoutButton = (Button) findViewById(R.id.logout);
+        unpackIntent();
+        addListeners();
+    }
 
-        //userInfo = (TextView) findViewById(R.id.info);
-        //userInfo.setText("User:"+ID);
-        //userInfo.setText("User:"+ID+" RMB:"+RMB);
+    private void unpackIntent() {
 
-        play = (Button) findViewById(R.id.play);
-        avatar = (Button) findViewById(R.id.avatar);
-        dl = (Button) findViewById(R.id.dl);
-        logout = (Button) findViewById(R.id.logout);
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //go back to previous activity(log in page)
-                NavUtils.navigateUpFromSameTask(curActivity);
-            }
-        });
-
-        play.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                sendMessage(v);
-            }
-        });
 
         if (getIntent() != null) {
             Bundle extras = getIntent().getExtras();
-            String username = extras.getString(LoginClientRequest.EXTRA_ID);
-            int rmb = extras.getInt(LoginClientRequest.EXTRA_RMB);
-            int avatarID = extras.getInt(LoginClientRequest.EXTRA_AVATARID);
+            username = extras.getString(ExtraConstants.EXTRA_ID);
+            rmbNum = extras.getInt(ExtraConstants.EXTRA_RMB);
+            avatarId = extras.getInt(ExtraConstants.EXTRA_AVATARID);
 
             ((TextView) findViewById(R.id.menu_username_text)).setText(username);
-            ((TextView) findViewById(R.id.menu_rmb_text)).setText("Rythm Point: " + rmb);
+            ((TextView) findViewById(R.id.menu_rmb_text)).setText("Rythm Point: " + rmbNum);
         }
     }
 
+    private void addListeners() {
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(MenuActivity.this);
+            }
+        });
 
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, SongSelectActivity.class);
-        startActivity(intent);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, SongSelectActivity.class);
+                startActivity(intent);
+            }
+        });
+        avatarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MenuActivity.this, ShopAvatarActivity.class);
+                intent.putExtra(ExtraConstants.EXTRA_RMB, rmbNum);
+                intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
+                startActivity(intent);
+            }
+        });
     }
 }

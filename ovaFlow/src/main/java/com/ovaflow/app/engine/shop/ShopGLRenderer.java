@@ -4,7 +4,6 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.ovaflow.app.engine.mania.model.renderable.Avatar;
 
@@ -22,7 +21,7 @@ public class ShopGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
 
-    Avatar avatar;
+    private Avatar avatar;
 
     public ShopGLRenderer(Context context) {
         mActivityContext = context;
@@ -40,6 +39,8 @@ public class ShopGLRenderer implements GLSurfaceView.Renderer {
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         avatar = new Avatar(mActivityContext);
+        avatar.scaleDim(10f, 10f);
+        avatar.setPosition(0f, 0f);
     }
 
     @Override
@@ -60,11 +61,13 @@ public class ShopGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
 
         float ratio = (float) width / height;
-        Log.i("SurfaceChanged", "Ratio: " + ratio);
 
         // this projection matrix is applied to object coordinates
         // in the onDrawFrame() method
         Matrix.frustumM(mProjectionMatrix, 0, -1, 1, -1, 1, 3, 7);
     }
 
+    public Avatar getAvatar() {
+        return avatar;
+    }
 }

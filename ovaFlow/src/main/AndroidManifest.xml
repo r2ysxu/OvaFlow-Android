@@ -43,32 +43,31 @@
             android:label="@string/title_activity_menu"
             android:launchMode="singleTask"
             android:parentActivityName="com.ovaflow.app.activity.MainActivity" >
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <!--
-                <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.myfirstapp.MainActivity" />
-            -->
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.BeatmapActivity"
-            android:label="@string/title_activity_beatmap"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_beatmap" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.SummaryActivity"
-            android:label="@string/title_activity_summary"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_summary">
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.EditSongActivity"
-            android:label="@string/title_activity_edit_song"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_edit_song" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.ScoreBoardActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_score_board" >
+        </activity>
+        <activity
+            android:name=".activity.ShopAvatarActivity"
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_shop_avatar" >
         </activity>
     </application>
 

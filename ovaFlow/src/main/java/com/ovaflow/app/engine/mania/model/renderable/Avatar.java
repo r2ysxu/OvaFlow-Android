@@ -21,8 +21,27 @@ public class Avatar extends TextureObject {
         state = 0;
         float x = 0.6f, y = 0.6f;
         scaleDim(4f, 4f);
-        setPosition(x ,y);
+        setPosition(x, y);
         setTexture(spriteMappings[state]);
+    }
+
+    public Avatar(Context context, int id) {
+        this(context);
+        setAvatar(id);
+    }
+
+    private int[] spriteSets(int id) {
+        int[] sprite1 = {R.drawable.sprite001_0_0, R.drawable.sprite001_0_1, R.drawable.sprite001_1, R.drawable.sprite001_2, R.drawable.sprite001_3, R.drawable.sprite001_4};
+        int[] sprite2 = {R.drawable.sprite002_0_0, R.drawable.sprite002_0_1, R.drawable.sprite002_1, R.drawable.sprite002_2, R.drawable.sprite002_3, R.drawable.sprite002_4};
+        switch (id) {
+            case 1: return sprite1;
+            case 2: return sprite2;
+        }
+        return spriteMappings;
+    }
+
+    public void setAvatar(int id) {
+        spriteMappings = spriteSets(id);
     }
 
     public void setPose(int pts) {

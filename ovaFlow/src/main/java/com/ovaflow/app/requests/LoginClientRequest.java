@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.ovaflow.app.activity.MenuActivity;
+import com.ovaflow.app.util.ExtraConstants;
 import com.ovaflow.app.util.StringUtil;
 
 import org.json.JSONException;
@@ -14,10 +15,6 @@ import org.json.JSONObject;
  * Created by ArthurXu on 09/07/2014.
  */
 public class LoginClientRequest extends ClientRequest {
-
-    public final static String EXTRA_ID = "com.ovaflow.app.ID";
-    public final static String EXTRA_RMB = "com.ovaflow.app.RMB";
-    public final static String EXTRA_AVATARID = "com.ovaflow.app.avatarID";
 
     private static final String serviceStr = "/OvaflowServer/rest/ovf/acinfo";
 
@@ -48,9 +45,9 @@ public class LoginClientRequest extends ClientRequest {
 
     public void sendMessage(String id, int rmb, int avatarId) {
         Intent intent = new Intent(getContext(), MenuActivity.class);
-        intent.putExtra(EXTRA_ID, id);
-        intent.putExtra(EXTRA_RMB, rmb);
-        intent.putExtra(EXTRA_AVATARID, avatarId);
+        intent.putExtra(ExtraConstants.EXTRA_ID, id);
+        intent.putExtra(ExtraConstants.EXTRA_RMB, rmb);
+        intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
         getContext().startActivity(intent);
     }
 
