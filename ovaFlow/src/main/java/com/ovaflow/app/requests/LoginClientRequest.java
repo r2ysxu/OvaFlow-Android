@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Handles account Login validation and account registration
+ * Handles account Login validation and account registration with server
  * <b>WARNING:</b> This class is not thread safe, sharing this class in different threads might
  * yield unpredictable results
  */
