@@ -12,13 +12,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by ArthurXu on 09/07/2014.
+ * Handles account Login validation and account registration
+ * <b>WARNING:</b> This class is not thread safe, sharing this class in different threads might
+ * yield unpredictable results
  */
 public class LoginClientRequest extends ClientRequest {
 
-    private static final String serviceStr = "/OvaflowServer/rest/ovf/acinfo";
+    private static final String loginStr = "/OvaflowServer/rest/ovf/acinfo";
+    private static final String registerStr = "/OvaflowServer/rest/ovf/newuser";
 
     private TextView infoView;
+
+    private int requestType = -1;
 
     public LoginClientRequest(Context context) {
         super(context);
@@ -26,7 +31,7 @@ public class LoginClientRequest extends ClientRequest {
 
     public boolean checkLogin(String userid, String password, TextView infoView) {
         this.infoView = infoView;
-
+        requestType = 0;
         String[] paramKeys = {"usr", "pass"};
         String[] paramValues = {userid, password};
 
@@ -34,12 +39,27 @@ public class LoginClientRequest extends ClientRequest {
             return false;
         }
 
-        String stringUrl = ClientRequestInfo.generateRequest(serviceStr, paramKeys, paramValues);
+        String stringUrl = ClientRequestInfo.generateRequest(loginStr, paramKeys, paramValues);
         super.sendRequest(stringUrl);
         return true;
     }
 
-    public boolean registerAccount(String userId, String password, TextView infoView) {
+    public boolean registerAccount(String userid, String password, String passwordre, TextView infoView) {
+        requestType = 1;
+        if (StringUtil.hasValue(userid, password, passwordre)) {
+            if (password.equals(passwordre)) {
+                String[] paramKeys = {"usr", "pass"};
+                String[] paramValues = {userid, password};
+                String stringUrl = ClientRequestInfo.generateRequest(registerStr, paramKeys, paramValues);
+                super.sendRequest(stringUrl);
+            } else {
+                infoView.setText("Passwords don't match");
+                return false;
+            }
+        } else {
+            infoView.setText("Please fill in all information");
+            return false;
+        }
         return true;
     }
 
@@ -51,8 +71,7 @@ public class LoginClientRequest extends ClientRequest {
         getContext().startActivity(intent);
     }
 
-    @Override
-    protected void getRequest(String result) {
+    private void getLoginRequest(String result) {
         try {
             JSONObject jsonResult = new JSONObject(result);
 
@@ -70,5 +89,34 @@ public class LoginClientRequest extends ClientRequest {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getRegisterRequest(String result) {
+        try {
+            JSONObject jsonResult = new JSONObject(result);
+
+            String token = jsonResult.getString("Token");
+            String username = jsonResult.getString("User");
+            int rmb = jsonResult.getInt("RMB");
+            int avatarID = jsonResult.getInt("Current Avatar");
+
+            if (StringUtil.hasValue(token)) {
+                infoView.setText("Registration successful");
+                sendMessage(username, rmb, avatarID);
+            } else {
+                infoView.setText("Registration failed");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void getRequest(String result) {
+        switch (this.requestType) {
+            case 0: getLoginRequest(result);break;
+            case 1: getRegisterRequest(result);break;
+        }
+        requestType = -1;
     }
 }

@@ -1,6 +1,7 @@
 package com.ovaflow.app.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ public class MainActivity extends Activity {
     private Button loginButton;
     private Button registerButton;
     private Button guestButton;
-    private TextView infoV;
+    private TextView infoView;
     private EditText nameE;
     private EditText passE;
 
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        infoV = (TextView) findViewById(R.id.information);
+        infoView = (TextView) findViewById(R.id.information);
 
         nameE = (EditText) findViewById(R.id.id);
         passE = (EditText) findViewById(R.id.main_password_text);
@@ -48,13 +49,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 String username = nameE.getText().toString();
                 String password = passE.getText().toString();
-                if (!loginRequest.checkLogin(username, password, infoV))
-                    infoV.setText("No network connection available.");
+                if (!loginRequest.checkLogin(username, password, infoView))
+                    infoView.setText("No network connection available.");
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                infoV.setText("Registering");
+                infoView.setText("Registering");
+                startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
         guestButton.setOnClickListener(new View.OnClickListener() {

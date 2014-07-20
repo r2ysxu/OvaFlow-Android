@@ -46,28 +46,35 @@
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.BeatmapActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_beatmap" >
+            android:label="@string/title_activity_beatmap"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.SummaryActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_summary">
+            android:label="@string/title_activity_summary"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.EditSongActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_edit_song" >
+            android:label="@string/title_activity_edit_song"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.ScoreBoardActivity"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_score_board" >
+            android:label="@string/title_activity_score_board"
+            android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name=".activity.ShopAvatarActivity"
+            android:name="com.ovaflow.app.activity.ShopAvatarActivity"
+            android:label="@string/title_activity_shop_avatar"
             android:launchMode="singleTask"
-            android:label="@string/title_activity_shop_avatar" >
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity">
+        </activity>
+        <activity
+            android:name="com.ovaflow.app.activity.RegistrationActivity"
+            android:label="@string/title_activity_registration"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity">
         </activity>
     </application>
 

@@ -18,7 +18,6 @@ public class SongSelectActivity extends Activity {
 
     private PlayListAdapter mPlayListAdapter;
     private PlaylistExpandListener mPlayListListener;
-    Activity curActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class SongSelectActivity extends Activity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavUtils.navigateUpFromSameTask(curActivity);
+                NavUtils.navigateUpFromSameTask(SongSelectActivity.this);
             }
         });
     }
