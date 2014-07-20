@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -25,15 +24,6 @@ public class SongSelectActivity extends Activity {
         setContentView(R.layout.activity_song_select);
         fillPlayList();
         addButtonListener();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.song_select, menu);
-        return true;
     }
 
     private void fillPlayList() {
