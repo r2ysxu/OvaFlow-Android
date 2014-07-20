@@ -28,9 +28,9 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
 
         playButton = (Button) findViewById(R.id.menu_play_button);
-        avatarButton = (Button) findViewById(R.id.menu_play_button);
-        downloadButton = (Button) findViewById(R.id.dl);
-        logoutButton = (Button) findViewById(R.id.logout);
+        avatarButton = (Button) findViewById(R.id.menu_avatar_button);
+        downloadButton = (Button) findViewById(R.id.menu_dl_button);
+        logoutButton = (Button) findViewById(R.id.menu_logout_button);
         unpackIntent();
         addListeners();
     }
