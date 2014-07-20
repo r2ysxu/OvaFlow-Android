@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,13 +23,10 @@ public class MenuActivity extends Activity {
     private String ID;
     private int RMB;
 
-    //@TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         ID = intent.getStringExtra(LoginClientRequest.EXTRA_ID);
@@ -59,8 +55,10 @@ public class MenuActivity extends Activity {
         });
 
         if (getIntent() != null) {
-            String username = getIntent().getExtras().getString(LoginClientRequest.EXTRA_ID);
-            int rmb = getIntent().getExtras().getInt(LoginClientRequest.EXTRA_RMB);
+            Bundle extras = getIntent().getExtras();
+            String username = extras.getString(LoginClientRequest.EXTRA_ID);
+            int rmb = extras.getInt(LoginClientRequest.EXTRA_RMB);
+            int avatarID = extras.getInt(LoginClientRequest.EXTRA_AVATARID);
 
             ((TextView) findViewById(R.id.menu_username_text)).setText(username);
             ((TextView) findViewById(R.id.menu_rmb_text)).setText("Rythm Point: " + rmb);
@@ -72,34 +70,4 @@ public class MenuActivity extends Activity {
         Intent intent = new Intent(this, SongSelectActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    /*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
 }

@@ -17,8 +17,9 @@ public class SummaryActivity extends ActionBarActivity {
 
 
     private Button backButton;
-    private TextView coolsView, goodsView, badsView, missesView, scoreView;
+    private TextView coolsView, goodsView, badsView, missesView, scoreView, newHScoreView;
     private ImageView rankView;
+    //private Activity curActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class SummaryActivity extends ActionBarActivity {
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //NavUtils.navigateUpFromSameTask(curActivity);
                 sendMessage(v);
             }
         });
@@ -41,6 +44,7 @@ public class SummaryActivity extends ActionBarActivity {
         badsView = (TextView) findViewById(R.id.summary_bad_pts);
         missesView = (TextView) findViewById(R.id.summary_miss_pts);
         scoreView = (TextView) findViewById(R.id.summary_score_pts);
+        newHScoreView = (TextView) findViewById(R.id.newHScore);
         ImageView rank = (ImageView) findViewById(R.id.summary_SABCDEF);
 
         ScoreType st = (ScoreType) getIntent().getExtras().get("ScoreType");

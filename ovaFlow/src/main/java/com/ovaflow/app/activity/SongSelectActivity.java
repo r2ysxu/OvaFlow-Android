@@ -39,6 +39,7 @@ public class SongSelectActivity extends Activity {
 
     private void fillPlayList() {
         final ExpandableListView playlist = (ExpandableListView) findViewById(R.id.play_list);
+        playlist.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
         mPlayListAdapter = new PlayListAdapter(this, PlaylistInfo.generatePlaylist());
         mPlayListListener = new PlaylistExpandListener(playlist);
 
@@ -51,8 +52,9 @@ public class SongSelectActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPlayListListener.getSelectedGroup() > -1)
+                if (mPlayListListener.getSelectedGroup() > -1) {
                     selectSong();
+                }
             }
         });
         Button backButton = (Button) findViewById(R.id.back_button);

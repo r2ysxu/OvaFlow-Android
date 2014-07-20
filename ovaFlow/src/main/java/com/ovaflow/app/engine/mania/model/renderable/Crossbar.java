@@ -10,7 +10,7 @@ import com.ovaflow.app.engine.mania.model.renderable.primitives.TextureObject;
  */
 public class Crossbar extends TextureObject {
 
-    public static final float HITRANGE = -0.7f;
+    public static final float HITRANGE = -0.68f;
     public static final float HEIGHT = 0.2f;
 
     public Crossbar(Context context) {

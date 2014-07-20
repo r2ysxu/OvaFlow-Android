@@ -26,6 +26,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/beatmap_back"
         android:layout_below="@+id/beatmap_song_duration" />
 
     <TextView
@@ -47,5 +50,16 @@
         android:layout_below="@+id/beatmap_song_info"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        android:id="@+id/beatmap_back"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/beatmap_list"
+        android:layout_alignEnd="@+id/beatmap_list" />
 
 </RelativeLayout>

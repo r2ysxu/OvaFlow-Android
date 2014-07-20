@@ -111,8 +111,8 @@
         android:text="Large Text"
         android:id="@+id/summary_score_pts"
         android:layout_alignBottom="@+id/summary_score"
-        android:layout_alignRight="@+id/back"
-        android:layout_alignEnd="@+id/back" />
+        android:layout_alignLeft="@+id/summary_score"
+        android:layout_marginLeft="240dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -129,7 +129,15 @@
         android:src="@drawable/summary_s"
         android:layout_above="@+id/back"
         android:layout_marginBottom="10dp"
-        android:layout_alignRight="@+id/summary_score_pts"
-        android:layout_alignEnd="@+id/summary_score_pts" />
+        android:layout_alignLeft="@+id/summary_score_pts"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/newHScore"
+        android:layout_below="@+id/summary_SABCDEF"
+        android:layout_alignRight="@+id/summary_score"
+        android:layout_alignEnd="@+id/summary_score" />
 
 </RelativeLayout>

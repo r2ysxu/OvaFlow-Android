@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class KeyNote {
 
-    public static final float MAXTOLERANCE = 0.02f;
-    public static final float MEDIUMTOLERANCE = 0.05f;
-    public static final float LOWTOLERANCE = 0.1f;
+    public static final float MAXTOLERANCE = 0.03f;
+    public static final float MEDIUMTOLERANCE = 0.8f;
+    public static final float LOWTOLERANCE = 0.15f;
 
     private long time;
     private short type;

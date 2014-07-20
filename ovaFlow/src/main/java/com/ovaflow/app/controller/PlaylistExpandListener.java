@@ -8,20 +8,20 @@ import android.widget.ExpandableListView;
 public class PlaylistExpandListener implements ExpandableListView.OnGroupExpandListener {
 
     private int pGroup = -1;
-    private ExpandableListView playlist;
+    private ExpandableListView expandableListView;
 
-    public PlaylistExpandListener(ExpandableListView playlist) {
-        this.playlist = playlist;
+    public PlaylistExpandListener(ExpandableListView expandableListView) {
+        this.expandableListView = expandableListView;
+    }
+
+    public int getSelectedGroup() {
+        return pGroup;
     }
 
     @Override
     public void onGroupExpand(int i) {
         if (i != pGroup)
-            playlist.collapseGroup(pGroup);
+            expandableListView.collapseGroup(pGroup);
         pGroup = i;
-    }
-
-    public int getSelectedGroup() {
-        return pGroup;
     }
 }

@@ -54,12 +54,12 @@ public class ScoreType implements Serializable {
     }
 
     public int getRank() {
-        if (score < getTotal() * 100) return 0;
-        else if (score < getTotal() * 200) return 1;
-        else if (score < getTotal() * 300) return 2;
-        else if (score < getTotal() * 400) return 3;
-        else if (score < getTotal() * 500) return 4;
-        else if (score < getTotal() * 600) return 5;
+        if (score < getTotal() * 40) return 0;
+        else if (score < getTotal() * 80) return 1;
+        else if (score < getTotal() * 120) return 2;
+        else if (score < getTotal() * 180) return 3;
+        else if (score < getTotal() * 300) return 4;
+        else if (score < getTotal() * 480) return 5;
         else return 6;
     }
 
