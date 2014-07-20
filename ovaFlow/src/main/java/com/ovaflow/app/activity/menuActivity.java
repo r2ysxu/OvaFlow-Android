@@ -27,8 +27,8 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        playButton = (Button) findViewById(R.id.play);
-        avatarButton = (Button) findViewById(R.id.avatar);
+        playButton = (Button) findViewById(R.id.menu_play_button);
+        avatarButton = (Button) findViewById(R.id.menu_play_button);
         downloadButton = (Button) findViewById(R.id.dl);
         logoutButton = (Button) findViewById(R.id.logout);
         unpackIntent();
@@ -66,6 +66,7 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ShopAvatarActivity.class);
+                intent.putExtra(ExtraConstants.EXTRA_ID, username);
                 intent.putExtra(ExtraConstants.EXTRA_RMB, rmbNum);
                 intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
                 startActivity(intent);
