@@ -89,6 +89,7 @@ public class LoginClientRequest extends ClientRequest {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            infoView.setText("Server is currently offline");
         }
     }
 
@@ -109,6 +110,7 @@ public class LoginClientRequest extends ClientRequest {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            infoView.setText("Server is currently offline");
         }
     }
 
