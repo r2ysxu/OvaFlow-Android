@@ -33,9 +33,13 @@ public class Avatar extends TextureObject {
     private int[] spriteSets(int id) {
         int[] sprite1 = {R.drawable.sprite001_0_0, R.drawable.sprite001_0_1, R.drawable.sprite001_1, R.drawable.sprite001_2, R.drawable.sprite001_3, R.drawable.sprite001_4};
         int[] sprite2 = {R.drawable.sprite002_0_0, R.drawable.sprite002_0_1, R.drawable.sprite002_1, R.drawable.sprite002_2, R.drawable.sprite002_3, R.drawable.sprite002_4};
+        int[] sprite3 = {R.drawable.sprite003_0_0, R.drawable.sprite003_0_1, R.drawable.sprite003_1, R.drawable.sprite003_2, R.drawable.sprite003_3, R.drawable.sprite003_4};
+        int[] sprite4 = {R.drawable.sprite004_0_0, R.drawable.sprite004_0_1, R.drawable.sprite004_1, R.drawable.sprite004_2, R.drawable.sprite004_3, R.drawable.sprite004_4};
         switch (id) {
             case 1: return sprite1;
             case 2: return sprite2;
+            case 3: return sprite3;
+            case 4: return sprite4;
         }
         return spriteMappings;
     }

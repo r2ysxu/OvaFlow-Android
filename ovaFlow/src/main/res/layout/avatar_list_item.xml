@@ -12,7 +12,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Small Text"
+        android:text="Avatar Name"
         android:id="@+id/avatar_item_name" />
 </LinearLayout>

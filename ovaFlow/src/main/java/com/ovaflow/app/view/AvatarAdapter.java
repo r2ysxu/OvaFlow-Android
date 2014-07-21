@@ -15,8 +15,8 @@ import com.ovaflow.app.R;
  */
 public class AvatarAdapter extends ArrayAdapter<Integer> {
 
-    private static final Integer[] sprites = {R.drawable.sprite001_0_0, R.drawable.sprite002_0_0};
-    private static final String[] spriteNames = {"Eko", "Dogé"};
+    private static final Integer[] sprites = {R.drawable.sprite001_0_0, R.drawable.sprite002_0_0, R.drawable.sprite003_0_0, R.drawable.sprite004_0_0};
+    private static final String[] spriteNames = {"Eko", "Dogé", "Yumina", "Ai"};
 
     public AvatarAdapter(Context context) {
         super(context, R.layout.avatar_list_item, sprites);
