@@ -48,7 +48,7 @@ public class SongFileLocator extends SQLiteOpenHelper {
 
     public void storeSongData(int id, String songName, String artist, String album, String songPath) {
         SQLiteStatement stmt = getWritableDatabase().compileStatement(
-                "INSERT INTO " + SONG_TABLE_NAME + " ( ?, ?, ?, ?, ? );");
+                "INSERT INTO " + SONG_TABLE_NAME + "(id, songname, songartist, songalbum, songpath) VALUES ( ?, ?, ?, ?, ? );");
         stmt.bindLong(1, id);
         stmt.bindString(2, songName);
         stmt.bindString(3, artist);

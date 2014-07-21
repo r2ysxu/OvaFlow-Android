@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.ovaflow.app.localstorage.SongFileLocator;
 import com.ovaflow.app.util.StringUtil;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +24,7 @@ import java.net.URL;
 public class DownloadClientRequest extends ClientRequest {
 
     private static final String downloadStr = "/OvaflowServer/rest/ovf/downloadsong";
-    private static final String storageLocStr = "/sdcard/";
+    private static final String storageLocStr = "OvaflowMusic/";
 
     private String songName;
     private int songId;
@@ -45,6 +47,7 @@ public class DownloadClientRequest extends ClientRequest {
         this.songArtist = artist;
         this.songAlbum = album;
         String stringUrl = ClientRequestInfo.generateRequest(downloadStr, paramKeys, paramValues);
+        Log.i("DownloadClientRequest", stringUrl);
         boolean value = sendRequest(stringUrl);
         return value;
     }
@@ -69,6 +72,7 @@ public class DownloadClientRequest extends ClientRequest {
 
     @Override
     protected void getRequest(String result) {
+        Log.i("DownloadClientRequest", result);
         if (StringUtil.hasValue(result)) {
             if (result.equals("Success")) {
                 SongFileLocator sfl = new SongFileLocator(getContext());
@@ -96,7 +100,16 @@ public class DownloadClientRequest extends ClientRequest {
             int response = conn.getResponseCode();
             int fileLength = conn.getContentLength();
             input = conn.getInputStream();
-            output = new FileOutputStream(storageLocStr + songName + ".mp3");
+
+
+
+            File loc = new File(getContext().getExternalFilesDir(null).getPath() + storageLocStr);
+            if (!loc.exists())
+                loc.mkdir();
+            File f = new File(storageLocStr + songName + ".mp3");
+            loc.createNewFile();
+
+            output = new FileOutputStream(getContext().getExternalFilesDir(null).getPath() + storageLocStr + songName + ".mp3");
 
             byte data[] = new byte[4096];
             long total = 0;
@@ -130,6 +143,7 @@ public class DownloadClientRequest extends ClientRequest {
             try {
                 return downloadUrl(urls[0]);
             } catch (IOException e) {
+                e.printStackTrace();
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }

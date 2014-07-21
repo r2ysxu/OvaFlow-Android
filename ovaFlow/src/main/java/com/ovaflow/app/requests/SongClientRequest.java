@@ -2,6 +2,7 @@ package com.ovaflow.app.requests;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.ovaflow.app.activity.DownloadActivity;
 import com.ovaflow.app.model.PlaylistInfo;
@@ -29,13 +30,12 @@ public class SongClientRequest extends ClientRequest {
     }
 
     public void fetchSongList(String userToken) {
-        String stringUrl = ClientRequestInfo.generateRequest(songListUrl, new String[0], new String[0]);
+        String[] paramKeys = {"usr"};
+        String[] paramValues = {userToken};
+        String stringUrl = ClientRequestInfo.generateRequest(songListUrl, paramKeys, paramValues);
+        Log.i("SongClientRequest", stringUrl);
         this.token = userToken;
         super.sendRequest(stringUrl);
-    }
-
-    public List<SongInfo> getSongInfoList() {
-        return songInfoList;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SongClientRequest extends ClientRequest {
 
 
         Intent intent = new Intent(getContext(), DownloadActivity.class);
-        intent.putExtra(ExtraConstants.EXTRA_ID, token);
+        intent.putExtra(ExtraConstants.EXTRA_TOKEN, token);
         intent.putExtra(ExtraConstants.EXTRA_SONG_LIST,
                 PlaylistInfo.generatePlaylist(songInfoList));
         getContext().startActivity(intent);

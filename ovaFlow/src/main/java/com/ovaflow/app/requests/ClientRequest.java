@@ -87,6 +87,7 @@ public abstract class ClientRequest {
             try {
                 return downloadUrl(urls[0]);
             } catch (IOException e) {
+                e.printStackTrace();
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }

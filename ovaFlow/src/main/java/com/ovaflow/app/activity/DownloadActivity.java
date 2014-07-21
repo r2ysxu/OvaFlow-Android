@@ -3,6 +3,7 @@ package com.ovaflow.app.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -78,6 +79,7 @@ public class DownloadActivity extends Activity {
             public void onClick(View view) {
                 int selected = mPlayListListener.getSelectedGroup();
                 if (selected != -1) {
+                    Log.i("DownloadActivity", "Initiate Download");
                     SongInfo si = mPlayListAdapter.getSongInfo(selected);
                     dlClient.downloadSong(userToken, si.getSongId(), si.getName(), si.getArtist(), si.getAlbum(), dlProgress);
                 }
