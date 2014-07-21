@@ -2,6 +2,7 @@ package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.GameManiaTouchInputListener;
@@ -24,8 +25,10 @@ public class GameManiaSurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
 
         SongFileLocator sfl = new SongFileLocator(context);
+        String beatmapPath = sfl.fetchBeatmapPath(songId, beatmapInfo.getId());
+        Log.i("BeatmapPath", beatmapPath);
 
-        gmController = new GameManiaController(sfl.fetchSongPath(songId), "");
+        gmController = new GameManiaController(sfl.fetchSongPath(songId), context.getExternalFilesDir(null) + beatmapPath);
         gmRenderer = new GameManiaGLRenderer(context, gmController);
         mInputListener = new GameManiaTouchInputListener(gmRenderer);
 

@@ -59,6 +59,28 @@ public class SongFileLocator extends SQLiteOpenHelper {
         return null;
     }
 
+    public String fetchBeatmapPath(int songId, int beatmapId) {
+        String[] args = {songId + "", beatmapId + ""};
+        Cursor rc = getReadableDatabase().rawQuery("SELECT beatmappath FROM " + BEATMAP_TABLE_NAME + " WHERE songId = ? AND id = ?", args);
+        if (rc.moveToFirst()) {
+            return rc.getString(0);
+        }
+        return null;
+    }
+
+    public List<BeatmapInfo> fetchBeatmaps(int songId) {
+        String[] args = {songId + ""};
+        Cursor rc = getReadableDatabase().rawQuery("SELECT * FROM " + BEATMAP_TABLE_NAME + " WHERE songId = ?", args);
+        List<BeatmapInfo> bmInfos = new ArrayList<BeatmapInfo>();
+        rc.moveToFirst();
+        while (!rc.isAfterLast()) {
+            BeatmapInfo bi = new BeatmapInfo(rc.getInt(0), rc.getString(1), (int) (Math.random() * 90) + 5);
+            bmInfos.add(bi);
+            rc.moveToNext();
+        }
+        return bmInfos;
+    }
+
     public BeatmapInfo fetchBeatmap(int songId, int beatmapId) {
         String[] args = {songId + "", beatmapId + ""};
         Cursor rc = getReadableDatabase().rawQuery("SELECT * FROM " + BEATMAP_TABLE_NAME + " WHERE id = ? AND songId = ?", args);
@@ -69,6 +91,10 @@ public class SongFileLocator extends SQLiteOpenHelper {
             return new BeatmapInfo(id, name, diff);
         }
         return null;
+    }
+
+    public void storeBMData(BeatmapInfo binfo, int songId, String storageLocStr) {
+        storeBMData(binfo.getId(), songId, binfo.getName(), binfo.getDifficulty(), songId + "_" + binfo.getId() + "_beatmap.txt");
     }
 
     public void storeBMData(int id, int songId, String bmName, int diffculty, String bmPath) {

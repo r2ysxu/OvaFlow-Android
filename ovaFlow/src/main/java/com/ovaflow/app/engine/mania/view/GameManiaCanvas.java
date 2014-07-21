@@ -2,17 +2,13 @@ package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
 
-import com.ovaflow.app.R;
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
-import com.ovaflow.app.engine.mania.model.data.KeyNote;
 import com.ovaflow.app.engine.mania.model.data.ScoreType;
 import com.ovaflow.app.engine.mania.model.renderable.Avatar;
-import com.ovaflow.app.engine.mania.model.renderable.clickables.Hitbox;
 import com.ovaflow.app.engine.mania.model.renderable.Crossbar;
-import com.ovaflow.app.engine.mania.model.renderable.hud.HUD;
 import com.ovaflow.app.engine.mania.model.renderable.Notes;
-
-import java.util.List;
+import com.ovaflow.app.engine.mania.model.renderable.clickables.Hitbox;
+import com.ovaflow.app.engine.mania.model.renderable.hud.HUD;
 
 /**
  * Created by ArthurXu on 04/07/2014.
@@ -23,7 +19,6 @@ public class GameManiaCanvas {
 
     private boolean gameStarted = false;
 
-    private List<KeyNote> keynotes;
     private Crossbar mCrossbar;
     private Hitbox mHitboxs;
     private Notes currentNotes;
@@ -53,8 +48,8 @@ public class GameManiaCanvas {
     private void drawNotes(float[] mMVPMatrix) {
         long elapsedTime = (gmee.getTime() / 100) * 100;
 
-        if (!keynotes.isEmpty() && (Math.abs(keynotes.get(0).getTime() - elapsedTime) < 100)) {
-            currentNotes.addKeyNote(keynotes.remove(0));
+        if (!gmee.getKeynotes().isEmpty() && (Math.abs(gmee.getKeynotes().get(0).getTime() - elapsedTime) < 100)) {
+            currentNotes.addKeyNote(gmee.getKeynotes().remove(0));
         }
         currentNotes.draw(mMVPMatrix);
         if (currentNotes.checkMissed()) {
@@ -96,7 +91,6 @@ public class GameManiaCanvas {
     public void onSurfaceCreated() {
         //Initialize Objects
         mCrossbar = new Crossbar(mActivityContext);
-        keynotes = KeyNote.generateNotes(mActivityContext, R.raw.default_beatmap);
         mHitboxs = new Hitbox(mActivityContext);
         currentNotes = new Notes();
         hud = new HUD(mActivityContext);

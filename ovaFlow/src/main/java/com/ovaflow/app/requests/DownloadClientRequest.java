@@ -43,10 +43,8 @@ public class DownloadClientRequest extends ClientRequest {
         songInfo = new SongInfo(id, 0, songname, artist, album);
         state = 0;
         String stringUrl = ClientRequestInfo.generateRequest(downloadSongStr, paramKeys, paramValues);
-        Log.i("Download Song", stringUrl);
-        fileName = id + "_song";
-        extension = ".mp3";
-        boolean value = sendFileRequest(stringUrl);
+        String fileName = id + "_song.mp3";
+        boolean value = sendFileRequest(stringUrl, storageLocStr + fileName);
         return value;
     }
 
@@ -56,12 +54,10 @@ public class DownloadClientRequest extends ClientRequest {
                 String[] paramKeys = {"id"};
                 String[] paramValues = {songInfo.getSongId() + ""};
                 SongFileLocator sfl = new SongFileLocator(getContext());
-                Log.i("Stored Path", "Song Id: " + songInfo.getSongId());
                 sfl.storeSongData(songInfo, storageLocStr);
 
                 //Fetch Beatmap ids
                 String stringUrl = ClientRequestInfo.generateRequest(fetchBMStr, paramKeys, paramValues);
-                Log.i("Fetch Beatmap", stringUrl);
                 state = 1;
                 super.sendRequest(stringUrl);
             }
@@ -70,7 +66,7 @@ public class DownloadClientRequest extends ClientRequest {
 
     private void fetchBeatmapResponse(String result) {
         try {
-            Log.i("fetch result", result);
+            Log.i("Result", result);
             JSONObject jsonResult = new JSONObject(result);
 
             JSONArray songList = jsonResult.getJSONArray("SongList");
@@ -83,15 +79,14 @@ public class DownloadClientRequest extends ClientRequest {
                 String[] paramKeys = {"usr", "id"};
                 String[] paramValues = {token, id + ""};
 
-                fileName = songInfo.getSongId() + "_" + id + "_beatmap";
-                extension = ".txt";
+                String fileName = songInfo.getSongId() + "_" + id + "_beatmap.txt";
 
                 SongFileLocator sfl = new SongFileLocator(getContext());
-                sfl.storeBMData(id, songInfo.getSongId(), name, 0, songInfo.getSongId() + "_" + id + "_beatmap" + extension);
+                sfl.storeBMData(id, songInfo.getSongId(), name, 0, storageLocStr + fileName);
                 String stringUrl = ClientRequestInfo.generateRequest(downloadBMStr, paramKeys, paramValues);
-                Log.i("Download Beatmap", stringUrl);
+                Log.i("DlRequest", stringUrl);
                 state = 2;
-                super.sendFileRequest(stringUrl);
+                super.sendFileRequest(stringUrl, storageLocStr + fileName);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -23,8 +23,6 @@ public abstract class ClientRequest {
     private Context context;
     private boolean cancelled = false;
     protected static final String storageLocStr = "/OvaflowMusic/";
-    protected String fileName;
-    protected String extension = ".mp3";
 
     public ClientRequest(Context context) {
         this.context = context;
@@ -79,12 +77,12 @@ public abstract class ClientRequest {
     }
 
 
-    protected boolean sendFileRequest(String stringUrl) {
+    protected boolean sendFileRequest(String stringUrl, String fileName) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadFileTask().execute(stringUrl);
+            new DownloadFileTask(fileName).execute(stringUrl);
         } else {
             return false;
         }
@@ -104,9 +102,10 @@ public abstract class ClientRequest {
     }
 
     protected abstract void getRequest(String result);
+
     protected abstract void publishProgress(int perc);
 
-    private String downloadFileUrl(String myurl) throws IOException {
+    private String downloadFileUrl(String myurl, String filePath) throws IOException {
         InputStream input = null;
         OutputStream output = null;
 
@@ -123,14 +122,13 @@ public abstract class ClientRequest {
             input = conn.getInputStream();
 
 
-
             File loc = new File(getContext().getExternalFilesDir(null).getPath() + storageLocStr);
             if (!loc.exists())
                 loc.mkdir();
-            File f = new File(storageLocStr + fileName + extension);
+            File f = new File(filePath);
             loc.createNewFile();
 
-            output = new FileOutputStream(getContext().getExternalFilesDir(null).getPath() + storageLocStr + fileName + ".mp3");
+            output = new FileOutputStream(getContext().getExternalFilesDir(null).getPath() + filePath);
 
             byte data[] = new byte[4096];
             long total = 0;
@@ -158,11 +156,16 @@ public abstract class ClientRequest {
     }
 
     private class DownloadFileTask extends AsyncTask<String, Void, String> {
+        String filePath;
+
+        public DownloadFileTask(String filePath) {
+            this.filePath = filePath;
+        }
 
         @Override
         protected String doInBackground(String... urls) {
             try {
-                return downloadFileUrl(urls[0]);
+                return downloadFileUrl(urls[0], filePath);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "Unable to retrieve web page. URL may be invalid.";

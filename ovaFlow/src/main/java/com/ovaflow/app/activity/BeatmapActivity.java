@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ovaflow.app.R;
+import com.ovaflow.app.localstorage.SongFileLocator;
 import com.ovaflow.app.model.BeatmapInfo;
 import com.ovaflow.app.model.SongInfo;
 import com.ovaflow.app.util.ExtraConstants;
@@ -45,7 +46,6 @@ public class BeatmapActivity extends Activity {
     }
 
     private void fillBeatmapList() {
-        mBeatmapAdapter = new BeatmapAdapter(this, BeatmapInfo.generateBeatmaps());
         ListView beatmap = (ListView) findViewById(R.id.beatmap_list);
         beatmap.setAdapter(mBeatmapAdapter);
         onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -63,6 +63,11 @@ public class BeatmapActivity extends Activity {
         songName.setText(songInfo.getName());
         songInfoView.setText(songInfo.getArtist() + " - " + songInfo.getAlbum());
         songDuration.setText(songInfo.getDurationStr());
+
+        SongFileLocator sfl = new SongFileLocator(this);
+
+        mBeatmapAdapter = new BeatmapAdapter(this, BeatmapInfo.generateBeatmaps(
+                sfl.fetchBeatmaps(songInfo.getSongId())));
     }
 
     private void addListener() {

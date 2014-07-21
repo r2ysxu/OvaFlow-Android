@@ -1,6 +1,7 @@
 package com.ovaflow.app.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by ArthurXu on 06/07/2014.
@@ -21,6 +22,10 @@ public class BeatmapInfo implements Serializable {
         return beatmapInfos;
     }
 
+    public static BeatmapInfo[] generateBeatmaps(List<BeatmapInfo> bis) {
+        return bis.toArray(new BeatmapInfo[0]);
+    }
+
     public BeatmapInfo(int id, String name, int difficulty) {
         this.id = id;
         this.name = name;
@@ -33,5 +38,9 @@ public class BeatmapInfo implements Serializable {
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public int getId() {
+        return id;
     }
 }

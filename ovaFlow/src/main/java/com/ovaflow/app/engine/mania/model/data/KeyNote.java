@@ -1,11 +1,9 @@
 package com.ovaflow.app.engine.mania.model.data;
 
-import android.content.Context;
-
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -27,14 +25,14 @@ public class KeyNote {
 
     private float downPos = 0.95f;
 
-    public static List<KeyNote> generateNotes(Context context, int resourceId) {
+    public static List<KeyNote> generateNotes(String filepath) throws FileNotFoundException {
 
-        final InputStream inputStream = context.getResources().openRawResource(
+        /*final InputStream inputStream = context.getResources().openRawResource(
                 resourceId);
         final InputStreamReader inputStreamReader = new InputStreamReader(
-                inputStream);
+                inputStream); */
         final BufferedReader bufferedReader = new BufferedReader(
-                inputStreamReader);
+                new FileReader(filepath));
 
         //HardCoded for testing
         float fallspeed = 0.02f;

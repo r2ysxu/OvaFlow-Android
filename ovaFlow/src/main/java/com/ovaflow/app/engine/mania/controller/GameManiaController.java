@@ -4,9 +4,12 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import com.ovaflow.app.engine.mania.model.data.ScoreType;
+import com.ovaflow.app.engine.mania.model.data.*;
+import com.ovaflow.app.engine.mania.model.data.KeyNote;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by ArthurXu on 09/06/2014.
@@ -20,6 +23,7 @@ public class GameManiaController {
     private long endTime = Long.MAX_VALUE;
     private int combo = 0;
     private int multiplier = 1;
+    private List<KeyNote> keynotes;
 
     private ScoreType scoreType;
     private int scoreChanged;
@@ -33,6 +37,11 @@ public class GameManiaController {
     public GameManiaController(String songPath, String beatmapPath) {
         scoreType = new ScoreType();
         songFileName = songPath;
+        try {
+            keynotes = KeyNote.generateNotes(beatmapPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startGame(int songId) {
@@ -121,5 +130,9 @@ public class GameManiaController {
 
     public boolean songEnded() {
         return playing;
+    }
+
+    public List<KeyNote> getKeynotes() {
+        return keynotes;
     }
 }
