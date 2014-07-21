@@ -13,6 +13,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +51,17 @@ public class SongClientRequest extends ClientRequest {
 
             for (int i = 0; i < songList.length(); i++) {
                 JSONObject obj = songList.getJSONObject(i);
-                songInfoList.add(new SongInfo(obj.getInt("Id"), 0, obj.getString("SongName"),
-                        obj.getString("Singer"), ""));
+
+                String duration = obj.getString("Duration");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+
+                try {
+                    songInfoList.add(new SongInfo(obj.getInt("Id"), sdf.parse(duration).getTime(), obj.getString("SongName"),
+                            obj.getString("Singer"), obj.getString("Album")));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

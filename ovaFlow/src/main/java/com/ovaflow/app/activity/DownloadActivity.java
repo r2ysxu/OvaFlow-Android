@@ -81,7 +81,7 @@ public class DownloadActivity extends Activity {
                 if (selected != -1) {
                     SongInfo si = mPlayListAdapter.getSongInfo(selected);
                     Log.i("DownloadActivity", "Initiate Download: " + si.getSongId());
-                    dlClient.downloadSong(userToken, si.getSongId(), si.getName(), si.getArtist(), si.getAlbum(), dlProgress);
+                    dlClient.downloadSong(userToken, si.getSongId(), si.getName(), si.getArtist(), si.getAlbum(), si.getDuration(), dlProgress);
                 }
             }
         });

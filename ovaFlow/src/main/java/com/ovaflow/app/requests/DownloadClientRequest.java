@@ -34,13 +34,13 @@ public class DownloadClientRequest extends ClientRequest {
         super(context);
     }
 
-    public boolean downloadSong(String token, int id, String songname, String artist, String album, ProgressBar progress) {
+    public boolean downloadSong(String token, int id, String songname, String artist, String album, long duration, ProgressBar progress) {
         String[] paramKeys = {"usr", "id"};
         String[] paramValues = {token, id + ""};
         this.dlProgress = progress;
         this.token = token;
 
-        songInfo = new SongInfo(id, 0, songname, artist, album);
+        songInfo = new SongInfo(id, duration, songname, artist, album);
         state = 0;
         String stringUrl = ClientRequestInfo.generateRequest(downloadSongStr, paramKeys, paramValues);
         String fileName = id + "_song.mp3";
