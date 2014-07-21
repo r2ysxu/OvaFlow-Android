@@ -9,7 +9,7 @@ import com.ovaflow.app.engine.mania.model.renderable.Avatar;
 /**
  * Created by ArthurXu on 20/07/2014.
  */
-public class ShopSurfaceView extends GLSurfaceView  {
+public class ShopSurfaceView extends GLSurfaceView {
 
     private final ShopGLRenderer sRenderer;
 
@@ -25,7 +25,7 @@ public class ShopSurfaceView extends GLSurfaceView  {
     public boolean setAvatar(int id) {
         Avatar avatar = sRenderer.getAvatar();
         if (avatar != null) {
-            avatar.setAvatar(id);
+            avatar.setAvatar(id + 1);
             return true;
         }
         return false;

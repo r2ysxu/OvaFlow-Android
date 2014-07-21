@@ -35,9 +35,6 @@ public class BeatmapAdapter extends ArrayAdapter<BeatmapInfo> {
         beatmapName.setTextColor(Color.WHITE);
         ProgressBar diff = (ProgressBar) view.findViewById(R.id.beatmap_diff);
         diff.setProgress(beatmaps[position].getDifficulty());
-       // RatingBar difficulty = (RatingBar) view.findViewById(R.id.beatmap_difficulty);
-        //difficulty.setEnabled(false);
-        //difficulty.setNumStars(4);
         beatmapName.setText(beatmaps[position].getName());
 
         return view;

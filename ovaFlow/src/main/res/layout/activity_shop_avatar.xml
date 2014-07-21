@@ -48,10 +48,10 @@
             android:layout_weight="10.41" />
     </LinearLayout>
 
-    <ScrollView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="372dp"
         android:id="@+id/shop_avatar_list"
-        android:layout_weight="0.70"/>
+        android:fillViewport="false" />
 
 </LinearLayout>
