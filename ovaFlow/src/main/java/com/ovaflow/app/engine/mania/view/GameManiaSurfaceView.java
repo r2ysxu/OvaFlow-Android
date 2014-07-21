@@ -2,7 +2,6 @@ package com.ovaflow.app.engine.mania.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
 import com.ovaflow.app.engine.mania.controller.GameManiaController;
 import com.ovaflow.app.engine.mania.controller.GameManiaTouchInputListener;
@@ -18,7 +17,7 @@ public class GameManiaSurfaceView extends GLSurfaceView {
     private final GameManiaTouchInputListener mInputListener;
     private final GameManiaController gmController;
 
-    public GameManiaSurfaceView(Context context, int songId, BeatmapInfo beatmapInfo) {
+    public GameManiaSurfaceView(Context context, int songId, BeatmapInfo beatmapInfo, int avatarId) {
         super(context);
 
         // Create an OpenGL ES 2.0 context.
@@ -26,10 +25,9 @@ public class GameManiaSurfaceView extends GLSurfaceView {
 
         SongFileLocator sfl = new SongFileLocator(context);
         String beatmapPath = sfl.fetchBeatmapPath(songId, beatmapInfo.getId());
-        Log.i("BeatmapPath", beatmapPath);
 
         gmController = new GameManiaController(sfl.fetchSongPath(songId), context.getExternalFilesDir(null) + beatmapPath);
-        gmRenderer = new GameManiaGLRenderer(context, gmController);
+        gmRenderer = new GameManiaGLRenderer(context, gmController, avatarId);
         mInputListener = new GameManiaTouchInputListener(gmRenderer);
 
         setRenderer(gmRenderer);

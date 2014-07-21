@@ -20,10 +20,11 @@ public class GameManiaActivity extends Activity {
 
         int songId = getIntent().getExtras().getInt("SongId");
         BeatmapInfo beatmapInfo = (BeatmapInfo) getIntent().getExtras().get(ExtraConstants.EXTRA_BM_INFO);
+        int avatarId = getIntent().getExtras().getInt(ExtraConstants.EXTRA_AVATARID);
 
-        Log.i("GameMania", "Song Id playing: " + songId);
+        Log.i("AVATAR ID:", avatarId +"");
 
-        mGLView = new GameManiaSurfaceView(this, songId, beatmapInfo);
+        mGLView = new GameManiaSurfaceView(this, songId, beatmapInfo, avatarId);
         setContentView(mGLView);
     }
 

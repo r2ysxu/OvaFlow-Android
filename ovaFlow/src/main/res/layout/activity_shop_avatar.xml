@@ -53,8 +53,16 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="372dp"
+        android:layout_height="267dp"
         android:id="@+id/shop_avatar_list"
-        android:fillViewport="false" />
+        android:fillViewport="false"
+        android:layout_weight="0.51" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Avatar"
+        android:id="@+id/shop_avatar_select_button"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

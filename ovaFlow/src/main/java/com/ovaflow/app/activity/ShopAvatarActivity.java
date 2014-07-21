@@ -2,8 +2,10 @@ package com.ovaflow.app.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class ShopAvatarActivity extends Activity {
 
     AvatarAdapter avatarAdapter;
     ShopSurfaceView currentView;
+    Button selectAvatarButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +34,19 @@ public class ShopAvatarActivity extends Activity {
     }
 
     private void addListener() {
-
+        selectAvatarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishActivity(avatarId);
+                NavUtils.navigateUpFromSameTask(ShopAvatarActivity.this);
+            }
+        });
     }
 
     private void populateListView() {
         currentView = (ShopSurfaceView) findViewById(R.id.shop_avatar_current_view);
+
+        selectAvatarButton = (Button) findViewById(R.id.shop_avatar_select_button);
 
         ListView sc = (ListView) findViewById(R.id.shop_avatar_list);
         avatarAdapter = new AvatarAdapter(this);
@@ -43,6 +54,7 @@ public class ShopAvatarActivity extends Activity {
         sc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                avatarId = i;
                 currentView.setAvatar(i);
             }
         });
@@ -61,7 +73,8 @@ public class ShopAvatarActivity extends Activity {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while (!((ShopSurfaceView) findViewById(R.id.shop_avatar_current_view)).setAvatar(avatarId));
+                    while (!((ShopSurfaceView) findViewById(R.id.shop_avatar_current_view)).setAvatar(avatarId))
+                        ;
                 }
             });
             thread.start();

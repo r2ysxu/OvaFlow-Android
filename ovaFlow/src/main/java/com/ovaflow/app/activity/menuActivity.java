@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ public class MenuActivity extends Activity {
             rmbNum = extras.getInt(ExtraConstants.EXTRA_RMB);
             avatarId = extras.getInt(ExtraConstants.EXTRA_AVATARID);
 
+            Log.i("Menu",""+avatarId);
+
             ((TextView) findViewById(R.id.menu_username_text)).setText(username);
             ((TextView) findViewById(R.id.menu_rmb_text)).setText("Rythm Point: " + rmbNum);
         }
@@ -69,10 +72,11 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MenuActivity.this, ShopAvatarActivity.class);
+                intent.putExtra(ExtraConstants.EXTRA_TOKEN, token);
                 intent.putExtra(ExtraConstants.EXTRA_ID, username);
                 intent.putExtra(ExtraConstants.EXTRA_RMB, rmbNum);
                 intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         downloadButton.setOnClickListener(new View.OnClickListener() {
@@ -82,5 +86,12 @@ public class MenuActivity extends Activity {
                 songClient.fetchSongList(token);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        avatarId = requestCode;
+        if (resultCode == RESULT_OK) {
+        }
     }
 }

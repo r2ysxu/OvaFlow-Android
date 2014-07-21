@@ -23,14 +23,16 @@ public class GameManiaCanvas {
     private Hitbox mHitboxs;
     private Notes currentNotes;
     private Avatar avatar;
+    private int avatarId;
 
     private HUD hud;
 
     private final GameManiaController gmee;
 
-    public GameManiaCanvas(Context context, GameManiaController gmee) {
+    public GameManiaCanvas(Context context, GameManiaController gmee, int avatarId) {
         this.mActivityContext = context;
         this.gmee = gmee;
+        this.avatarId = avatarId;
     }
 
     public void startGame() {
@@ -95,6 +97,7 @@ public class GameManiaCanvas {
         currentNotes = new Notes();
         hud = new HUD(mActivityContext);
         avatar = new Avatar(mActivityContext);
+        avatar.setAvatar(avatarId);
         currentNotes.setMissRange(Crossbar.HITRANGE, Crossbar.HEIGHT);
     }
 

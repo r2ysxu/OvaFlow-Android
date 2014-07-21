@@ -32,9 +32,9 @@ public class GameManiaGLRenderer implements GLSurfaceView.Renderer {
 
     private Background background;
 
-    public GameManiaGLRenderer(Context context, GameManiaController gmee) {
+    public GameManiaGLRenderer(Context context, GameManiaController gmee, int avatarId) {
         mActivityContext = context;
-        gmc = new GameManiaCanvas(context, gmee);
+        gmc = new GameManiaCanvas(context, gmee, avatarId);
     }
 
     public void buttonPressed(float x, float y) {
