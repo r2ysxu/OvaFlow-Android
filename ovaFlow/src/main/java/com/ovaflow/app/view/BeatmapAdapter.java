@@ -1,6 +1,7 @@
 package com.ovaflow.app.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class BeatmapAdapter extends ArrayAdapter<BeatmapInfo> {
         }
 
         TextView beatmapName = (TextView) view.findViewById(R.id.beatmap_name);
+        beatmapName.setTextColor(Color.WHITE);
         ProgressBar diff = (ProgressBar) view.findViewById(R.id.beatmap_diff);
         diff.setProgress(beatmaps[position].getDifficulty());
        // RatingBar difficulty = (RatingBar) view.findViewById(R.id.beatmap_difficulty);

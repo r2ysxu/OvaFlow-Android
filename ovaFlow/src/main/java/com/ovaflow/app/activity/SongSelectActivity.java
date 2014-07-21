@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 
 import com.ovaflow.app.R;
 import com.ovaflow.app.controller.PlaylistExpandListener;
+import com.ovaflow.app.localstorage.SongFileLocator;
 import com.ovaflow.app.model.PlaylistInfo;
 import com.ovaflow.app.view.PlayListAdapter;
 
@@ -29,7 +30,10 @@ public class SongSelectActivity extends Activity {
     private void fillPlayList() {
         final ExpandableListView playlist = (ExpandableListView) findViewById(R.id.play_list);
         playlist.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
-        mPlayListAdapter = new PlayListAdapter(this, PlaylistInfo.generatePlaylist());
+
+        SongFileLocator sfl = new SongFileLocator(this);
+
+        mPlayListAdapter = new PlayListAdapter(this, PlaylistInfo.generatePlaylist(sfl.fetchAllSongData()));
         mPlayListListener = new PlaylistExpandListener(playlist);
 
         playlist.setAdapter(mPlayListAdapter);

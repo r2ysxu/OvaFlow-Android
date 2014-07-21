@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
         guestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginRequest.sendMessage("guest", 0, 2);
+                loginRequest.sendMessage("", "guest", 0, 2);
             }
         });
     }

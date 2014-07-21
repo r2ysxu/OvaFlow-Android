@@ -3,8 +3,10 @@ package com.ovaflow.app.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +20,9 @@ public class BeatmapActivity extends Activity {
     private BeatmapAdapter mBeatmapAdapter;
     private AdapterView.OnItemClickListener onItemClickListener;
     private TextView songName, songInfo, songDuration;
+    private Button backButton, playButton;
+
+    private int selectedBeatmapIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +33,12 @@ public class BeatmapActivity extends Activity {
         songInfo = (TextView) findViewById(R.id.beatmap_song_info);
         songDuration = (TextView) findViewById(R.id.beatmap_song_duration);
 
-        fillBeatmapList();
+        backButton = (Button) findViewById(R.id.beatmap_back_button);
+        playButton = (Button) findViewById(R.id.beatmap_play_button);
+
         setupResults();
+        fillBeatmapList();
+        addListener();
     }
 
     private void fillBeatmapList() {
@@ -37,12 +46,10 @@ public class BeatmapActivity extends Activity {
         ListView beatmap = (ListView) findViewById(R.id.beatmap_list);
         beatmap.setAdapter(mBeatmapAdapter);
         onItemClickListener = new AdapterView.OnItemClickListener() {
-            private int selected = -1;
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selected = i;
-                selectBeatmap(mBeatmapAdapter.getBeatmapInfo(i));
+                selectedBeatmapIndex = i;
             }
         };
         beatmap.setOnItemClickListener(onItemClickListener);
@@ -53,6 +60,22 @@ public class BeatmapActivity extends Activity {
         songName.setText(si.getName());
         songInfo.setText(si.getArtist() + " - " + si.getAlbum());
         songDuration.setText(si.getDurationStr());
+    }
+
+    private void addListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavUtils.navigateUpFromSameTask(BeatmapActivity.this);
+            }
+        });
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedBeatmapIndex > -1)
+                    selectBeatmap(mBeatmapAdapter.getBeatmapInfo(selectedBeatmapIndex));
+            }
+        });
     }
 
     private void selectBeatmap(BeatmapInfo beatmapInfo) {

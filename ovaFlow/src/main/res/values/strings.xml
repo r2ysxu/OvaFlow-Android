@@ -17,5 +17,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_shop_avatar">ShopAvatarActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_download">DownloadActivity</string>
 
 </resources>

@@ -35,7 +35,7 @@ public abstract class ClientRequest {
     }
 
     private String downloadUrl(String myurl) throws IOException {
-        InputStream is = null;
+        InputStream input = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
         int len = 500;
@@ -51,17 +51,17 @@ public abstract class ClientRequest {
             conn.connect();
             int response = conn.getResponseCode();
             //Log.d(DEBUG_TAG, "The response is: " + response);
-            is = conn.getInputStream();
+            input = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is, len);
+            String contentAsString = readIt(input, len);
             return contentAsString;
 
             // Makes sure that the InputStream is closed after the app is
             // finished using it.
         } finally {
-            if (is != null) {
-                is.close();
+            if (input != null) {
+                input.close();
             }
         }
     }

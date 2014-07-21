@@ -33,7 +33,7 @@ public class ShopGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
         // Set the background frame color
-        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glClearColor(1f, 0f, 0f, 0f);
 
         // Set the camera position
         Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);

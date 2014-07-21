@@ -1,12 +1,13 @@
 package com.ovaflow.app.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ArthurXu on 04/07/2014.
  */
-public class PlaylistInfo {
+public class PlaylistInfo implements Serializable {
 
     private List<SongInfo> songs;
     private int pointer;
@@ -23,9 +24,13 @@ public class PlaylistInfo {
         return new PlaylistInfo(songs);
     }
 
+    public static final PlaylistInfo generatePlaylist(List<SongInfo> songInfos) {
+        return new PlaylistInfo(songInfos);
+    }
+
     private PlaylistInfo(List<SongInfo> songs) {
         this.songs = songs;
-        pointer = (int) Math.random() * (songs.size() - 1);
+        //pointer = (int) Math.random() * (songs.size() - 1);
     }
 
     public SongInfo getSongInfo(int index) {

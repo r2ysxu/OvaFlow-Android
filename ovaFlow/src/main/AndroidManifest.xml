@@ -47,7 +47,8 @@
         <activity
             android:name="com.ovaflow.app.activity.BeatmapActivity"
             android:label="@string/title_activity_beatmap"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:parentActivityName="com.ovaflow.app.activity.SongSelectActivity" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.SummaryActivity"
@@ -60,21 +61,21 @@
             android:launchMode="singleTask" >
         </activity>
         <activity
-            android:name="com.ovaflow.app.activity.ScoreBoardActivity"
-            android:label="@string/title_activity_score_board"
-            android:launchMode="singleTask" >
-        </activity>
-        <activity
             android:name="com.ovaflow.app.activity.ShopAvatarActivity"
             android:label="@string/title_activity_shop_avatar"
             android:launchMode="singleTask"
-            android:parentActivityName="com.ovaflow.app.activity.MenuActivity">
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity" >
         </activity>
         <activity
             android:name="com.ovaflow.app.activity.RegistrationActivity"
             android:label="@string/title_activity_registration"
             android:launchMode="singleTask"
-            android:parentActivityName="com.ovaflow.app.activity.MenuActivity">
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity" >
+        </activity>
+        <activity
+            android:name="com.ovaflow.app.activity.DownloadActivity"
+            android:label="@string/title_activity_download"
+            android:parentActivityName="com.ovaflow.app.activity.MenuActivity" >
         </activity>
     </application>
 

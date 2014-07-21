@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ovaflow.app.R;
+import com.ovaflow.app.requests.SongClientRequest;
 import com.ovaflow.app.util.ExtraConstants;
 
 public class MenuActivity extends Activity {
@@ -18,6 +19,7 @@ public class MenuActivity extends Activity {
     private Button downloadButton;
     private Button logoutButton;
 
+    private String token;
     private String username;
     private int rmbNum;
     private int avatarId;
@@ -36,10 +38,9 @@ public class MenuActivity extends Activity {
     }
 
     private void unpackIntent() {
-
-
         if (getIntent() != null) {
             Bundle extras = getIntent().getExtras();
+            token = extras.getString(ExtraConstants.EXTRA_TOKEN);
             username = extras.getString(ExtraConstants.EXTRA_ID);
             rmbNum = extras.getInt(ExtraConstants.EXTRA_RMB);
             avatarId = extras.getInt(ExtraConstants.EXTRA_AVATARID);
@@ -70,6 +71,13 @@ public class MenuActivity extends Activity {
                 intent.putExtra(ExtraConstants.EXTRA_RMB, rmbNum);
                 intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
                 startActivity(intent);
+            }
+        });
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SongClientRequest songClient = new SongClientRequest(MenuActivity.this);
+                songClient.fetchSongList(token);
             }
         });
     }

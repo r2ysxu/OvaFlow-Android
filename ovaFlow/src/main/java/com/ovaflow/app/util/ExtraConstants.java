@@ -5,7 +5,9 @@ package com.ovaflow.app.util;
  */
 public class ExtraConstants {
 
+    public final static String EXTRA_TOKEN = "com.ovaflow.app.token";
     public final static String EXTRA_ID = "com.ovaflow.app.userId";
     public final static String EXTRA_RMB = "com.ovaflow.app.RMB";
     public final static String EXTRA_AVATARID = "com.ovaflow.app.avatarID";
+    public final static String EXTRA_SONG_LIST = "com.ovaflow.app.songList";
 }

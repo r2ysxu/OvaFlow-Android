@@ -35,18 +35,18 @@ public class LoginClientRequest extends ClientRequest {
         String[] paramKeys = {"usr", "pass"};
         String[] paramValues = {userid, password};
 
-        if (StringUtil.hasValue(userid)){
-            return false;
+        if (!StringUtil.hasValue(userid)){
+            infoView.setText("Please enter userid");
+            return true;
         }
 
         String stringUrl = ClientRequestInfo.generateRequest(loginStr, paramKeys, paramValues);
-        super.sendRequest(stringUrl);
-        return true;
+        return super.sendRequest(stringUrl);
     }
 
     public boolean registerAccount(String userid, String password, String passwordre, TextView infoView) {
         requestType = 1;
-        if (StringUtil.hasValue(userid, password, passwordre)) {
+        if (!StringUtil.hasValue(userid, password, passwordre)) {
             if (password.equals(passwordre)) {
                 String[] paramKeys = {"usr", "pass"};
                 String[] paramValues = {userid, password};
@@ -63,8 +63,9 @@ public class LoginClientRequest extends ClientRequest {
         return true;
     }
 
-    public void sendMessage(String id, int rmb, int avatarId) {
+    public void sendMessage(String token, String id, int rmb, int avatarId) {
         Intent intent = new Intent(getContext(), MenuActivity.class);
+        intent.putExtra(ExtraConstants.EXTRA_TOKEN, token);
         intent.putExtra(ExtraConstants.EXTRA_ID, id);
         intent.putExtra(ExtraConstants.EXTRA_RMB, rmb);
         intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
@@ -82,7 +83,7 @@ public class LoginClientRequest extends ClientRequest {
 
             if (StringUtil.hasValue(token)) {
                 infoView.setText("Log in succeeded");
-                sendMessage(username, rmb, avatarID);
+                sendMessage(token, username, rmb, avatarID);
             } else {
                 infoView.setText("Incorrect id or password");
             }
@@ -102,7 +103,7 @@ public class LoginClientRequest extends ClientRequest {
 
             if (StringUtil.hasValue(token)) {
                 infoView.setText("Registration successful");
-                sendMessage(username, rmb, avatarID);
+                sendMessage(token, username, rmb, avatarID);
             } else {
                 infoView.setText("Registration failed");
             }
