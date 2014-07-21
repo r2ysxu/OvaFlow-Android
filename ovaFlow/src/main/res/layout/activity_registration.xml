@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mania_background"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Registration"
+        android:textColor="#FFFFFF"
         android:id="@+id/reg_prompt_text"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -59,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Password"
+                android:textColor="#FFFFFF"
                 android:id="@+id/reg_password_prompt" />
 
             <EditText
@@ -66,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
+                android:textColor="#FFFFFF"
                 android:id="@+id/reg_password_text"
                 android:layout_weight="1" />
         </LinearLayout>
@@ -81,6 +85,7 @@
                 android:layout_height="54dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Re-enter Password"
+                android:textColor="#FFFFFF"
                 android:id="@+id/reg_passrep_prompt" />
 
             <EditText
@@ -88,12 +93,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
+                android:textColor="#FFFFFF"
                 android:id="@+id/reg_passrep_text" />
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/reg_info_text" />
 
