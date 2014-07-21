@@ -12,6 +12,7 @@ import com.ovaflow.app.R;
 import com.ovaflow.app.controller.PlaylistExpandListener;
 import com.ovaflow.app.localstorage.SongFileLocator;
 import com.ovaflow.app.model.PlaylistInfo;
+import com.ovaflow.app.util.ExtraConstants;
 import com.ovaflow.app.view.PlayListAdapter;
 
 public class SongSelectActivity extends Activity {
@@ -61,7 +62,10 @@ public class SongSelectActivity extends Activity {
 
     private void selectSong() {
         Intent intent = new Intent(this, BeatmapActivity.class);
-        intent.putExtra("Song", mPlayListAdapter.getSongInfo(mPlayListListener.getSelectedGroup()));
+        Bundle extras = getIntent().getExtras();
+        intent.putExtra(ExtraConstants.EXTRA_TOKEN, extras.getString(ExtraConstants.EXTRA_TOKEN));
+        intent.putExtra(ExtraConstants.EXTRA_AVATARID, extras.getInt(ExtraConstants.EXTRA_AVATARID));
+        intent.putExtra(ExtraConstants.EXTRA_SONG_INFO, mPlayListAdapter.getSongInfo(mPlayListListener.getSelectedGroup()));
         startActivity(intent);
     }
 }

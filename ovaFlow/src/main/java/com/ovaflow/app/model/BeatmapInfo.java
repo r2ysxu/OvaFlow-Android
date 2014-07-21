@@ -9,18 +9,20 @@ public class BeatmapInfo implements Serializable {
 
     private String name;
     private int difficulty;
+    private int id;
     private String songFileLocation;
     private String beatmapFileLocation;
 
     public static BeatmapInfo[] generateBeatmaps() {
         BeatmapInfo[] beatmapInfos = new BeatmapInfo[3];
         for (int i = 0; i < beatmapInfos.length; i++) {
-            beatmapInfos[i] = new BeatmapInfo("Beatmap " + i, (int)(Math.random() * 70) + 30);
+            beatmapInfos[i] = new BeatmapInfo(i, "Beatmap " + i, (int)(Math.random() * 70) + 30);
         }
         return beatmapInfos;
     }
 
-    public BeatmapInfo(String name, int difficulty) {
+    public BeatmapInfo(int id, String name, int difficulty) {
+        this.id = id;
         this.name = name;
         this.difficulty = difficulty;
     }

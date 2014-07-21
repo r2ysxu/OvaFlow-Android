@@ -120,4 +120,9 @@ public class LoginClientRequest extends ClientRequest {
         }
         requestType = -1;
     }
+
+    @Override
+    protected void publishProgress(int perc) {
+
+    }
 }

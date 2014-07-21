@@ -60,6 +60,8 @@ public class MenuActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, SongSelectActivity.class);
+                intent.putExtra(ExtraConstants.EXTRA_TOKEN, token);
+                intent.putExtra(ExtraConstants.EXTRA_AVATARID, avatarId);
                 startActivity(intent);
             }
         });

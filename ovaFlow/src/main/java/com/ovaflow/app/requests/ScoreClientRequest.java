@@ -27,4 +27,9 @@ public class ScoreClientRequest extends ClientRequest {
     @Override
     protected void getRequest(String result) {
     }
+
+    @Override
+    protected void publishProgress(int perc) {
+
+    }
 }

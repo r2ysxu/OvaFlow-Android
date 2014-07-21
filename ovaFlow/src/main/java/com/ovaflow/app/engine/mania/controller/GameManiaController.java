@@ -1,8 +1,8 @@
 package com.ovaflow.app.engine.mania.controller;
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import com.ovaflow.app.engine.mania.model.data.ScoreType;
 
@@ -30,21 +30,21 @@ public class GameManiaController {
     private int songId;
     private String songFileName = "we_will_rock_you.mp3";
 
-    public GameManiaController() {
+    public GameManiaController(String songPath, String beatmapPath) {
         scoreType = new ScoreType();
+        songFileName = songPath;
     }
 
     public void startGame(int songId) {
         playing = true;
-        this.songId = songId;
         startTime = System.currentTimeMillis();
     }
 
     public void playMusic(Context context) {
         try {
-            AssetFileDescriptor afd = context.getAssets().openFd(songFileName);
             player = new MediaPlayer();
-            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            player.setDataSource(context.getExternalFilesDir(null) + songFileName);
+            Log.i("Song Inf", context.getExternalFilesDir(null) + songFileName);
             player.prepare();
             player.start();
             player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

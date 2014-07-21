@@ -8,6 +8,12 @@ public class ClientRequestInfo {
     public static final String hostIp = "192.168.0.15";
     public static final String hostPort = "8080";
 
+    public static final String parseBeatmap(String resourcePath, String param) {
+        String params = resourcePath.substring(resourcePath.indexOf("?"), resourcePath.length() - 1);
+        params = params.substring(param.indexOf(param + "=") + param.length() + 1, params.length() - 1);
+        return params;
+    }
+
     public static final String generateRequest(String resourcePath, String[] paramKeys, String[] paramValues) {
         String resource = "http://" + hostIp + ":" + hostPort + resourcePath;
 

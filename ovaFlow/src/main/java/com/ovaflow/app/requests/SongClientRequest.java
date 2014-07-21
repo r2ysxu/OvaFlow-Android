@@ -63,4 +63,9 @@ public class SongClientRequest extends ClientRequest {
                 PlaylistInfo.generatePlaylist(songInfoList));
         getContext().startActivity(intent);
     }
+
+    @Override
+    protected void publishProgress(int perc) {
+
+    }
 }

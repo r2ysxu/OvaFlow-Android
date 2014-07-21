@@ -13,16 +13,19 @@ import android.widget.TextView;
 import com.ovaflow.app.R;
 import com.ovaflow.app.model.BeatmapInfo;
 import com.ovaflow.app.model.SongInfo;
+import com.ovaflow.app.util.ExtraConstants;
 import com.ovaflow.app.view.BeatmapAdapter;
 
 public class BeatmapActivity extends Activity {
 
     private BeatmapAdapter mBeatmapAdapter;
     private AdapterView.OnItemClickListener onItemClickListener;
-    private TextView songName, songInfo, songDuration;
+    private TextView songName, songInfoView, songDuration;
     private Button backButton, playButton;
 
     private int selectedBeatmapIndex = -1;
+
+    private SongInfo songInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,13 @@ public class BeatmapActivity extends Activity {
         setContentView(R.layout.activity_beatmap);
 
         songName = (TextView) findViewById(R.id.beatmap_song_name);
-        songInfo = (TextView) findViewById(R.id.beatmap_song_info);
+        songInfoView = (TextView) findViewById(R.id.beatmap_song_info);
         songDuration = (TextView) findViewById(R.id.beatmap_song_duration);
 
         backButton = (Button) findViewById(R.id.beatmap_back_button);
         playButton = (Button) findViewById(R.id.beatmap_play_button);
 
-        setupResults();
+        unpackIntent();
         fillBeatmapList();
         addListener();
     }
@@ -55,11 +58,11 @@ public class BeatmapActivity extends Activity {
         beatmap.setOnItemClickListener(onItemClickListener);
     }
 
-    private void setupResults() {
-        SongInfo si = (SongInfo) getIntent().getExtras().get("Song");
-        songName.setText(si.getName());
-        songInfo.setText(si.getArtist() + " - " + si.getAlbum());
-        songDuration.setText(si.getDurationStr());
+    private void unpackIntent() {
+        songInfo = (SongInfo) getIntent().getExtras().get(ExtraConstants.EXTRA_SONG_INFO);
+        songName.setText(songInfo.getName());
+        songInfoView.setText(songInfo.getArtist() + " - " + songInfo.getAlbum());
+        songDuration.setText(songInfo.getDurationStr());
     }
 
     private void addListener() {
@@ -73,14 +76,19 @@ public class BeatmapActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (selectedBeatmapIndex > -1)
-                    selectBeatmap(mBeatmapAdapter.getBeatmapInfo(selectedBeatmapIndex));
+                    selectBeatmap(mBeatmapAdapter.getBeatmapInfo(selectedBeatmapIndex), songInfo);
             }
         });
     }
 
-    private void selectBeatmap(BeatmapInfo beatmapInfo) {
+    private void selectBeatmap(BeatmapInfo beatmapInfo, SongInfo songInfo) {
+        Bundle extras = getIntent().getExtras();
+
         Intent intent = new Intent(this, GameManiaActivity.class);
-        intent.putExtra("Beatmap", beatmapInfo);
+        intent.putExtra(ExtraConstants.EXTRA_TOKEN, extras.getString(ExtraConstants.EXTRA_TOKEN));
+        intent.putExtra(ExtraConstants.EXTRA_AVATARID, extras.getInt(ExtraConstants.EXTRA_AVATARID));
+        intent.putExtra("SongId", songInfo.getSongId());
+        intent.putExtra(ExtraConstants.EXTRA_BM_INFO, beatmapInfo);
         startActivity(intent);
     }
 }

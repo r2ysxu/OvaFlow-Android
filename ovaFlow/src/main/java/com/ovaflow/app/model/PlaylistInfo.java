@@ -1,5 +1,7 @@
 package com.ovaflow.app.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class PlaylistInfo implements Serializable {
     }
 
     public static final PlaylistInfo generatePlaylist(List<SongInfo> songInfos) {
+        for (SongInfo si : songInfos)
+            Log.i("PlaylistInfo", "Song id fetch: " + si.getSongId());
         return new PlaylistInfo(songInfos);
     }
 

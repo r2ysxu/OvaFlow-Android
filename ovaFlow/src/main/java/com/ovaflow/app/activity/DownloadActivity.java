@@ -79,8 +79,8 @@ public class DownloadActivity extends Activity {
             public void onClick(View view) {
                 int selected = mPlayListListener.getSelectedGroup();
                 if (selected != -1) {
-                    Log.i("DownloadActivity", "Initiate Download");
                     SongInfo si = mPlayListAdapter.getSongInfo(selected);
+                    Log.i("DownloadActivity", "Initiate Download: " + si.getSongId());
                     dlClient.downloadSong(userToken, si.getSongId(), si.getName(), si.getArtist(), si.getAlbum(), dlProgress);
                 }
             }
